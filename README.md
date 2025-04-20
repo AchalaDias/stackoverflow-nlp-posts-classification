@@ -22,7 +22,4 @@ This project focuses on collecting, preprocessing, and categorizing NLP-related 
 - Stack Exchange API
 - Jupyter Notebook
 
----
-
-Let me know if you'd like to add sections for installation, usage, or demo screenshots!
 
