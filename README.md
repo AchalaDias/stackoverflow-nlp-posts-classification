@@ -1,6 +1,3 @@
-# stackoverflow-nlp-posts-classification
-StackOverflow NLP Posts Classification
-
 # 🧠 NLP Stack Overflow Post Categorization
 
 This project focuses on collecting, preprocessing, and categorizing NLP-related questions from Stack Overflow using a rule-based classification system powered by regular expressions. The goal is to identify the types of NLP problems developers face and analyze common discussion patterns within the community.
