@@ -68,5 +68,5 @@ for page in range(1, 101):
     time.sleep(1.5)
 
 df = pd.DataFrame(data)
-df.to_csv('nlp_advanced_search_results.csv', index=False)
-print("Data saved to nlp_advanced_search_results.csv")
+df.to_csv('nlp_post_data_with_only_accepted_answers.csv', index=False)
+print("Data saved to nlp_post_data_with_only_accepted_answers.csv")

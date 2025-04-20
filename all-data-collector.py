@@ -72,4 +72,4 @@ for page in range(1, 101):
 
 # Save to CSV
 df = pd.DataFrame(data)
-df.to_csv('./data/04.csv', index=False)
+df.to_csv('./data/03.csv', index=False)
