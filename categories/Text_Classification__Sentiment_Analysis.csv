@@ -2964,6 +2964,11 @@ trainer.train() # argument trial can be used for hyperparameter search
 </code></pre>
 <p>My code does run but I’m uncertain of whether I’m missing anything important in my value definitions. Especially since the trial gets pruned from run 3 - 99.</p>
 ",Text Classification / Sentiment Analysis,hyperparameter search criterion define finetuning language model vesteinn scandibert multiclass text classification po neg neu task wish run hyperparameter search find optimal hyperparameters starting read realize hp tuning wild west consensus hp tune range specify nlp expert might missing conceptual knowledge hoping one would take look initiate hp tuning using optuna look like code doe run uncertain whether missing anything important value definition especially since trial get pruned run
+Minimum term/doc frequency for Seeded Latent Dirichlet Allocation:?,"<p>I'm a newbie at language technology using R's <code>seededlda</code> package to perform SLDA on a document term matrix created from a corpus of ~400k texts (scientific abstracts) to classify each document into one of two categories, say category &quot;A&quot; and &quot;B&quot;.</p>
+<p>I get wildly different results based on how I shorten the document term matrix. I first decided to limit the DTM to words used at least 1,000 times in 10,000 different documents. This got me some weird results on the distribution of categories across documents--based on my knowledge of the problem I'm studying, I was expecting category A to outweigh B at least 1.5:1, if not 2:1 or greater. Instead, Category B outweighed A 3:1.</p>
+<p>However, if I do not impose any limits on term and document frequency, I get results that align with my prior expectations. Since I'm not a computational linguist, I'm not sure which &quot;approach&quot; is more desirable.</p>
+<p><strong>Is there any literature out there on &quot;optimal&quot; minimum document/term frequency when performing (seeded) LDA?</strong> On a quick Google search, I haven't seem to find anything that would help me decide which of my results are closer to the &quot;correct&quot; answer, or what the threshold should be for cutting terms by document or term frequency.</p>
+",Text Classification / Sentiment Analysis,minimum term doc frequency seeded latent dirichlet allocation newbie language technology using r package perform slda document term matrix created corpus k text scientific abstract classify document one two category say category b get wildly different result based shorten document term matrix first decided limit dtm word used least time different document got weird result distribution category across document based knowledge problem studying wa expecting category outweigh b least greater instead category b outweighed however impose limit term document frequency get result align prior expectation since computational linguist sure approach desirable literature optimal minimum document term frequency performing seeded lda quick google search seem find anything would help decide result closer correct answer threshold cutting term document term frequency
 Google Cloud Vertex AI with .Net,"<p>I am new to google cloud service VERTEX AI.</p>
 <p>I am looking to Create, train, and deploy an AutoML text classification model through .Net application. I did not find anything for .Net with Vertex AI. If someone can please guide my to the location or any .Net code samples, will be really helpful.</p>
 ",Text Classification / Sentiment Analysis,google cloud vertex ai net new google cloud service vertex ai looking create train deploy automl text classification model net application find anything net vertex ai someone please guide location net code sample really helpful
@@ -3273,6 +3278,48 @@ Is This Solution Fundamentally Correct To The Text Classification Model With Pre
 <p>or even how about the other same ways; define callback to lock and unlock layers on the end of each epoch sequentially, or even lock only the dense classifier layers and unlock the embedding layer and  the other ones.</p>
 <p>thanks for your companion</p>
 ",Text Classification / Sentiment Analysis,solution fundamentally correct text classification model pre trained word vector fundamentally correct training text classification sentiment analysis model pre trained word vector first locked embedding layer train locked additional layer unlocked embedding layer know many word exist pre trained word vector creating embedding layer weight zero element model would miss word vocabulary word even way define callback lock unlock layer end epoch sequentially even lock dense classifier layer unlock embedding layer one thanks companion
+Using for loop to search through string and create data frame,"<p>I am trying to use openNLP to look through rows of text and classify sentences into thematic buckets. Here is a sample df:</p>
+<pre><code>dat &lt;- data.frame(text=c(&quot;A fluffy crab discovered off the coast of Western Australia has been named after the ship that carried Charles Darwin around the world. The new species, Lamarckdromia beagle, belongs to the Dromiidae family, commonly known as sponge crabs. Crustaceans in this family fashion and use sea sponges and ascidians – animals including sea squirts – for protection. They trim the creatures using their claws and wear them like hats. &quot;,
+                         &quot;The inadmissibility of such actions, which violate the relevant legal and political obligations of the European Union and lead to an escalation of tensions, was pointed out, the ministry said in a statement. Speaking shortly after the meeting, Ederer said he had called on the Russian government to remain calm and resolve this issue diplomatically, the Russian news agency Tass reported.&quot;),
+                  date=c(as.Date(&quot;2020-12-26&quot;),as.Date(&quot;2020-12-31&quot;)), 
+                  id= c(&quot;1&quot;, &quot;2&quot;))
+</code></pre>
+<p>Ive gotten as splitting the text into sentences, and then searching for the keywords using the following code:</p>
+<pre><code>
+#split sentences search for keywords
+
+all_sentence &lt;- as.String(dat$text)
+
+sent_annotator &lt;- Maxent_Sent_Token_Annotator()
+annotation &lt;- annotate(all_sentence, sent_annotator)
+
+split_text &lt;- all_sentence[annotation]
+
+# word list to search for 
+
+word_dat &lt;- data.frame(words=c(&quot;animal&quot;, &quot;species&quot;, &quot;political&quot;, &quot;government&quot;),
+                  theme=c(&quot;nature&quot;, &quot;nature&quot;, &quot;geopolitics&quot;, &quot;geopolitics&quot;))
+
+stem_keyword &lt;- wordStem(word_dat$words, language = &quot;english&quot;)
+
+
+for(kw in stem_keyword) {
+  x=grep(kw, split_text)
+  print(split_text[x])
+  print(stem_keyword[x])
+}
+</code></pre>
+<p>However my for loop doesnt print exactly what im looking for.. for example, print(stem_keyword) is giving me the wrong keyword for the wrong sentence. In the end I dont want to print, I want to write the results to a new dataframe with this structure:</p>
+<pre><code>final_df &lt;- data.frame(text=c(&quot;A fluffy crab discovered off the coast of Western Australia has been named after the ship that carried Charles Darwin around the world.&quot;, &quot;The new species, Lamarckdromia beagle, belongs to the Dromiidae family, commonly known as sponge crabs.&quot;,&quot;Crustaceans in this family fashion and use sea sponges and ascidians – animals including sea squirts – for protection.&quot;, &quot;They trim the creatures using their claws and wear them like hats.&quot;,
+                              &quot;The inadmissibility of such actions, which violate the relevant legal and political obligations of the European Union and lead to an escalation of tensions, was pointed out, the ministry said in a statement.&quot;,
+                              &quot;Speaking shortly after the meeting, Ederer said he had called on the Russian government to remain calm and resolve this issue diplomatically, the Russian news agency Tass reported.&quot;),
+                  keyword=c(&quot;null&quot;, &quot;species&quot;, &quot;animal&quot;, &quot;null&quot;, &quot;political&quot;, &quot;government&quot;),
+                  theme=c(&quot;null&quot;, &quot;nature&quot;, &quot;nature&quot;, &quot;null&quot;, &quot;geopolitics&quot;, &quot;geopolitics&quot;), 
+                  id= c(&quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;2&quot;, &quot;2&quot;))
+</code></pre>
+<p>Any advice or help getting my for loop to where I need it to be? TIA</p>
+<p>EDIT: I would also like for sentences that cannot be classified to appear in the final dataframe with 'null' keywords and themes</p>
+",Text Classification / Sentiment Analysis,using loop search string create data frame trying use opennlp look row text classify sentence thematic bucket sample df ive gotten splitting text sentence searching keywords using following code however loop doesnt print exactly im looking example print stem keyword giving wrong keyword wrong sentence end dont want print want write result new dataframe structure advice help getting loop need tia edit would also like sentence classified appear final dataframe null keywords theme
 Does Fine-tunning Bert Model in multiple times with different dataset make it more accuracy?,"<p>i'm totally new in NLP and Bert Model.
 What im trying to do right now is <em><strong>Sentiment Analysis on Twitter Trending Hashtag</strong></em> (&quot;neg&quot;, &quot;neu&quot;, &quot;pos&quot;) by using DistilBert Model, but the accurazcy was about 50% ( I tried w Label data taken from Kaggle).
 So here is my idea:
@@ -3599,11 +3646,71 @@ for itn in range(100):
         print(losses)
 </code></pre>
 ",Text Classification / Sentiment Analysis,text classification custom dataset spacy v really struggling make thing work new spacy v version documentation full however trying run training loop script also able perform text classification training cli approach data publically available
+The best and simple way to convert labeled text classification data to spaCy v3 format,"<p>Let's suppose we have labeled data for text classification in a nice CSV file. We have 2 columns - &quot;text&quot; and &quot;label&quot;. I am kind of struggling to understand spacy V3. documentation. If I understand the correctly main sources of examples of spacy v3 documentation are THIS PROJECTS ()<a href=""https://github.com/explosion/projects/tree/v3/tutorials"" rel=""nofollow noreferrer"">https://github.com/explosion/projects/tree/v3/tutorials</a>).</p>
+<p>However, the training data are already prepared in the expected JSON nested structure format.</p>
+<p>If I want to perform costume text classification in spacy v3 I need to convert the data to the example structure - e.g LIKE HERE (<a href=""https://github.com/explosion/projects/blob/v3/tutorials/textcat_docs_issues/assets/docs_issues_eval.jsonl"" rel=""nofollow noreferrer"">https://github.com/explosion/projects/blob/v3/tutorials/textcat_docs_issues/assets/docs_issues_eval.jsonl</a>).</p>
+<p>How to get from pandas data frame to here? Does prodigy support labeled data to spacy format? Let's have small example of the dataset</p>
+<pre class=""lang-py prettyprint-override""><code>pd.DataFrame({
+    &quot;TEXT&quot;:[
+    &quot;i really like this post&quot;,
+    &quot;thanks for that comment&quot;,
+    &quot;i enjoy this friendly forum&quot;,
+    &quot;this is a bad post&quot;,
+    &quot;i dislike this article&quot;,
+    &quot;this is not well written&quot;,
+    &quot;who came up with this stupid idea?&quot;,
+    &quot;This is just completely wrong!!&quot;,
+    &quot;Get out of here now!!!!&quot;],
+    &quot;LABEL&quot;: [
+        &quot;POS&quot;, &quot;POS&quot;, &quot;POS&quot;, &quot;NEG&quot;, &quot;NEG&quot;, &quot;NEG&quot;, &quot;RUDE&quot;, &quot;RUDE&quot;, &quot;RUDE&quot;
+    ]
+
+})
+</code></pre>
+",Text Classification / Sentiment Analysis,best simple way convert labeled text classification data spacy v format let suppose labeled data text classification nice csv file column text label kind struggling understand spacy v documentation understand correctly main source example spacy v documentation project however training data already prepared expected json nested structure format want perform costume text classification spacy v need convert data example structure e g like get panda data frame doe prodigy support labeled data spacy format let small example dataset
 Text classification using POS taggers of spacy,"<p>I'm very new to NLP and new to spacy as well and trying to learn things by myself.
 My question is, is there a way to classify if a text is sarcastic or if it's a warning or an order, using spacy's pos taggers which are already there to use? For example &quot;Open that door&quot; is an order, how to classify it?</p>
 <p>My end goal is I want to classify tweets so I can do more practice and advance a little bit, but for starters I just want to learn how to classify simple sentences.</p>
 <p>Thanks in advance.</p>
 ",Text Classification / Sentiment Analysis,text classification using po tagger spacy new nlp new spacy well trying learn thing question way classify text sarcastic warning order using spacy po tagger already use example open door order classify end goal want classify tweet practice advance little bit starter want learn classify simple sentence thanks advance
+kwic() function returns less rows than it should,"<p>I'm currently trying to perform a sentiment analysis on a <code>kwic</code> object, but I'm afraid that the <code>kwic()</code> function does not return all rows it should return. I'm not quite sure what exactly the issue is which makes it hard to post a reproducible example, so I hope that a detailed explanation of what I'm trying to do will suffice.</p>
+<p>I subsetted the original dataset containing speeches I want to analyze to a new data frame that only includes speeches mentioning certain keywords. I used the following code to create this subset:</p>
+<pre><code>ostalgie_cluster &lt;- full_data %&gt;%
+  filter(grepl('Schwester Agnes|Intershop|Interflug|Trabant|Trabi|Ostalgie',
+                speechContent,
+                ignore.case = TRUE))
+</code></pre>
+<p>The resulting data frame consists of 201 observations. When I perform <code>kwic()</code> on the same initial dataset using the following code, however, it returns a data frame with only 82 observations. Does anyone know what might cause this? Again, I'm sorry I can't provide a reproducible example, but when I try to create a reprex from scratch it just.. works...</p>
+<pre><code>#create quanteda corpus object
+qtd_speeches_corp &lt;- corpus(full_data,
+                            docid_field = &quot;id&quot;,
+                            text_field = &quot;speechContent&quot;)
+
+#tokenize speeches
+qtd_tokens &lt;- tokens(qtd_speeches_corp, 
+                     remove_punct = TRUE,
+                     remove_numbers = TRUE,
+                     remove_symbols = TRUE,
+                     padding = FALSE) %&gt;%
+  tokens_remove(stopwords(&quot;de&quot;), padding = FALSE) %&gt;%
+  tokens_compound(pattern = phrase(c(&quot;Schwester Agnes&quot;)), concatenator = &quot; &quot;)
+
+ostalgie_words &lt;- c(&quot;Schwester Agnes&quot;, &quot;Intershop&quot;, &quot;Interflug&quot;, &quot;Trabant&quot;, &quot;Trabi&quot;, &quot;Ostalgie&quot;)
+
+test_kwic &lt;- kwic(qtd_tokens,
+                  pattern = ostalgie_words,
+                  window = 5)
+</code></pre>
+",Text Classification / Sentiment Analysis,kwic function return le row currently trying perform sentiment analysis object afraid function doe return row return quite sure exactly issue make hard post reproducible example hope detailed explanation trying suffice subsetted original dataset containing speech want analyze new data frame includes speech mentioning certain keywords used following code create subset resulting data frame consists observation perform initial dataset using following code however return data frame observation doe anyone know might cause sorry provide reproducible example try create reprex scratch work
+Extract a 100-Character Window around Keywords in Text Data with R (Quanteda or Tidytext Packages),"<p>This is my first time asking a question on here so I hope I don't miss any crucial parts. I want to perform sentiment analysis on windows of speeches around certain keywords. My dataset is a large csv file containing a number of speeches, but I'm only interest in the sentiment of the words immediately surrounding certain key words.</p>
+<p>I was told that the quanteda package in R would likely be my best bet for finding such a function, but I've been unsuccessful in locating it so far. If anyone knows how to do such a task it would be <em>greatly</em> appreciated !!!</p>
+<p>Reprex (I hope?) below:</p>
+<pre><code>speech = c(&quot;This is the first speech. Many words are in this speech, but only few are relevant for my research question. One relevant word, for example, is the word stackoverflow. However there are so many more words that I am not interested in assessing the sentiment of&quot;, &quot;This is a second speech, much shorter than the first one. It still includes the word of interest, but at the very end. stackoverflow.&quot;, &quot;this is the third speech, and this speech does not include the word of interest so I'm not interested in assessing this speech.&quot;)
+
+data &lt;- data.frame(id=1:3, 
+                   speechContent = speech)
+</code></pre>
+",Text Classification / Sentiment Analysis,extract character window around keywords text data r quanteda tidytext package first time asking question hope miss crucial part want perform sentiment analysis window speech around certain keywords dataset large csv file containing number speech interest sentiment word immediately surrounding certain key word wa told quanteda package r would likely best bet finding function unsuccessful locating far anyone know task would greatly appreciated reprex hope
 Generating Trigrams with Gensim&#39;s Phraser Package in Python,"<p>I have the following code snippet which I created with the help of <a href=""https://towardsdatascience.com/unsupervised-sentiment-analysis-a38bf1906483"" rel=""nofollow noreferrer"">this</a> tutorial for unsupervised sentiment analysis purposes:</p>
 <pre><code>sent = [row for row in file_model.message]
 phrases = Phrases(sent, min_count=1, progress_per=50000)
@@ -4358,6 +4465,10 @@ How to extract COMPLAINT features from texts in order to classify complaints fro
 
 <p>Instead of naive way of bag of words, I am wondering how can I accurately extract the features of these complaints and non-complaints texts? My goal is to use SVM or other classification algorithm/ library such as Liblinear to most accurately classify the rest of these texts as either complaint or non-complaint with the current training set of 300 texts. Is this procedure similar to sentiment analysis? If not, where should I start?</p>
 ",Text Classification / Sentiment Analysis,extract complaint feature text order classify complaint non complaint text corpus around text comment social network fb twitter news content general regional news magazine etc gone first text tag text content either customer complaint non complaint instead naive way bag word wondering accurately extract feature complaint non complaint text goal use svm classification algorithm library liblinear accurately classify rest text either complaint non complaint current training set text procedure similar sentiment analysis start
+The label tag mixed with comment in sentiment analysis data frame,"<p>I have below data frame and my label column as u can see is part of sentence row and its separated by \ character. My question is how can I delete these zero and ones or replace them with &quot; &quot; character and transition them to new Label column beside this comment column?</p>
+<p>thanks for you're help.</p>
+<p><a href=""https://i.sstatic.net/t4hnW.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/t4hnW.png"" alt=""enter image description here"" /></a></p>
+",Text Classification / Sentiment Analysis,label tag mixed comment sentiment analysis data frame data frame label column u see part sentence row separated character question delete zero one replace character transition new label column beside comment column thanks help
 Binary vs. multi-class text classification,"<p>I have a dataset with social media posts that looks as below, but its in Farsi and I could not find a readily available R/Python sentiment analysis package.</p>
 <pre><code>post/tweet
 &quot;we are tired of this regime and need to make a change happen now&quot;
@@ -6992,35 +7103,15 @@ print(get_text_sentiment(text))
 <p>my localhost returns - 0.1666</p>
 <p>the server returns - 0.0</p>
 ",Text Classification / Sentiment Analysis,override downloader directory local directory polyglot python run polyglot sentiment detection upload server run command downloaded sentiment folder saved folder python file tried set pointing sentiment folder location say polyglot documentation doesnt work override downloader directory access sentiment local folder executes sentiment analysis please see full code code work computer localhost return zero run server localhost return server return
-Predicting next week incidents using text analysis on incident reports,"<p>I want to do a project but I'm not sure if it's really viable neither which path I should take to try and solve this.</p>
-<p>I have a dataset with numerous incidents from different places and their risk classification. For example:</p>
-<pre><code>Incident: &quot;John stumbled and fell down the stairs&quot;
-
-Risk: Severe
-
-Warehouse: A
-
-Date: 2020-07-11
-
----
-
-Incident: &quot;Mary left the door open&quot;
-
-Risk: Low
-
-Warehouse: B
-
-Date: 2020-07-10
-</code></pre>
-<p>My idea is to compile the incidents by warehouse by week and give a probability of incidents happening in each warehouse for every risk.</p>
-<pre><code>Warehouse A
-
-Probability of low risk incidents next week: 60%
-
-Probability of severe risk incidents next week: 30%
-</code></pre>
-<p>But I'm not really sure how to get around this problem. It's not really text classification because I know the classification of every report (risk). Is there a way to use this dataset and get any prediction for the next week?</p>
-",Text Classification / Sentiment Analysis,predicting next week incident using text analysis incident report want project sure really viable neither path take try solve dataset numerous incident different place risk classification example idea compile incident warehouse week give probability incident happening warehouse every risk really sure get around problem really text classification know classification every report risk way use dataset get prediction next week
+How to Do Topic Modelling and Classification on Each Sentence Comment in a Data Frame in R?,"<p>Is there a way to do topic modelling and classification on a data frame of comments in R?</p>
+<p>I have 10 columns of comments (where each comment is a open ended sentence of a topic related to a question) and I want to classify each of these comments by topic for each column of comments.</p>
+<p>I tried to use LDA (Latent Dirichlet Allocation) using the topicmodels package in R (and use DocumentTermMatrix and Corpus before I applied the LDA model). I tried to find the optimal number of topics using the lowest perplexity.</p>
+<p>The issue is that I don't know what topic each sentence of a comment is classified by. It does put words into a similar topic but not by sentence. So it's a little confusing.</p>
+<p>I don't know where to go from there and need advice on how to do this.</p>
+<p>I was able to apply Sentimental Analysis on the same data frame in R using the sentimentr package and it worked but I can't do the same for topic modelling and classification.</p>
+<p>How can I do this in R for each sentence of comment in a column (for a total of 10 columns)?</p>
+<p><img src=""https://i.sstatic.net/fsAHJ.png"" alt=""image of data"" /></p>
+",Text Classification / Sentiment Analysis,topic modelling classification sentence comment data frame r way topic modelling classification data frame comment r column comment comment open ended sentence topic related question want classify comment topic column comment tried use lda latent dirichlet allocation using topicmodels package r use documenttermmatrix corpus applied lda model tried find optimal number topic using lowest perplexity issue know topic sentence comment classified doe put word similar topic sentence little confusing know go need advice wa able apply sentimental analysis data frame r using sentimentr package worked topic modelling classification r sentence comment column total column
 How to proceed after annotating text data for ML?,"<p>I am currently working on a project where I want to classify some text. For that, I first had to annotate text data. I did it using a web tool and have now the corresponding json file (containing the annotations) and the plain txt files (containing the raw text).
 I now want to use different classifiers to train the data and eventually predict the desired outcome.</p>
 <p>However, I am struggling with where to start. I haven't really found what I've been looking for in the internet so that's why I try it here.</p>
@@ -7441,6 +7532,76 @@ print(df.phrase)
 
 <p>Any help?</p>
 ",Text Classification / Sentiment Analysis,extracting key phrase text based topic python large dataset column column text phrase topic want find way extract key phrase phrase column based topic key phrase part text value whole text value big trouble finding path something like row dataset around unique value phrase different topic guess building dataset football basketball tennis topic really best solution wa thinking making kind ml model mean feature text topic one result phrase different class result good approach wa thinking using text column feature applying classification model order find sentiment use predicted sentiment extract key feature know extract one problem get accuracy try classify sentiment using random forest decision tree classifying algorithm also accuracy im using sentiment analysis help
+tokenizer.texts_to_sequences Keras Tokenizer gives almost all zeros,"<p>I am working to create a text classification code but I having problems in encoding documents using the tokenizer. </p>
+
+<p>1) I started by fitting a tokenizer on my document as in here: </p>
+
+<pre><code>vocabulary_size = 20000
+tokenizer = Tokenizer(num_words= vocabulary_size, filters='')
+tokenizer.fit_on_texts(df['data'])
+</code></pre>
+
+<p>2) Then I wanted to check if my data is fitted correctly so I converted into sequence as in here: </p>
+
+<pre><code>sequences = tokenizer.texts_to_sequences(df['data'])
+data = pad_sequences(sequences, maxlen= num_words) 
+print(data) 
+</code></pre>
+
+<p>which gave me fine output. i.e. encoded words into numbers </p>
+
+<pre><code>[[ 9628  1743    29 ...   161    52   250]
+ [14948     1    70 ...    31   108    78]
+ [ 2207  1071   155 ... 37607 37608   215]
+ ...
+ [  145    74   947 ...     1    76    21]
+ [   95 11045  1244 ...   693   693   144]
+ [   11   133    61 ...    87    57    24]]
+</code></pre>
+
+<p>Now, I wanted to convert a text into a sequence using the same method. 
+Like this: </p>
+
+<pre><code>sequences = tokenizer.texts_to_sequences(""physics is nice "")
+text = pad_sequences(sequences, maxlen=num_words)
+print(text)
+</code></pre>
+
+<p>it gave me weird output: </p>
+
+<pre><code>[[   0    0    0    0    0    0    0    0    0  394]
+ [   0    0    0    0    0    0    0    0    0 3136]
+ [   0    0    0    0    0    0    0    0    0 1383]
+ [   0    0    0    0    0    0    0    0    0  507]
+ [   0    0    0    0    0    0    0    0    0    1]
+ [   0    0    0    0    0    0    0    0    0 1261]
+ [   0    0    0    0    0    0    0    0    0    0]
+ [   0    0    0    0    0    0    0    0    0 1114]
+ [   0    0    0    0    0    0    0    0    0    1]
+ [   0    0    0    0    0    0    0    0    0 1261]
+ [   0    0    0    0    0    0    0    0    0  753]]
+</code></pre>
+
+<p>According to Keras documentation (<a href=""https://faroit.github.io/keras-docs/1.2.2/preprocessing/text/"" rel=""noreferrer"">Keras</a>): </p>
+
+<blockquote>
+  <p>texts_to_sequences(texts)</p>
+  
+  <p>Arguments: texts: list of texts to turn to sequences. </p>
+  
+  <p>Return: list of
+  sequences (one per text input).</p>
+</blockquote>
+
+<p>is it not supposed to encode each word to its corresponding number? then pad the text if it shorter than 50 to 50? 
+Where is the mistake ? </p>
+",Text Classification / Sentiment Analysis,tokenizer text sequence kera tokenizer give almost zero working create text classification code problem encoding document using tokenizer started fitting tokenizer document wanted check data fitted correctly converted sequence gave fine output e encoded word number wanted convert text sequence using method like gave weird output according kera documentation kera text sequence text argument text list text turn sequence return list sequence one per text input supposed encode word corresponding number pad text shorter mistake
+Classify web pages with neural net?,"<p>So I am working on a java project and I'm have a webcrawler that retrieves and downloads the html from websites it finds. You input a word, such as the word Java, and my program then searches google for websites and downloads the html data.</p>
+
+<p>So now I am trying to use a Neural Net to predict if the website is what I am looking for, yes I am aware that I am going to need a lot of data and have to manually feed the network. Where I am stuck is with converting the html into numbers for the neural net.</p>
+
+<p>At first I though about just converting the html into plain text and then assign a number to each letter, and just have a document that is made up of a bunch of numbers that make up words. I am unsure though how a neural net would view this, would all these numbers be just one input or would each word be an input to the neural net, which then would cause the problem of having an unspecified number of inputs, and if the net allows this as one input would this be a viable way of classifying if a website is what I want or not?</p>
+",Text Classification / Sentiment Analysis,classify web page neural net working java project webcrawler retrieves downloads html website find input word word java program search google website downloads html data trying use neural net predict website looking yes aware going need lot data manually feed network stuck converting html number neural net first though converting html plain text assign number letter document made bunch number make word unsure though neural net would view would number one input would word input neural net would cause problem unspecified number input net allows one input would viable way classifying website want
 Obtaining word polarity in each review,"<p>I'm working on a domain-specific sentiment analysis, and I want to get each independent word polarity in that specific corpus (not a general score like ""SentiWordNet"" or other lexicons).</p>
 
 <p>At first I thought using the following formula would help:</p>
@@ -7532,6 +7693,99 @@ I've never fetched using two arguments.</p>
 ",Text Classification / Sentiment Analysis,fetch json google cloud natural language api based existing text using client side j doe anyone know retrieve data google cloud natural language nl api using client side javascript incorrect code block likely line looking lot documentation today figure perform sentiment analysis using google cloud nl api many clear tutorial helped understand google cloud nl api work large degree still gap block code derived looking doc one area think may potential issue line never fetched using two argument
 Chat Data for NLP Text classification,"<p>I have a set of chat conversations (each conversations with 100 sentences) and corresponding labels (No other meta features). but there are only 5 observations per labels. I know that we need lots of observations per label to create a good classification model. So to increase the training data , is it a good practice to split the large text conversation into different sentences and considering each sentence as a distinct observation.(Now I will have 500 observations per label).What would be the effect on the performance of the classification model ? Would it increase or decrease or would have no effect on the performance? if there is change in performance, why is it so?</p>
 ",Text Classification / Sentiment Analysis,chat data nlp text classification set chat conversation conversation sentence corresponding label meta feature observation per label know need lot observation per label create good classification model increase training data good practice split large text conversation different sentence considering sentence distinct observation observation per label would effect performance classification model would increase decrease would effect performance change performance
+How to merge sentiment analysis results (dfm) with original readtext object in Quanteda?,"<p>I have been using Quanteda's basic <code>tokens_lookup</code> function with the Young Soroka Sentiment Dictionary to count the number of positive and negative words in Tweets by politicians. </p>
+
+<p>Once I get the results, is there a way I can then add these columns back into the original readtext object with the various docvars? </p>
+
+<pre><code>head(dat)
+readtext object consisting of 6 documents and 11 docvars.
+# Description: df[,13] [6 × 13]
+  doc_id   text       date      username   to      replies retweets favorites geo   mentions   hashtags        id permalink               
+* &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                   
+1 trump.c… ""\""Sleepy… 2020-05-… realDonal… MZHemi…    5415    13062     39680 NA    @AjitPaiF… """"       1.84e-224 https://twitter.com/rea…
+2 trump.c… ""\""He got… 2020-05-… realDonal… mikand…   20406    39081    111370 NA    """"         """"       1.84e-224 https://twitter.com/rea…
+3 trump.c… ""\""Thank … 2020-05-… realDonal… mikand…    5733    17293     66992 NA    """"         """"       1.84e-224 https://twitter.com/rea…
+4 trump.c… ""\"".@CBS … 2020-05-… realDonal… """"        22215    25834     93625 NA    @CBS @60M… """"       1.83e-224 https://twitter.com/rea…
+5 trump.c… ""\""This b… 2020-05-… realDonal… GreggJ…    5379    11403     39869 NA    """"         """"       1.81e-224 https://twitter.com/rea…
+6 trump.c… ""\""OBAMAG… 2020-05-… realDonal… """"        55960    89664    320171 NA    """"         """"       1.81e-224 https://twitter.com/rea…
+&gt; corp &lt;- corpus(dat)
+&gt; toks &lt;- tokens(corp, remove_punct = TRUE)
+&gt; toks_lsd &lt;- tokens_lookup(toks, dictionary =  data_dictionary_LSD2015[1:2])
+&gt; dfmat_lsd &lt;- dfm(toks_lsd)
+&gt; head(dfmat_lsd)
+Document-feature matrix of: 6 documents, 2 features (66.7% sparse).
+6 x 2 sparse Matrix of class ""dfm""
+             features
+docs          negative positive
+  trump.csv.1        2        0
+  trump.csv.2        0        0
+  trump.csv.3        0        1
+  trump.csv.4        2        1
+  trump.csv.5        0        0
+  trump.csv.6        0        0
+</code></pre>
+
+<p>I've tried taking the required columns from the readtext object and making a new data.frame with them, which works okay, but it'd be great if I could instead merge the dfm results back into the other data.</p>
+",Text Classification / Sentiment Analysis,merge sentiment analysis result dfm original readtext object quanteda using quanteda basic function young soroka sentiment dictionary count number positive negative word tweet politician get result way add column back original readtext object various docvars tried taking required column readtext object making new data frame work okay great could instead merge dfm result back data
+Need helping performing sentiment analysis on customer reviews and for a string of text,"<p>This is a 2 part code question.</p>
+
+<p>1.) Need to perform sentiment analysis on a csv file for customer reviews.</p>
+
+<p>2.) Need to perform sentiment analysis on a harry potter book review saved as a .txt</p>
+
+<p>1.) The name of this Dataframe is ""reviews"" and what I want to do is display the sentiment score for each of these 5 reviews under the ""sent"" column.  Thank you so much!!! If you can provide the code with the ""sent"" column filled  with its sentiment analysis score for each row that would be awesome!!</p>
+
+<p>reviews.head()</p>
+
+<pre><code> ID  Customer Name    Review                                       Sent  
+
+ 1   Jack             Beautiful cover up. My only 
+                      feedback is that it is a tad larger 
+                      than expected, but since it's a cover 
+                      up, it doesn't need to be fitted. The 
+                      waist tassels also allow you to adjust 
+                      to fit your waist which is nice. 
+                      Otherwise, its exactly as expected!
+
+ 2   Rachel           This tunic is very cute in person. It's 
+                      more sheer than I'd like, but I imagine 
+                      I'll wear it a ton on vacation.
+
+ 3   Ryan             Just got this sweet little dress in 
+                      blue. It's a great little dress for a 
+                      pool cover up. I can envision myself 
+                      wearing it on our winter getaway for 
+                      breakfast or on a walk. I'm not sure how 
+                      see through it is. I think I could get 
+                      away wearing it as a dress. The length 
+                      is great, not too short. The quality is 
+                      great. I got a size S. Fits true to size. 
+                      I am usually a size 2, 34b, 129lb, slim 
+                      build. Very happy with this.
+
+ 4   Jennifer         Love this hat! Kept the sun off my face 
+                      and neck/chest in the intense tropical 
+                      sun! Choose white - so I stayed cool.
+
+ 5   Alex             What I like about bikinis is that they 
+                      always fit you perfectly. You won't 
+                      realize how gorgeous they are and how 
+                      attractive they make your body look 
+                      until you put one on. As for the bra-part 
+                      it gives good support and sits well. I 
+                      also like the fabric: it stretches well 
+                      without losing its shape, the color 
+                      doesn't fade. This bikini is no exception. 
+                      is far better at making bikinis than 
+                      anybody else, I would say! 
+</code></pre>
+
+<p>For this string I just to know what the overall sentiment score is... thanks!!</p>
+
+<p>2.) </p>
+
+<p>""Parents need to know that Harry Potter and the Sorcerer's Stone is a thrill-a-minute story, the first in J.K. Rowling's Harry Potter series. It respects kids' intelligence and motivates them to tackle its greater length and complexity, play imaginative games, and try to solve its logic puzzles. It's the lightest in the series, but it still has some scary stuff for sensitive readers: a three-headed dog, an attacking troll, a violent life-size chess board, a hooded figure over a dead and bleeding unicorn, as well as a discussion of how Harry's parents died years ago.""</p>
+",Text Classification / Sentiment Analysis,need helping performing sentiment analysis customer review string text part code question need perform sentiment analysis csv file customer review need perform sentiment analysis harry potter book review saved txt name dataframe review want display sentiment score review sent column thank much provide code sent column filled sentiment analysis score row would awesome review head string know overall sentiment score thanks parent need know harry potter sorcerer stone thrill minute story first j k rowling harry potter series respect kid intelligence motivates tackle greater length complexity play imaginative game try solve logic puzzle lightest series still ha scary stuff sensitive reader three headed dog attacking troll violent life size chess board hooded figure dead bleeding unicorn well discussion harry parent died year ago
 Aspect Based Sentiment Assignment,"<p>I was working on Aspect based sentiment analysis using Spacy dependent parser . In simple sentences such as "" Car is good"" it works properly , but when a slightly complex sentences arrives such as "" Car is good in terms of mileage "" it fails to assign positive sentiment for mileage and assigns it to car instead. Iam not able to relate mileage with good in following spacy parser. How to establish such a relation , If somebody could give a high level idea. 
 <a href=""https://i.sstatic.net/gl921.png"" rel=""nofollow noreferrer"">Good and mileage are not at all related here</a></p>
 ",Text Classification / Sentiment Analysis,aspect based sentiment assignment wa working aspect based sentiment analysis using spacy dependent parser simple sentence car good work properly slightly complex sentence arrives car good term mileage fails assign positive sentiment mileage assigns car instead iam able relate mileage good following spacy parser establish relation somebody could give high level idea good mileage related
@@ -7638,6 +7892,43 @@ How to get the sentiment score of each word in sentence based sentiment classifi
 
 <p><a href=""https://i.sstatic.net/sVWrk.jpg"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/sVWrk.jpg"" alt=""enter image description here""></a></p>
 ",Text Classification / Sentiment Analysis,get sentiment score word sentence based sentiment classification using rnn lstm use rnn lstm sentence based sentiment analysis get sentiment distribution confidence word read one article shown neural network remembers includes one picture get likelihood character classification sentence level know use lstm sentence classification use last hidden representation classification get likelihood character word practical example showing input output would great
+what is the accurate Twitter sentiment analysis solution with Python?,"<p>I have a CSV file of 20K tweets with all information such as location, username, and date which I want to assign a label positive/neutral/negative to each tweet by Python. 
+I used the following Python code from textblob library for <strong>Tweets Sentiment Analysis</strong>. </p>
+
+<pre><code>import csv
+from textblob import TextBlob
+import sys
+
+# Do some version specific stuff
+if sys.version[0] == '3':
+    from importlib import reload
+    sntTweets = csv.writer(open(""sentimentTweets.csv"", ""w"", newline=''))
+
+if sys.version[0] == '2':
+    reload(sys)
+    sys.setdefaultencoding(""utf-8"")
+    sntTweets = csv.writer(open(""sentimentTweets.csv"", ""w""))
+
+alltweets = csv.reader(open(""Corona.csv"", 'r'))
+
+for row in alltweets:
+    blob = TextBlob(row[2])
+    print (blob.sentiment.polarity)
+    if blob.sentiment.polarity &gt; 0:
+        sntTweets.writerow([row[0], row[1], row[2], row[3], blob.sentiment.polarity, ""positive""])
+    elif blob.sentiment.polarity &lt; 0:
+        sntTweets.writerow([row[0], row[1], row[2], row[3], blob.sentiment.polarity, ""negative""])
+    elif blob.sentiment.polarity == 0.0:
+        sntTweets.writerow([row[0], row[1], row[2], row[3], blob.sentiment.polarity, ""neutral""])
+</code></pre>
+
+<p>this code runs perfect and produces the sentimentTweets.csv file. I like the idea that for each tweet, it gives me two labels: a number between -1 and 1, and also classify tweet to negative/neutral/positive.</p>
+
+<p>but it is not accurate. for example for the following tweet, it assigns positive with the number:0.285714285714285.
+<em>""RT @eliyudin: ‚ÄúI‚Äôll have a Corona... hold the virus!‚Äù -a dad on vacation somewhere in Florida right now""</em><br>
+but as you can understand, the sentiment of the above tweet should be negative.
+How can I make it accurate? and how can I find the accuracy of my output?</p>
+",Text Classification / Sentiment Analysis,accurate twitter sentiment analysis solution python csv file k tweet information location username date want assign label positive neutral negative tweet python used following python code textblob library tweet sentiment analysis code run perfect produce sentimenttweets csv file like idea tweet give two label number also classify tweet negative neutral positive accurate example following tweet assigns positive number rt eliyudin corona hold virus dad vacation somewhere florida right understand sentiment tweet negative make accurate find accuracy output
 Visualize text classes in a scatter-plot,"<p>I am looking for ways to investigate in my train data 'modellability' and check if the classes are well distinguished in terms of vocabulary... etc.</p>
 
 <p>I am a bit embarrassed but I was wondering if it is possible to do a scatter plot for text classification model in torch? or any other approach to investigate in the data quality.</p>
@@ -7749,6 +8040,84 @@ Text Classification - DNN,"<p>I am performing text classification using a Deep N
     return model
 </code></pre>
 ",Text Classification / Sentiment Analysis,text classification dnn performing text classification using deep neural network problem receiving high accuracy train data whereas validation accuracy tried following shuffled data train validation data split using dimension glov vector suggestion
+"I fine tuned a pre-trained BERT for sentence classification, but i cant get it to predict for new sentences","<p>below is the result of my fine-tuning.</p>
+
+<pre><code>Training Loss   Valid. Loss Valid. Accur.   Training Time   Validation Time
+epoch                   
+1   0.16    0.11    0.96    0:02:11 0:00:05
+2   0.07    0.13    0.96    0:02:19 0:00:05
+3   0.03    0.14    0.97    0:02:22 0:00:05
+4   0.02    0.16    0.96    0:02:21 0:00:05
+</code></pre>
+
+<p>next i tried to use the model to predict labels from a csv file. i created a label column, set the type to int64 and run the prediction.</p>
+
+<pre><code>print('Predicting labels for {:,} test sentences...'.format(len(input_ids)))
+model.eval()
+# Tracking variables 
+predictions , true_labels = [], []
+# Predict 
+for batch in prediction_dataloader:
+  # Add batch to GPU
+  batch = tuple(t.to(device) for t in batch)
+
+  # Unpack the inputs from our dataloader
+  b_input_ids, b_input_mask, b_labels = batch
+
+  # Telling the model not to compute or store gradients, saving memory and 
+  # speeding up prediction
+  with torch.no_grad():
+      # Forward pass, calculate logit predictions
+      outputs = model(b_input_ids, token_type_ids=None, 
+                      attention_mask=b_input_mask)
+
+  logits = outputs[0]
+
+  # Move logits and labels to CPU
+  logits = logits.detach().cpu().numpy()
+  label_ids = b_labels.to('cpu').numpy()
+
+  # Store predictions and true labels
+  predictions.append(logits)
+  true_labels.append(label_ids)
+
+
+</code></pre>
+
+<p>however, while i am able to print out the predictions[4.235, -4.805] etc, and the true_labels[NaN,NaN.....], i am unable to actually get the predicted labels{0 or 1}. Am i missing something here?</p>
+",Text Classification / Sentiment Analysis,fine tuned pre trained bert sentence classification cant get predict new sentence result fine tuning next tried use model predict label csv file created label column set type int run prediction however able print prediction etc true label nan nan unable actually get predicted label missing something
+Not enough memory while using the Tokenizer in keras.preprocessing.text,"<p>I want to build a RNN model using keras to classify sentences.</p>
+
+<p>I tried the following code:</p>
+
+<pre><code>docs = []
+with open('all_dga.txt', 'r') as f:
+    for line in f.readlines():
+        dga_domain, _ = line.split(' ')
+        docs.append(dga_domain)
+
+t = Tokenizer()
+t.fit_on_texts(docs)
+encoded_docs = t.texts_to_matrix(docs, mode='count')
+print(encoded_docs)
+</code></pre>
+
+<p>but got a MemoryError. It seemed that I couldn't load all data into the memory. This is the output:</p>
+
+<pre><code>Traceback (most recent call last):
+  File ""test.py"", line 11, in &lt;module&gt;
+    encoded_docs = t.texts_to_matrix(docs, mode='count')
+  File ""/home/yurzho/anaconda3/envs/deepdga/lib/python3.6/site-packages/keras/preprocessing/text.py"", line 273, in texts_to_matrix
+    return self.sequences_to_matrix(sequences, mode=mode)
+  File ""/home/yurzho/anaconda3/envs/deepdga/lib/python3.6/site-packages/keras/preprocessing/text.py"", line 303, in sequences_to_matrix
+    x = np.zeros((len(sequences), num_words))
+MemoryError
+</code></pre>
+
+<p>If anyone familiar with keras, please tell me how to pre-process the dataset.</p>
+
+<p>Thanks in advance!</p>
+",Text Classification / Sentiment Analysis,enough memory using tokenizer kera preprocessing text want build rnn model using kera classify sentence tried following code got memoryerror seemed load data memory output anyone familiar kera please tell pre process dataset thanks advance
 How to classify texts that are related to the bible based on their content,"<p>I have a database of texts from comments of social networks (FB,Twitter).
 My goal is to classify texts that have strong relation to the bible based on their content (for example if there are cites or ""biblical"" words that are used.
 This is a binary classification problem and i need help to figure out how to approach it (maybe use the bible as a dictionary somehow). Thanks!</p>
@@ -8522,6 +8891,47 @@ How to analyse StackOverflow Q&amp;A for root cause analysis if it expected in t
 
 <p>How do you prepare a dataset for such task and how to solve it? I am looking for an idea. A preliminary approach will suffice to proceed. For my background, I have worked on sentiment analysis (using BOW method though), sequential network and have an idea about the latest NLP <a href=""https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html"" rel=""nofollow noreferrer"">Transformers</a> model.  </p>
 ",Text Classification / Sentiment Analysis,analyse stackoverflow q root cause analysis expected problem question actually ask cause problem example doe necessarily mean ha question intent asking reason behind problem want get root cause problem expected question solution otherwise question pick accepted solution voted one prepare dataset task solve looking idea preliminary approach suffice proceed background worked sentiment analysis using bow method though sequential network idea latest nlp transformer model
+Spacy text classification scores,"<p>I'm quite new to NLP text classification and trying to apprehend the basics. It seems that Spacy is more suitable for my tasks and experience. I've read through all the docs and run the example code from <a href=""https://spacy.io/usage/training#example-textcat"" rel=""nofollow noreferrer"">https://spacy.io/usage/training#example-textcat</a> with default plac parameters with my own output folder. Then, I wrote a testing file:</p>
+
+<pre><code>import spacy
+
+output_dir=""train_output_orig""
+
+test_text = [
+    ""This movie sucked"",
+    ""It's a great one"",
+    ""I've watched a lot of films of this kind. A lot of them were more attractive for me"",
+    ""This is a great movie"",
+    ""This movie is terrible"",
+    ""I love this movie"",
+    ""This is a bad film"",
+    ""So fucking dung!"",
+    ""Very involving work with developed characters""
+    ]
+print(""Loading from"", output_dir)
+nlp2 = spacy.load(output_dir)
+for text in test_text:
+    print(text, nlp2(text).cats)
+</code></pre>
+
+<p>and got results:</p>
+
+<pre><code>Loading from train_output_orig
+This movie sucked {'POSITIVE': 0.6549780368804932}
+It's a great one {'POSITIVE': 0.7863456606864929}
+I've watched a lot of films of this kind. A lot of them were more attractive for me {'POSITIVE': 0.7664909958839417}
+This is a great movie {'POSITIVE': 0.7897435426712036}
+This movie is terrible {'POSITIVE': 0.4777064323425293}
+I love this movie {'POSITIVE': 0.7530838847160339}
+This is a bad film {'POSITIVE': 0.46895521879196167}
+So fucking dung! {'POSITIVE': 0.6296740174293518}
+Very involving work with developed characters {'POSITIVE': 0.8538092970848083}
+</code></pre>
+
+<p>Is it OK for Spacy model, or have I done something wrong? I mean there's quite narrow frontier between ""positive"" and ""negative"" labels. Even definitive ""This is a bad film"" earned 0.46 of ""positive"" rating. ""I love this movie"" got only 0.75 while ""Very involving work with developed characters"" got 0.83. At the same time, suggested in the original Spacy usage docs phrase ""This movie sucked"" got 0.65 ""positive"" score!</p>
+
+<p>Thank you in advance for your answer</p>
+",Text Classification / Sentiment Analysis,spacy text classification score quite new nlp text classification trying apprehend basic seems spacy suitable task experience read doc run example code default plac parameter output folder wrote testing file got result ok spacy model done something wrong mean quite narrow frontier positive negative label even definitive bad film earned positive rating love movie got involving work developed character got time suggested original spacy usage doc phrase movie sucked got positive score thank advance answer
 Distant Supervision: a rule-based labelling approach?,"<p>I am currently working on entity relations stuff and I found out that a lot of papers implemented distant supervision to label the data. What I understand about distant supervision is that we have an established Knowledge Base (KB) and we do kind of ""rule-based labeling"" by checking the extracted entity pairs whether they exist in the KB or not. If the entity pair exist in KB, it will be labelled as positive, otherwise it will be labelled as negative. </p>
 
 <p>My questions are:</p>
@@ -9748,6 +10158,12 @@ Text classification: Raw dictionary input and text vectorization,"<p>I am workin
 
 <p>These items are passed into a classification model (e.g., sklearn <code>LinearSVC</code>). I have found in the sklearn site that in text classification text data are transformed into a vector using some technique e.g., <code>HashingVectorizer</code> but I couldn't locate any documentation on how the aforementioned dictionary input is treated. Is it possible to provide some explanation of what procedure is followed in this input case?</p>
 ",Text Classification / Sentiment Analysis,text classification raw dictionary input text vectorization working text processing using series sklearn classifier example found internet noticed input classifier series dictionary item item passed classification model e g sklearn found sklearn site text classification text data transformed vector using technique e g locate documentation aforementioned dictionary input treated possible provide explanation procedure followed input case
+How do I train model in Google NLP Sentiment Analysis correctly,"<p>I need to compare to sentiment models trained with different types of content. Google supplies you with a training dataset filled with tweets in a .csv file, As expected training with this went well however, when I decided to train a model using the Stanford NLP's dataset of IMDB reviews, I manage to upload the dataset without issue but when I train it the NLP, for some reason only predicts that the sentiment value is 2, regardless of what I write.  </p>
+
+<p>I figured that the dataset was diluted since, while there were 800-2000 examples of sentiment 0,1,3 and 4, there were 6000 examples of sentiment 2. Although after removing 4000 of these examples, the problem persisted. </p>
+
+<p>I'm expecting my confusion matrix to not simply only have 100% prediction on each sentiment value. It should be distributed over the matrix w</p>
+",Text Classification / Sentiment Analysis,train model google nlp sentiment analysis correctly need compare sentiment model trained different type content google supply training dataset filled tweet csv file expected training went well however decided train model using stanford nlp dataset imdb review manage upload dataset without issue train nlp reason predicts sentiment value regardless write figured dataset wa diluted since example sentiment example sentiment although removing example problem persisted expecting confusion matrix simply prediction sentiment value distributed matrix w
 How to choose dimensionality of the Dense layer in LSTM?,"<p>I have a task of multi-label text classification. My dataset has 1369 classes:</p>
 
 <pre><code># data shape
@@ -9904,6 +10320,31 @@ How to gain insights in text classifications with error analysis?,"<p>I'm doing 
 
 <p>Also, how can I know how countVectorizer classified the documents? And which words he used to classify a document.</p>
 ",Text Classification / Sentiment Analysis,gain insight text classification error analysis text classification dialect using naive bayes classifier countvectorizer many misclassified text method analyse error figure classification going wrong example could know word used misclassify text classified b take word corpus switch unsupervised learning using clustering neural network deep learning naive bayes classifier working also know countvectorizer classified document word used classify document
+Read text files with paragraphs as one string using VCorpus from tm package in r,"<p>I have a list of text files in my directory, all of which are documents with multiple paragraphs. I want to read those documents and do sentiment analysis.</p>
+
+<p>For example, I have one text document <code>data/hello.txt</code> with text like below:</p>
+
+<pre><code>""Hello world.  
+ This is an apple.
+
+ That is an orange""
+</code></pre>
+
+<p>I read the document in like below (there can also be multiple documents):</p>
+
+<pre><code>docs &lt;- VCorpus(DirSource('./data/hello.txt'))
+</code></pre>
+
+<p>When I look at the document content  <code>docs[[1]]$content</code> It seems like it is character vector.</p>
+
+<pre><code>[1] ""hello  world""        ""this is apple.""      """"                   
+[4] ""That is an orange. "" """"  
+</code></pre>
+
+<p>My question is how I can read in those documents so that in each document, paragraphs are concatenated into one single character string so that I can use it for sentiment analysis. (VCorpus from tm package)</p>
+
+<p>Thanks a lot.</p>
+",Text Classification / Sentiment Analysis,read text file paragraph one string using vcorpus tm package r list text file directory document multiple paragraph want read document sentiment analysis example one text document text like read document like also multiple document look document content seems like character vector question read document document paragraph concatenated one single character string use sentiment analysis vcorpus tm package thanks lot
 Interactive learning,"<p>I'm new in NLP and text mining and I'm trying to build a documents classifier.
 Once the model is trained, we test it on new documents (they, test-data, don't have labels). It is expected that the model is not 100% accurate; so for misclassified documents, we want interact with a user to correct these bad predictions.</p>
 
@@ -10409,6 +10850,62 @@ model = Model(sentence_indices, X)
 
 <p>I'll appreciate any hint of the question above and also some suggestion to improve my neural network.</p>
 ",Text Classification / Sentiment Analysis,different accuracy code text classification kera training recurrent neural network based lstm text classification strange behaviour code training set obtain different level accuracy know normal different value sometimes get value accuracy others possible moreover sometimes get stuck accuracy level mean loss accuracy change different epoch value remain explanation another aspect sure truly understand fact padding input text using training batch think since using rnn better use left padding know pad input better left right padding last question choose number layer number node know someone best approach experiment suggestion could useful implementation rnn embeddings layer came glove model pre trained using category sample le training set uniform appreciate hint question also suggestion improve neural network
+r text mining extract keywords,"<p>I am new to R and working on a machine learning problem, I understand that machine learning requires labelled data to make accurate prediction.</p>
+
+<p>I am working with text data where the reviews given by users for a particular mobile app in text format. My primary task is to first extract the main keywords(features) </p>
+
+<p>The text data is as follows in the CSV file in the 'review' column</p>
+
+<pre><code>review1  - ""the gps does not work"",
+review2  - ""tracking of phone is inconsistent"",
+review3  - ""the battery is draining fast"",
+review4  - ""the tracks disappear after some time"",
+review5  - ""the app consumes the battery lot because of gps""
+</code></pre>
+
+<p>now I want to extract the feature mentioned in the each review such as
+""gps"", ""tracking"", ""battery"", ""tracks"",""battery gps"" and add it as a label next to it respectively in the CSV file; so there would be one more column created in the CSV file as 'Feature'. 
+So my CSV will have 2 columns, one review and one feature column that will highlight the feature mentioned in the review.The snapshot of the data in the CSV will be as follows <a href=""https://i.sstatic.net/H1VGs.jpg"" rel=""nofollow noreferrer"">new csv file data</a></p>
+
+<p>I have written a sample code mentioned below for the same but since I need to deal with thousands of reviews I need to get the Feature column in my csv file which will act as a label for feature prediction</p>
+
+<pre><code>#Feature Prediction
+library(tm)
+library(e1071)
+texts &lt;- c(""the gps does not work"",
+           ""tracking of phone is inconsistent"",
+           ""the battery is draining fast"",
+           ""the tracks disappear after some time"",
+           ""the app consumes the battery a lot"")
+
+features &lt;- c(""gps"", ""tracking"", ""battery"", ""tracks"",""battery"")
+docs &lt;- VCorpus(VectorSource(texts))
+# Clean corpus
+docs &lt;- tm_map(docs, content_transformer(tolower))
+docs &lt;- tm_map(docs, removeNumbers)
+docs &lt;- tm_map(docs, removeWords, stopwords(""english""))
+docs &lt;- tm_map(docs, removePunctuation)
+docs &lt;- tm_map(docs, stripWhitespace)
+dtm &lt;- DocumentTermMatrix(docs)
+# Transform dtm to matrix to data frame - df is easier to work with
+mat.df &lt;- as.data.frame(data.matrix(dtm), stringsAsfactors = FALSE)
+# Column bind category (known classification)
+mat.df &lt;- cbind(mat.df, features)
+View(mat.df)
+# Split data by rownumber into two equal portions (Train and Test Data)
+train &lt;- sample(nrow(mat.df), ceiling(nrow(mat.df) * .50))
+test &lt;- (1:nrow(mat.df))[- train]
+# Isolate classifier
+cl &lt;- mat.df[, ""features""]
+# Create model data and remove ""features""
+modeldata &lt;- mat.df[,!colnames(mat.df) %in% ""features""]
+feature_pred &lt;- naiveBayes(modeldata[train,], cl[train])
+naiv_pred &lt;- predict(feature_pred, modeldata[test,])
+conf.mat &lt;- table(""Predictions"" = naiv_pred, Actual = cl[test])
+conf.mat
+(accuracy &lt;- sum(diag(conf.mat))/length(test) * 100)
+</code></pre>
+",Text Classification / Sentiment Analysis,r text mining extract keywords new r working machine learning problem understand machine learning requires labelled data make accurate prediction working text data review given user particular mobile app text format primary task first extract main keywords feature text data follows csv file review column want extract feature mentioned review gps tracking battery track battery gps add label next respectively csv file would one column created csv file feature csv column one review one feature column highlight feature mentioned review snapshot data csv follows new csv file data written sample code mentioned since need deal thousand review need get feature column csv file act label feature prediction
 Web/browser-oriented open source machine learning projects?,"<p>Applying machine learning techniques, more specifically text mining techniques, in browser environment (mainly Javascript) or as a web application is not a very widely discussed topic.</p>
 
 <p>I want to build my own web application / browser extension that can accomplish certain level of text classification / visualization techniques. I would like to know, if there is any open source projects that apply text mining techniques in web application or even better as browser extensions? </p>
@@ -10587,6 +11084,16 @@ Text classification by pattern,"<p>Could you recomend me best way how to do it: 
 
 <p>Could you give some advice to how to do it? </p>
 ",Text Classification / Sentiment Analysis,text classification pattern could recomend best way list phrase example free flower delivery flower delivery moscow color home delivery flower delivery delivery order flower delivery color delivery pattern flower delivery need get list phrase close possible pattern could give advice
+Text classification on CNN model,"<p>The problem is i need to load the file which i have in h5 format as below</p>
+<pre><code>from keras.models import load_model
+model = load_model('my_model.h5')
+model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['acc'])
+classes = model.predict_classes(&quot;How is the weather today&quot;)
+print classes
+</code></pre>
+<p>And also i need that percentage value of the prediction to be printed</p>
+<p><a href=""https://github.com/jatana-research/Text-Classification/blob/master/CNN.ipynb"" rel=""nofollow noreferrer"">Here is the link that i refered to while generating this model and saving the file</a></p>
+",Text Classification / Sentiment Analysis,text classification cnn model problem need load file h format also need percentage value prediction printed link refered generating model saving file
 NLP Categorizing Details with Confidence Values,"<h2>Background</h2>
 
 <p>I'm writing a Swift application that requires the classification of user events by <code>categories</code>. These categories can be things like:</p>
@@ -10830,6 +11337,33 @@ print(""--------------------------------------------------------------"")
 
 <p>The first index is the document index. I am printing the vector of 769th document (started from 0). So the first index should have been 769 instead of 0, like, <code>(769, 4819)    1</code> . Why isn't it so?</p>
 ",Text Classification / Sentiment Analysis,text classification bag word python bag word show document index written following code produce bag word getting following output clear document unique word corpus confusion line code printing first index document index printing vector th document started first index instead like
+R - How to apply terms from training document-term-matrix (dtm) to test dtm (both unigrams and bigrams)?,"<p>I am training a simple text classification method on 1,000 training examples and would like to make predictions on unseen test data (about 500,000 observations).</p>
+
+<p>The script is working fine, when I work only with unigrams. However, I am not sure how to use <code>control = list(dictionary=Terms(dtm_train_unigram))</code> when working with unigrams and bigrams as I have two separate document-term-matrices (one for unigrams, one for bigrams, see below):</p>
+
+<pre><code>  UnigramTokenizer &lt;- function(x) unlist(lapply(NLP::ngrams(words(x), 1), paste, collapse = "" ""), use.names = FALSE)
+  dtm_train_unigram &lt;- DocumentTermMatrix(processed_dataset, control = list(tokenize = UnigramTokenizer, wordLengths=c(3,20), bounds = list(global = c(4,Inf))))
+
+  BigramTokenizer &lt;- function(x) unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = "" ""), use.names = FALSE)
+  dtm_train_bigram &lt;- DocumentTermMatrix(processed_dataset, control = list(tokenize = BigramTokenizer, wordLengths=c(6,20), bounds = list(global = c(7,Inf))))
+</code></pre>
+
+<p>To ensure that the test set has the same terms as the training set, I use the following function:</p>
+
+<pre><code>corpus_test &lt;- VCorpus(VectorSource(test_set))
+dtm_test &lt;- DocumentTermMatrix(corpus_test, control = list(dictionary=Terms(dtm_train_unigram), wordLengths = c(3,20)))
+</code></pre>
+
+<p>How do I feed the terms of both the <code>dtm_train_unigram</code> and the <code>dtm_train_bigram</code> to the dtm_test?</p>
+
+<ol>
+<li>Can I combine <code>dtm_train_unigram</code> and <code>dtm_train_bigram</code> to a single dtm after creating them separately (as currently done)?  </li>
+<li>Can I simplify my two-step Tokenizer function so I only create a single
+dtm with unigrams and bigrams in the first place?</li>
+</ol>
+
+<p>Thank you!</p>
+",Text Classification / Sentiment Analysis,r apply term training document term matrix dtm test dtm unigrams bigram training simple text classification method training example would like make prediction unseen test data observation script working fine work unigrams however sure use working unigrams bigram two separate document term matrix one unigrams one bigram see ensure test set ha term training set use following function feed term dtm test combine single dtm creating separately currently done simplify two step tokenizer function create single dtm unigrams bigram first place thank
 How to classify the text which are not belong to the classes which I have to &quot;Unknown&quot; in text classifcation?,"<p>I am working on a NLP problem to classify the text to four classes. 
 1. Sports
 2. Entertainment
@@ -11292,6 +11826,12 @@ Data sets for emotion detection in text,"<p>I'm implementing a system that could
 <p>Here are some interesting datasets:
 <a href=""https://dataturks.com/projects/trending"" rel=""noreferrer"">https://dataturks.com/projects/trending</a></p>
 ",Text Classification / Sentiment Analysis,data set emotion detection text implementing system could detect human emotion text manually annotated data set available supervised learning testing interesting datasets
+NLP and Machine learning for sentiment analysis,"<p>I'm trying to write a program that takes text(article) as input and outputs the polarity of this text, weather its a positive or a negative sentiment. I've read extensively about different approaches but i am still confused. I read about many techniques like classifiers and machine learning. I would like direction and clear instructions on where to start. For example, i have a classifier which requires a dataset but how do i convert the text(article) into a dataset for the classifier. If anyone can tell me the logical sequence to approach this problem that would be greet. Thanks in advance!
+PS: please mention any related algorithms or open-source implementation</p>
+
+<p>Regards,
+Mike</p>
+",Text Classification / Sentiment Analysis,nlp machine learning sentiment analysis trying write program take text article input output polarity text weather positive negative sentiment read extensively different approach still confused read many technique like classifier machine learning would like direction clear instruction start example classifier requires dataset convert text article dataset classifier anyone tell logical sequence approach problem would greet thanks advance p please mention related algorithm open source implementation regard mike
 Classify text using NaiveBayesClassifier,"<p>I have a text file with a sentence on each line:
 eg """"Have you registered your email ID with your Bank Account?""</p>
 
@@ -11681,6 +12221,66 @@ C:\Users\toshiba&gt;
 
 <p>Thank you.</p>
 ",Text Classification / Sentiment Analysis,mallet text classification output value test file learning mallet text classification command line output value estimating differrent class know incorrect help mallet version e mallet mallet rc help thanks update thank answer still output file idea wa put dog file dog dir treated dog file instance trained model tested file test dir see result tried according understanding suggestion still output help commandlines e mallet train dir dog dog txt file dog txt dog txt dog txt dogmaterial txt e mallet test dir txt file cat txt catmaterial txt deermaterial txt dog txt dog txt dog txt dog txt dog txt dogmaterial txt thank
+How to find Most frequently used words used on data using Python?,"<p>I am doing a sentiment analysis project in Python (using Natural Language Processing). I already collected the data from twitter and saved it as a CSV file. The file contains tweets, which are mostly about cryptocurrency. I cleaned the data and applied sentiment analysis using classification algorithms.</p>
+
+<p>Since the data is clean, I want to find the most frequently used words. Here's the code that I used to import the libraries and the csv file:</p>
+
+<pre><code># importing Libraries
+from pandas import DataFrame, read_csv
+import chardet
+import matplotlib.pyplot as plt; plt.rcdefaults()
+from matplotlib import rc
+%matplotlib inline
+import pandas as pd
+plt.style.use('ggplot')
+import numpy as np
+import re
+import warnings
+
+#Visualisation
+import matplotlib.pyplot as plt
+import matplotlib
+import seaborn as sns
+from IPython.display import display
+from mpl_toolkits.basemap import Basemap
+from wordcloud import WordCloud, STOPWORDS
+
+#nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.sentiment.util import *
+from nltk import tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.stem.snowball import SnowballStemmer
+
+
+matplotlib.style.use('ggplot')
+pd.options.mode.chained_assignment = None
+warnings.filterwarnings(""ignore"")
+
+## Reading CSV File and naming the object called crime
+ltweet=pd.read_csv(""C:\\Users\\name\\Documents\\python assignment\\bitcoin1.csv"",index_col = None, skipinitialspace = True)
+print(btweet)
+</code></pre>
+
+<p>There is no need for me to post the other codes because they are very long.
+For data cleaning, I got rid of hyperlinks, RT(Retweeted), URL, Punctuation's, put text in lowercase, etc.</p>
+
+<p>Here's the output for the list of positive tweets for example</p>
+
+<pre><code>In [35]: btweet[btweet.sentiment_type == 'POSITIVE'].Tweets.reset_index(drop = True)[0:5]
+
+Out[35]:
+0    anizameddine more than just bitcoin blockchain...
+1    bitcoinmagazine icymi wyoming house unanimousl...
+2    bitracetoken bitrace published the smart contr...
+3    unusual and quite promising ico banca banca_of...
+4    airdrop coinstocks link it is a exchange so ge...
+Name: Tweets, dtype: object
+</code></pre>
+
+<p>Is there a way to find the most frequently used words in the data? Can anyone help me write the code for it?</p>
+",Text Classification / Sentiment Analysis,find frequently used word used data using python sentiment analysis project python using natural language processing already collected data twitter saved csv file file contains tweet mostly cryptocurrency cleaned data applied sentiment analysis using classification algorithm since data clean want find frequently used word code used import library csv file need post code long data cleaning got rid hyperlink rt retweeted url punctuation put text lowercase etc output list positive tweet example way find frequently used word data anyone help write code
 "Text Classification into Predefined Labels, Unsupervised and Continuous learning","<p>I am trying to work on something, I want to classify customer calls into some n predefined categories. The frequency of words in my the calls cannot decide the labels. however, the category word will be present in the call.  And I do not have training data.</p>
 
 <p>Also, I can classify the incoming text into labels, and i want my machine during the same time to learn from the new classified data. </p>
@@ -11985,6 +12585,18 @@ Text file import to dataframe with pandas: Data in Blocks,"<p>I'm kinda new at u
 ",Text Classification / Sentiment Analysis,text file import dataframe panda data block kinda new using panda since done data analysis usually r data format seen link got data also html tag review text attribute well thinking get rid perform text sentiment analysis data snippet record
 Trying to find the name of a specific location from tweets,"<p>I am trying to find the name of a specific location from tweets and performing sentiment analysis on the hits I get from the search. The problem I am facing is that, I am looking for a location whose name is suppose ""Sammy's Tap and Grill"", searching which I get no hits. I need to search something like ""Sammys"" or ""Sammy's"" to get some hits. Alternatively, when I search for ""Empire State Building"", I cannot search for ""Empire"" alone, it gives weird tweets including Mayan and Chola empires. So here I have to search with ""Empire State Building"" or ""Empire State"". So is there an NLP trick where I can do something and search for the best possible term from the full name of the location that gets most relevent hits? I was just able to make a solution where I was checking if the hits I get were nouns, because some places have names like ""Excellent"" and ""Fantastic"" and I didnt want adjectives to pop up. So is there some NLP way to solve my problem about searching a locationname  from a tweet?</p>
 ",Text Classification / Sentiment Analysis,trying find name specific location tweet trying find name specific location tweet performing sentiment analysis hit get search problem facing looking location whose name suppose sammy tap grill searching get hit need search something like sammys sammy get hit alternatively search empire state building search empire alone give weird tweet including mayan chola empire search empire state building empire state nlp trick something search best possible term full name location get relevent hit wa able make solution wa checking hit get noun place name like excellent fantastic didnt want adjective pop nlp way solve problem searching locationname tweet
+Classification of Categories in Text Data,"<p>This may be an abstract question, but I always face difficulties with this kind of problem and it keeps on coming to me.</p>
+
+<p>I crawled data (example: news articles about Tata Steel) extracted the content, manually read the content of each link and classified them as Finance, Operation, Sustainability and so on.</p>
+
+<p>Then I made tf-idf data frame to be the features for classifier model. </p>
+
+<p>I want to train the model to classify these articles. I am only left with either SVM or Logistic using the tf-idf features.</p>
+
+<p>Is there a better approach to clssify text data? Can there be better approach rather then making tf-idf as we may loose information (contextual meaning of sentence) when breaking them into words and use as features.</p>
+
+<p>Any algorithm which can help me to improve classification on text data? </p>
+",Text Classification / Sentiment Analysis,classification category text data may abstract question always face difficulty kind problem keep coming crawled data example news article tata steel extracted content manually read content link classified finance operation sustainability made tf idf data frame feature classifier model want train model classify article left either svm logistic using tf idf feature better approach clssify text data better approach rather making tf idf may loose information contextual meaning sentence breaking word use feature algorithm help improve classification text data
 Amazon Machine Learning for sentiment analysis,"<p>How flexible or supportive is the Amazon Machine Learning platform for sentiment analysis and text analytics?</p>
 ",Text Classification / Sentiment Analysis,amazon machine learning sentiment analysis flexible supportive amazon machine learning platform sentiment analysis text analytics
 How Can I Use Confusion Matrix With Naive Bayes in Python?,"<p>I want to classify many sentences with Naive Bayes classifier with 5 categories and I can do, but I can not create a confusion matrix. I researched much but I could not find. These are my code, please teach me how to create a confusion matrix over these code:</p>
@@ -12054,6 +12666,25 @@ Any help on this?</p>
 
 <p>Thanks</p>
 ",Text Classification / Sentiment Analysis,combine base line naive bayes multinomial naive bayes semi supervised nb working sentiment analysis twitter data tried couple naive bayes model like baseline naive bayes multinomial nb bernoulli nb semi supervised nb question understand way combine model two way improve perforrmance nb mnb ssnb nb bnb ssnb thanks
+Is it possible to make SVM probabiility predictions without tm and RTextTools using e1071 in R?,"<p>I am trying to create a topic classifier from an employee satisfaction survey. The survey contains several commentary fields, and therefore want to produce an effective way of classifying what a single comment is about, and later also whether it is positive or negative (pretty standard sentiment analysis).
+I already have a sample data from last years survey, where comments have been given a category manually. </p>
+
+<p>The data is structured in a CSV file with three rows:</p>
+
+<p>The document (or comment) - The topic - The sentiment</p>
+
+<p>One example could be:</p>
+
+<p>Document: I am afraid of violence from our customers, since my position does not have sufficient sercurity</p>
+
+<p>Topic: Violence</p>
+
+<p>Sentiment: Negative</p>
+
+<p><em>(Very crude example, but bear with me)</em></p>
+
+<p>My tool for making this classifier is RStudio, but I only have access to a limited number of packages. I do not have access to tm or RTextTools, which are the packages I usually use when I am doing projects outside of work. I pretty much only have access to e1071, and that is why I figured a support vector machine might do the trick. I have bad experiences with NaiveBayes when dealing with text analytics, but I am of course open to any advice. Is it possible at all to do text mining without tm or RTextTools? I have access to the NLP and tau packages</p>
+",Text Classification / Sentiment Analysis,possible make svm probabiility prediction without tm rtexttools using e r trying create topic classifier employee satisfaction survey survey contains several commentary field therefore want produce effective way classifying single comment later also whether positive negative pretty standard sentiment analysis already sample data last year survey comment given category manually data structured csv file three row document comment topic sentiment one example could document afraid violence customer since position doe sufficient sercurity topic violence sentiment negative crude example bear tool making classifier rstudio access limited number package access tm rtexttools package usually use project outside work pretty much access e figured support vector machine might trick bad experience naivebayes dealing text analytics course open advice possible text mining without tm rtexttools access nlp tau package
 How do I approach this machine learning/NLP context aware text classification project? See the description below,"<p>I am a newbie in machine learning and NLP. I need help for my college project. It's’ actually a subtask of a major project. Description is as follow:</p>
 
 <p>It is a classification problem. I will be given an item and I have to predict the shop type from where the item can be bought.<br>
@@ -12335,6 +12966,57 @@ if __name__ == '__main__':
   fetchsamples()
 </code></pre>
 ",Text Classification / Sentiment Analysis,adding location twitter sentiment analysis trying build twitter sentiment analysis tool want add geolocation look tweet within mile nyc tried add location end url work code far
+"For text mining in R, how do I combine DocumentTermMatrix with original Data Frame?","<p>What I am looking to do is create code that will allow me to classify tweets. So in the example below I would want to take tweets talking about a credit card and determine if they are related to the issue of travel.</p>
+
+<p>Here is the initial dataset: </p>
+
+<pre><code>id&lt;- c(123,124,125,126,127) 
+text&lt;- c(""Since I love to travel, this is what I rely on every time."", 
+        ""I got this card for the no international transaction fee"", 
+        ""I got this card mainly for the flight perks"",
+        ""Very good card, easy application process"",
+        ""The customer service is outstanding!"") 
+travel_cat&lt;- c(1,0,1,0,0) 
+df_all&lt;- data.frame(id,text,travel) 
+</code></pre>
+
+<p>Output 1:</p>
+
+<pre><code>id  text                                                        travel_cat
+123 Since I love to travel, this is what I rely on every time.  1
+124 I got this card for the no international transaction fee    0
+125 I got this card mainly for the flight perks                 1
+126 Very good card, easy application process                    0
+127 The customer service is outstanding!                        0
+</code></pre>
+
+<p>I am then creating a data frame with only the text field and then doing the text analytics:</p>
+
+<pre><code>myvars&lt;- c(""text"")
+df&lt;- df_all[myvars]
+
+library(tm)
+corpus&lt;- Corpus(DataframeSource(df))
+corpus&lt;- tm_map(corpus, content_transformer(tolower))
+corpus&lt;- tm_map(corpus, removePunctuation)
+corpus&lt;- tm_map(corpus, removeWords, stopwords(""english""))
+corpus&lt;- tm_map(corpus, stripWhitespace)
+dtm&lt;- as.matrix(DocumentTermMatrix(corpus))
+</code></pre>
+
+<p>Output 2 (dtm):</p>
+
+<pre><code>Docs    application card    customer    easy    every ... etc.
+1       0           0       0           1       0
+2       0           1       0           0       1
+3       0           1       0           0       0
+4       1           1       0           0       0
+5       0           0       1           0       0
+</code></pre>
+
+<p>How do I then tie this back to the original data so that it contains the fields from the original dataset and the matrix (Output 1 + Output 2):
+    id,text,travel_cat + application,card,customer,easy,every...</p>
+",Text Classification / Sentiment Analysis,text mining r combine documenttermmatrix original data frame looking create code allow classify tweet example would want take tweet talking credit card determine related issue travel initial dataset output creating data frame text field text analytics output dtm tie back original data contains field original dataset matrix output output id text travel cat application card customer easy every
 Dataset for sentiment analysis of diary entries,"<p>I was wondering if there is a dataset of sentiment-labelled diary entries? What I am looking for is a table of diary entries and a label indicating at least whether the entry is ""positive"" or ""negative"" (or even classified into more categories). </p>
 
 <p>Example (completely arbitrary):</p>
@@ -13140,6 +13822,98 @@ classifier.classify(text);
 <p>It is a way to &quot;train&quot; the classifier in such a way?
 Thanks.</p>
 ",Text Classification / Sentiment Analysis,train classifier natural nlp node j unexpected sentence context node j bot natural module would like build bot using natural module order parse overall classify user input test work fine good user text contains something bla bla bla want get way know text fit enough case bla bla bla return welcome actually would like return something unknown understood way train classifier way thanks
+How to get data within data,"<p>I don't know if I'm gonna be able to explain this properly but here goes. I have a data frame called <code>ZCP</code> that includes tokenized tweets (gonna use them for sentiment analysis) and related metadata. The structure looks like this:</p>
+
+<pre><code>head(ZAD)
+num_tokens unique_tokens
+1         12            12
+2         11            10
+3         11            10
+4         12            12
+5         22            20
+6         11            10
+text
+1 rt, caradelevingne, fam, a, lam, glastonbury, https, t, co, h, ew, oux
+2 rt, caradelevingne, home, sweet, home, glastonbury, https, t, co, zolld, ltvt
+3 rt, caradelevingne, home, sweet, home, glastonbury, https, t, co, zolld, ltvt
+4 rt, caradelevingne, fam, a, lam, glastonbury, https, t, co, h, ew, oux
+5 rt, yahoocelebuk, adele, set, to, dominate, the, uk, albums, chart, as, heads, back, to, number, post, glastonbury, https, t, co, cndkufsgo, https
+6 rt, caradelevingne, home, sweet, home, glastonbury, https, t, co, zolld, ltvt
+
+favoriteCount                 id retweetCount isRetweet
+1             0 747942553010397184          593      TRUE
+2             0 747942530340118529          729      TRUE
+3             0 747941795988905986          729      TRUE
+4             0 747941781820542976          593      TRUE
+5             0 747940287847161856            3      TRUE
+6             0 747940084603838464          729      TRUE
+</code></pre>
+
+<p>Basically I'm only interested in the data in the text column for now. That data looks like this:</p>
+
+<pre><code>head(ZCP$text) 
+$to_return [1] ""saw"" ""viola"" ""beach"" ""support"" ""courteeners"" ""in""
+[7] ""w"" ""ton"" ""to"" ""see"" ""coldplay"" ""do""
+[13] ""the"" ""tribute"" ""to"" ""them"" ""at"" ""glastonbury"" [19] ""was"" ""amazing"" ""so"" ""well"" ""thought"" ""out""
+[[2]] [1] ""glastonbury"" ""coldplay"" ""elo"" ""break"" ""viewing"" ""records""
+[7] ""muse"" ""s"" ""audience"" ""doubles"" ""https"" ""t""
+[13] ""co"" ""eocvqnoeen"" ""coldplay"" ""muse"" ""https"" ""t""
+[19] ""co"" ""yd"" ""ie"" ""xr"" ""n""
+[[3]] [1] ""another"" ""cheeky"" ""glastonbury"" ""pic"" ""coldplay"" ""pyramidstage""[7] ""https"" ""t"" ""co"" ""qttz"" ""xgjpx"" ""https""
+[13] ""t"" ""co"" ""rm"" ""y"" ""pbvml""
+[[4]] [1] ""i"" ""m"" ""having"" ""my"" ""very"" ""own""
+[7] ""glastonbury"" ""tonight"" ""coldplay"" ""adele""
+[[5]] [1] ""that"" ""was"" ""awesome"" ""coldplay"" ""glastonbury"" ""glasto""
+[7] ""https"" ""t"" ""co"" ""fz"" ""ly"" ""cvx""
+[[6]] [1] ""beegees"" ""barry"" ""gibb"" ""stayin"" ""alive"" ""and""
+[7] ""coldplay"" ""en"" ""glastonbury"" ""https"" ""t"" ""co""
+[13] ""hoj""
+</code></pre>
+
+<p>What operator should i use to get the individual tokens? I'm planning on writing a for loop but I can't the right operator to reach data within data. <code>ZCP$text[1]</code> gives me the below result:</p>
+
+<pre><code>ZCP$text[1] $to_return [1] ""saw"" ""viola"" ""beach"" ""support"" ""courteeners"" ""in""
+[7] ""w"" ""ton"" ""to"" ""see"" ""coldplay"" ""do""
+[13] ""the"" ""tribute"" ""to"" ""them"" ""at"" ""glastonbury"" [19] ""was"" ""amazing"" ""so"" ""well"" ""thought"" ""out""
+</code></pre>
+
+<p>How can I get the first element of this object? I can't find the right operator to do this for some reason. Any help is appreciated. Thanks.</p>
+
+<p>edit: @Sotos asked for a dput for this. Not sure if this is what he wanted (I'm a noob at R and never used dput before) but here it is for <code>head(ZCP)</code>:</p>
+
+<pre><code>structure(list(num_tokens = structure(list(to_return = 24L, 23L, 
+17L, 10L, 12L, 16L), .Names = c(""to_return"", """", """", """", 
+"""", """")), unique_tokens = structure(list(to_return = 23L, 18L, 
+14L, 10L, 12L, 16L), .Names = c(""to_return"", """", """", """", 
+"""", """")), text = structure(list(to_return = c(""saw"", ""viola"", 
+""beach"", ""support"", ""courteeners"", ""in"", ""w"", ""ton"", ""to"", ""see"", 
+""coldplay"", ""do"", ""the"", ""tribute"", ""to"", ""them"", ""at"", ""glastonbury"", 
+""was"", ""amazing"", ""so"", ""well"", ""thought"", ""out""), c(""glastonbury"", 
+""coldplay"", ""elo"", ""break"", ""viewing"", ""records"", ""muse"", ""s"", 
+""audience"", ""doubles"", ""https"", ""t"", ""co"", ""eocvqnoeen"", ""coldplay"", 
+""muse"", ""https"", ""t"", ""co"", ""yd"", ""ie"", ""xr"", ""n""), c(""another"", 
+""cheeky"", ""glastonbury"", ""pic"", ""coldplay"", ""pyramidstage"", ""https"", 
+""t"", ""co"", ""qttz"", ""xgjpx"", ""https"", ""t"", ""co"", ""rm"", ""y"", ""pbvml""
+), c(""i"", ""m"", ""having"", ""my"", ""very"", ""own"", ""glastonbury"", 
+""tonight"", ""coldplay"", ""adele""), c(""that"", ""was"", ""awesome"", 
+""coldplay"", ""glastonbury"", ""glasto"", ""https"", ""t"", ""co"", ""fz"", 
+""ly"", ""cvx""), c(""beegees"", ""barry"", ""gibb"", ""stayin"", ""alive"", 
+""and"", ""coldplay"", ""en"", ""glastonbury"", ""https"", ""t"", ""co"", ""hoj"", 
+""u"", ""j"", ""yz"")), .Names = c(""to_return"", """", """", """", """", """")),
+favoriteCount = structure(list(to_return = 2, 1, 0, 0, 0, 
+1), .Names = c(""to_return"", """", """", """", """", """")), id = structure(list(
+to_return = ""747938975621521408"", ""747938533290049537"", 
+""747934687696420864"", ""747934531756384256"", ""747931753373892608"", 
+""747928260835696640""), .Names = c(""to_return"", """", """", 
+"""", """", """")), retweetCount = structure(list(to_return = 1, 
+0, 0, 0, 0, 0), .Names = c(""to_return"", """", """", """", """", 
+"""")), isRetweet = structure(list(to_return = FALSE, FALSE, 
+FALSE, FALSE, FALSE, FALSE), .Names = c(""to_return"", 
+"""", """", """", """", """"))), .Names = c(""num_tokens"", ""unique_tokens"", 
+""text"", ""favoriteCount"", ""id"", ""retweetCount"", ""isRetweet""), row.names = c(NA, 
+6L), class = ""data.frame"")
+</code></pre>
+",Text Classification / Sentiment Analysis,get data within data know gon na able explain properly go data frame called includes tokenized tweet gon na use sentiment analysis related metadata structure look like basically interested data text column data look like operator use get individual token planning writing loop right operator reach data within data give result get first element object find right operator reason help appreciated thanks edit sotos asked dput sure wanted noob r never used dput
 nltk naivebayes classifier for text classification,"<p>In following code, I know that my naivebayes classifier is working correctly because it is working correctly on trainset1 but why is it not working on trainset2? I even tried it on two classifiers, one from TextBlob and other directly from nltk.</p>
 
 <pre><code>from textblob.classifiers import NaiveBayesClassifier
@@ -13195,102 +13969,6 @@ class2
 ",Text Classification / Sentiment Analysis,nltk naivebayes classifier text classification following code know naivebayes classifier working correctly working correctly trainset working trainset even tried two classifier one textblob directly nltk output although test sentence clearly belongs class
 Can I do Sentiment Analysis (POS Tagging etc) on Android?,"<p>I am working on an <code>Android</code> Application. I want to do sentiment analysis on client side. I tried to do it using <code>StanfordCoreNLP</code> but it does not work in Android but working fine in <code>Java</code> . Is there any method to do it? Will <code>NDK</code> work? Or some other guidelines? Any help will be appreciative. Thanks in advance.</p>
 ",Text Classification / Sentiment Analysis,sentiment analysis po tagging etc android working application want sentiment analysis client side tried using doe work android working fine method work guideline help appreciative thanks advance
-Imbalance corpus using label propagation for classification,"<p>I am trying to do user location classification with <strong>semi-supervised</strong> learning.</p>
-
-<p>The dataset is used to do user location classification in tweet, the mixture of all messages posted by a user is considered as one sample of this user. </p>
-
-<p>The number of samples vary 8 categories (locations) is <code>24</code>, <code>233</code>, <code>780</code>, <code>804</code>, <code>144</code>, <code>91</code>, <code>503</code>, <code>243</code> as shown in <strong>confusion matrix</strong>. </p>
-
-<p>I want to <strong>predict</strong> the user's location via these messages. </p>
-
-<p>I assume that some labeled data are unlabeled, which labels are set as <code>-1</code>. Using Label propagation in <code>scikit-learning</code> leads to that all unlabeled data are predicted as the label <code>3</code> that the amount of the samples is the most.</p>
-
-<p><strong>Question:</strong> Which method should I use to handle this imbalance semi-supervised texts classification?</p>
-
-<p>Here is the full snippet of my code:</p>
-
-<pre><code>from document import readfile
-trainDocs,trainLabels,nu1 = readfile(r'train', 700)
-valDocs,valLabels,nu2 = readfile(r'valid', 100)
-testDocs,testLabels,nu3 = readfile(r'test', 200)
-#Valids,nu4,userIds = readfile(r'classifiedValid',1200)
-
-from sklearn.feature_extraction.text import CountVectorizer
-#count_vect = CountVectorizer(stop_words=""english"",decode_error='ignore')
-count_vect = CountVectorizer()
-X_train_counts = count_vect.fit_transform(valDocs+trainDocs+testDocs)
-#print (X_train_counts.shape)
-#print (X_train_counts)
-
-from sklearn.feature_extraction.text import TfidfTransformer
-
-#tf_transformer = TfidfTransformer(use_idf = False).fit(X_train_counts)
-#X_train_tf = tf_transformer.transform(X_train_counts)
-#print (X_train_tf.shape)
-#print (X_train_tf)
-#
-tfidf_transformer = TfidfTransformer()
-X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
-X_train_tfidf = X_train_tfidf.toarray()
-#X_train_tfidf.shape
-
-print (X_train_tfidf.shape)
-#print (X_train_tfidf)
-
-#X_test_counts = count_vect.transform(Valids)
-#X_test_tfidf = tfidf_transformer.transform(X_test_counts)
-#X_test_tfidf = X_test_tfidf.toarray()
-
-#from sklearn.naive_bayes import MultinomialNB
-from sklearn.linear_model import SGDClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.svm import SVC
-from sklearn.semi_supervised import label_propagation
-
-labels = np.array(valLabels+trainLabels+testLabels)
-unlabeled_set = np.arange(len(trainLabels+testLabels))
-#testLabels2[unlabeled_set] = -1
-unlabeled_set2 = np.arange(len(trainLabels+testLabels))
-unlabeled_set2[unlabeled_set] += len(valLabels)
-labels[unlabeled_set2] = -1
-
-print 'start'
-#clf = SVC(C=1.0, gamma=0.10000000000000001).fit(X_train_tfidf,np.array(trainLabels+valLabels))
-clf = label_propagation.LabelSpreading(gamma = 0.25, max_iter=100).fit(X_train_tfidf,labels)
-predicted_labels = clf.transduction_[unlabeled_set2]
-print (np.mean(predicted_labels == np.array(trainLabels+testLabels)))
-from sklearn import metrics
-print(metrics.classification_report(np.array(trainLabels+testLabels),predicted_labels))
-
-cm = metrics.confusion_matrix(np.array(trainLabels+testLabels), predicted_labels,
-                          labels=clf.classes_)
-print(""Confusion matrix"")
-print(cm)
-
-precision    recall  f1-score   support
-
-      0       0.00      0.00      0.00        24
-      1       0.00      0.00      0.00       233
-      2       0.00      0.00      0.00       780
-      3       0.28      1.00      0.44       804
-      4       0.00      0.00      0.00       144
-      5       0.00      0.00      0.00        91
-      6       0.00      0.00      0.00       503
-      7       0.00      0.00      0.00       243
-avg / total 0.08 0.28 0.13 2822
-
-Confusion matrix
-[[  0   0   0  24   0   0   0   0]
- [  0   0   0 233   0   0   0   0]
- [  0   0   0 780   0   0   0   0]
- [  0   0   0 804   0   0   0   0]
- [  0   0   0 144   0   0   0   0]
- [  0   0   0  91   0   0   0   0]
- [  0   0   0 503   0   0   0   0]
- [  0   0   0 243   0   0   0   0]]
-</code></pre>
-",Text Classification / Sentiment Analysis,imbalance corpus using label propagation classification trying user location classification semi supervised learning dataset used user location classification tweet mixture message posted user considered one sample user number sample vary category location shown confusion matrix want predict user location via message assume labeled data unlabeled label set using label propagation lead unlabeled data predicted label amount sample question method use handle imbalance semi supervised text classification full snippet code
 Is it possible to use Feature Learning for Binary Text Classification?,"<p>I'm currently working with the CHILDES corpus trying to create a classifier that distinguishes children whom suffer from specific language impairment (SLI) from those who are typically developing (TD).</p>
 
 <p>In my readings I noticed that there really isn't a convincing set of features to distinguish the two that have been discovered yet, so I came upon the crazy idea of trying to create a feature learning algorithm that could potentially make better ones.</p>
@@ -13545,6 +14223,10 @@ b. I do not like this book.</p>
 ",Text Classification / Sentiment Analysis,doe input lstm nlp need length input problem text sentiment classification using lstm doe sentence need lenght anyone explain step step using two sentence example example like book b like book
 Which type of neural network is good for text classification(extractive summary),"<p>Currently i am working on text summarization.I am planning to use neural network to generate extractive summary of given text. Which type of neural network is good for text classification.  </p>
 ",Text Classification / Sentiment Analysis,type neural network good text classification extractive summary currently working text summarization planning use neural network generate extractive summary given text type neural network good text classification
+How to prepare feature vectors for text classification when the words in the text is not frequently repeating?,"<p>I need to perform the text classification on set of emails. But all the words in my text are thinly sparse i.e frequency of each word with respect to all the documents are very less. words are not that much frequently repeating. Since to train the classifiers I think document term matrix with frequency as weightage is not suitable. Can you please suggest me what kind of other methods I need to use . </p>
+
+<p>Thanks</p>
+",Text Classification / Sentiment Analysis,prepare feature vector text classification word text frequently repeating need perform text classification set email word text thinly sparse e frequency word respect document le word much frequently repeating since train classifier think document term matrix frequency weightage suitable please suggest kind method need use thanks
 What is an appropriate training set size for sentiment analysis?,"<p>I'm looking to use some tweets about measles/ the mmr vaccine to see how sentiment about vaccination changes over time.  I plan on creating the training set from the corpus of data I currently have (unless someone has a recommendation on where I can get similar data).</p>
 
 <p>I would like to classify a tweet as either: Pro-vaccine, Anti-Vaccine, or Neither (these would be factual tweets about outbreaks).</p>
@@ -13943,6 +14625,34 @@ Compare documents by sequence vector,"<p>I'm trying to classify documents by seq
 <br/><br/> Now what I want is to assess the similarity between the first and the second vector. Here you can see these vectors don't have the same length. Furthermore, comparing directly them may not make sense because they represent sequence of words. This case is different from binary (bag-of-word) vector, which considers the appearance of a word in the document (1 if appear, otherwise 0), and also frequency (word count) vector, which considers frequency of a word in the document with the given vocabulary.
 <Br>Can you give me a suggestion?</p>
 ",Text Classification / Sentiment Analysis,compare document sequence vector trying classify document sequence vector basically vocabulary word document converted vector integer number element vector corresponds position word vocabulary example vocab hello today document hello vector another document result want ass similarity first second vector see vector length furthermore comparing directly may make sense represent sequence word case different binary bag word vector considers appearance word document appear otherwise also frequency word count vector considers frequency word document given vocabulary give suggestion
+Python Naive Bayes Classifier trained on Movie Review Corpus to test on Tweets,"<pre><code>import nltk.classify.util
+import csv
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import movie_reviews
+
+def word_feats(words):
+    return dict([(word, True) for word in words])
+
+negids = movie_reviews.fileids('neg')
+posids = movie_reviews.fileids('pos')
+
+negfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'neg') for f in negids]
+posfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'pos') for f in posids]
+
+negcutoff = len(negfeats)*3/4
+poscutoff = len(posfeats)*3/4
+
+trainfeats = negfeats[:negcutoff] + posfeats[:poscutoff]
+testfeats = negfeats[negcutoff:] + posfeats[poscutoff:]
+print 'train on %d instances, test on %d instances' % (len(trainfeats), len(testfeats))
+
+classifier = NaiveBayesClassifier.train(trainfeats)
+print 'accuracy:', nltk.classify.util.accuracy(classifier, testfeats)
+classifier.show_most_informative_features()
+</code></pre>
+
+<p>I am very new to Python and am trying to perform sentiment analysis on Tweets. I am using the Naive Bayes Classifier that is built into the NLTK package. I am testing it on the movie review corpus and want to test in on tweets I have stored into a .txt or .csv file using Tweepy. Can anyone help figure out how to test this classifier off the tweets in my output file? Thanks!</p>
+",Text Classification / Sentiment Analysis,python naive bayes classifier trained movie review corpus test tweet new python trying perform sentiment analysis tweet using naive bayes classifier built nltk package testing movie review corpus want test tweet stored txt csv file using tweepy anyone help figure test classifier tweet output file thanks
 python textblob and text classification,"<p>I'm trying do build a text classification model with python and <a href=""https://textblob.readthedocs.org/en/dev/index.html"" rel=""nofollow noreferrer"">textblob</a>, the script is runing on my server and in the future the idea is that users will be able to submit their text and it will be classified.
 i'm loading the training set from csv :</p>
 <pre><code># -*- coding: utf-8 -*-
@@ -14140,6 +14850,22 @@ My questions are -<br><br>
 1. How do i filter out data based on topics?<br>
 2. Do i need to perform topic extraction or use spam filter?</p>
 ",Text Classification / Sentiment Analysis,filtering twitter data implemented unsupervised algorithm sentiment analysis data social medium site specifically twitter however intend gauge people saying specific topic say traffic certain state example could gather data using keywords traffic congestion pedestrian acquired data ha different context ha nothing traffic question filter data based topic need perform topic extraction use spam filter
+Do I need to standardize data when doing text classification in Scikit,"<p>I am developing a spam filter using <code>Scikit.</code> 
+Here are the steps I follow:</p>
+
+<p>Xdata = <code>[""This is spam"" , ""This is Ham"" , ""This is spam again""]</code></p>
+
+<ol>
+<li><p><code>Matrix</code> = <code>Countvectorizer (XData)</code> . Matrix will contains count of each word in all documents. So Matrix[i][j] will give me counts of word <code>j</code> in document <code>i</code></p></li>
+<li><p><code>Matrix_idfX</code> = <code>TFIDFVectorizer(Matrix)</code>. It will normalize score. </p></li>
+<li><p><code>Matrix_idfX_Select</code> = <code>SelectKBest( Matrix_IdfX , 500)</code> . It will reduce matrix to  500 best score columns</p></li>
+<li><p><code>Multinomial.train( Matrix_Idfx_Select)</code>  </p></li>
+</ol>
+
+<p>Now my question Do I need to perform <strong>normalization or standardization</strong> in any of the above four steps ? If yes then after which step and why?</p>
+
+<p>Thanks</p>
+",Text Classification / Sentiment Analysis,need standardize data text classification scikit developing spam filter using step follow xdata matrix contains count word document matrix j give count word document normalize score reduce matrix best score column question need perform normalization standardization four step yes step thanks
 Understanding Naive Bayes for text classification,"<p>I'm familiar with machine learning and Naive Bayes, but I am having some trouble understanding how to implement it for document classification where my feature vector is a bag of words.</p>
 
 <p>In particular, how do you compute the class-conditional feature likelihood <code>Pr(word | class)</code>? In many texts I see the following terminology:</p>
@@ -14237,35 +14963,6 @@ For subjectivity, I was thinking of using a lot of books (since books tend to be
 
 <p>Is this likely to work or am I thinking about this wrong? What accuracy can I expect? Which data will work best for training objective and subjective?</p>
 ",Text Classification / Sentiment Analysis,sentence classification subjectivity objectivity want classify sentence objective subjective example objective taipei world tallest building subjective venus williams greatest athlete decade wa thinking using naive bayes classifier data use training wa thinking news article wiki article objective sentence subjectivity wa thinking using lot book since book tend subjective likely work thinking wrong accuracy expect data work best training objective subjective
-Text processing tool for tweets,"<p>I am collecting millions of sports related tweets daily. I want to process the text in those tweets. I want to recognize the entities, find the sentiment of the sentence and find the events in those tweets.</p>
-
-<p>Entity recognizing :</p>
-
-<p>For example :
-""Rooney will play for England in their next match"".</p>
-
-<p>From this tweet i want to recognize person entity ""Rooney"" and place entity ""England""</p>
-
-<p>sentiment analysis:</p>
-
-<p>I want to find the sentiment of a sentence. For example </p>
-
-<ol>
-<li>Chelsea played their worst game ever</li>
-<li>Ronaldo scored a beautiful goal</li>
-</ol>
-
-<p>The first one should marked as ""negative"" sentence and the later one should marked as ""positive"".</p>
-
-<p>Event recognizing :</p>
-
-<p>I want to find ""goal scoring event"" from tweets. Sentences like  ""messi scored goal in first half"" and ""that was a fantastic goal from gerrald"" should marked as ""goal scoring event"".</p>
-
-<p>I know entity recognizing and sentiment analysis tools are available and i need to write the rules for event recognizing. I have seen so many tools like <code>Stanford NER</code>, <code>alchemy api</code>, <code>open calais</code>, <code>meaning cloud api</code>, <code>ling pipe</code>, <code>illinois</code> etc..
-I'm really confused about which tool I should select? Is there any free tools available without daily rate limits? I want to process millions of tweets daily and <code>java</code> is my preferable language. </p>
-
-<p>Thanks. </p>
-",Text Classification / Sentiment Analysis,text processing tool tweet collecting million sport related tweet daily want process text tweet want recognize entity find sentiment sentence find event tweet entity recognizing example rooney play england next match tweet want recognize person entity rooney place entity england sentiment analysis want find sentiment sentence example chelsea played worst game ever ronaldo scored beautiful goal first one marked negative sentence later one marked positive event recognizing want find goal scoring event tweet sentence like messi scored goal first half wa fantastic goal gerrald marked goal scoring event know entity recognizing sentiment analysis tool available need write rule event recognizing seen many tool like etc really confused tool select free tool available without daily rate limit want process million tweet daily preferable language thanks
 Good training data for text classification by LDA?,"<p>I'm classifying content based on LDA into generic topics such as Music, Technology, Arts, Science</p>
 
 <p>This is the process i'm using,</p>
@@ -14762,8 +15459,6 @@ Feature Construction for Text Classification using Autoencoders,"<p>Autoencoders
 <li>Has anyone already done this? A source would be nice, if so.</li>
 </ol>
 ",Text Classification / Sentiment Analysis,feature construction text classification using autoencoders autoencoders used reduce dimensionallity feature vector far understand text classification feature vector normally constructed via dictionary tends extremely large experience using autoencoders question could autoencoders used reduce dimensionallity text classification ha anyone already done source would nice
-"How do I tell if a noun is a person, place, or a thing?","<p>I am trying to classify text and then map the nouns on to a person, place, or a thing.  Is there a way or dictionary to do that?</p>
-",Text Classification / Sentiment Analysis,tell noun person place thing trying classify text map noun person place thing way dictionary
 Simple statistical yes/no classifier in WEKA,"<p>In order for me to compare my results of my research in labeled text classification, I need to have a baseline to compare with. One of my colleagues told me one solution would be to make the most easiest and dumbest classifier possible. The classifier makes a decision based on the frequency of a particular label. 
 This means that, when in my dataset I have a total of 100 samples and when it knows 80% of these samples have the label A, it will classify a sample as 'A' in 80% of the time. Since my entire research is using the Weka API, I have looked into the documentation but unfortunatly haven't found anything about this.</p>
 
@@ -15147,31 +15842,6 @@ extract data from twitter,"<p>I want to extract tweets at real time, I'm using R
 How to use context-sensitive grammar in sentiment analysis?,"<p>Is it possible to use context-sensitive grammar in sentiment analysis? If yes, then how?
 Basically, I want to do some phrase-level analysis.</p>
 ",Text Classification / Sentiment Analysis,use context sensitive grammar sentiment analysis possible use context sensitive grammar sentiment analysis yes basically want phrase level analysis
-How to perform website benchmarking?,"<p>I am trying to do competitive analysis of online trends prevailing in real estate domain at state level in a country. I have to create a report which is not biased towards any particular company but it compares or just shows how the companies are performing for a list of trends. I will use parameters of <code>Clickstream analysis</code> to show the statistics of how the websites of the company perform. The trend specific performance can be depicted by <code>Sentiment Analysis</code> in my opinion. If there is some other way to do it in an effective manner I am looking forward to any such approach.</p>
-
-<p>Now, I am not able to find any trends that come in common.</p>
-
-<ul>
-<li><strong>How can I find general trends which will be common for all real estate comapnies ?</strong></li>
-</ul>
-
-<p>I tried using <code>Google Trends</code>. They provide graphical and demographic information regarding a particular search term and lists related terms to the search which I am clueless how to use. And as I drill down from country to state, the amount data is very less.</p>
-
-<p>Once I have the trends then I've to find how people are reacting to those trends. <code>Sentiment Analysis</code> is the thing which will provide me this info. </p>
-
-<ul>
-<li><strong>But even if I get the trends how will I get trend specific data from which I can calculate its polarity ?</strong></li>
-</ul>
-
-<p>Twitter and other social media sites can provide some data on which sentiment analysis can be performed. I used <a href=""http://twitrratr.com/"" rel=""nofollow"">this</a> site which gives the positive, negative and neutral behaviour related to some term on twitter. I need something analogous to this but the dataset on which this analysis can be performed should not be limited to social media only.</p>
-
-<ul>
-<li><strong>Are there any other entities I can add in this competitive analysis
-report ?</strong></li>
-</ul>
-
-<p>The report will be generated on monthly basis. And I want maximum amount of automation in above tasks. I am thinking of using web-scraping also to scrape data of similar format. I would also like to know what data I should scrape and what data I should manually extract.</p>
-",Text Classification / Sentiment Analysis,perform website benchmarking trying competitive analysis online trend prevailing real estate domain state level country create report biased towards particular company compare show company performing list trend use parameter show statistic website company perform trend specific performance depicted opinion way effective manner looking forward approach able find trend come common find general trend common real estate comapnies tried using provide graphical demographic information regarding particular search term list related term search clueless use drill country state amount data le trend find people reacting trend thing provide info even get trend get trend specific data calculate polarity twitter social medium site provide data sentiment analysis performed used site give positive negative neutral behaviour related term twitter need something analogous dataset analysis performed limited social medium entity add competitive analysis report report generated monthly basis want maximum amount automation task thinking using web scraping also scrape data similar format would also like know data scrape data manually extract
 How to implement Bag of words feature hashing in python?,"<p>I'm trying to classify a few thousand documents, with a few lines each.  I've used regular bag of words before, but want to use the hashing trick this time, and I'm having trouble understanding the implementation.  There are around 8000 unique words in my data, so I figure 128*128 should be enough</p>
 
 <p>I'm using mostly these sources:</p>

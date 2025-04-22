@@ -52,6 +52,11 @@ Flash attention implementation does not support kwargs: output_attentions
 <p>attentions is None</p>
 <p>I tried it with other models and it works as expected.</p>
 ",Vectorization & Embeddings,attention output jinaai jina embeddings v embedding model use model like get warning seems contradictory attention none tried model work expected
+dl4j does not contain text and models modules,"<p>In my project, I need to use the Word2Vec model. I decide to use dl4j for this. I load all dependencies, but there are no modules such as deeplearning4j.text and deeplearning4j.models </p>
+
+<p>I tried to change the version of dl4j from beta5 to 4 and 3 but the problem still here
+I even tried download jar files of dl4j but it didn't help too</p>
+",Vectorization & Embeddings,dl j doe contain text model module project need use word vec model decide use dl j load dependency module deeplearning j text deeplearning j model tried change version dl j beta problem still even tried download jar file dl j help
 How to replace an Embedding layer with a Time Distributed Dense after training?,"<p>I have the following problem:</p>
 
 <ol>
@@ -484,6 +489,28 @@ Problem in tqdm function in a Doc2Vec model,"<p>I am using this article <a href=
 <p>As you can see, I am using the tqdm function. When I ran the code the tqdm is 100%, after some minutes, but the algorithm still runs in the same shell for a long time.</p>
 <p><strong>Do you have any idea if this is a problem of tqdm function or something else?</strong></p>
 ",Vectorization & Embeddings,problem tqdm function doc vec model using article implement doc vec model problem training step see using tqdm function ran code tqdm minute algorithm still run shell long time idea problem tqdm function something else
+Fuzzy String Comparison,"<p>What I am striving to complete is a program which reads in a file and will compare each sentence according to the original sentence. The sentence which is a perfect match to the original will receive a score of 1 and a sentence which is the total opposite will receive a 0. All other fuzzy sentences will receive a grade in between 1 and 0. </p>
+
+<p>I am unsure which operation to use to allow me to complete this in Python 3. </p>
+
+<p>I have included the sample text in which the Text 1 is the original and the other preceding strings are the comparisons.  </p>
+
+<h2>Text: Sample</h2>
+
+<p>Text 1: It was a dark and stormy night. I was all alone sitting on a red chair. I was not completely alone as I had three cats.</p>
+
+<p>Text 20: It was a murky and stormy night. I was all alone sitting on a crimson chair. I was not completely alone as I had three felines
+// Should score high point but not 1</p>
+
+<p>Text 21: It was a murky and tempestuous night. I was all alone sitting on a crimson cathedra. I was not completely alone as I had three felines
+// Should score lower than text 20</p>
+
+<p>Text 22: I was all alone sitting on a crimson cathedra. I was not completely alone as I had three felines. It was a murky and tempestuous night.
+// Should score lower than text 21 but NOT 0</p>
+
+<p>Text 24: It was a dark and stormy night. I was not alone. I was not sitting on a red chair. I had three cats.
+// Should score a 0!</p>
+",Vectorization & Embeddings,fuzzy string comparison striving complete program read file compare sentence according original sentence sentence perfect match original receive score sentence total opposite receive fuzzy sentence receive grade unsure operation use allow complete python included sample text text original preceding string comparison text sample text wa dark stormy night wa alone sitting red chair wa completely alone three cat text wa murky stormy night wa alone sitting crimson chair wa completely alone three feline score high point text wa murky tempestuous night wa alone sitting crimson cathedra wa completely alone three feline score lower text text wa alone sitting crimson cathedra wa completely alone three feline wa murky tempestuous night score lower text text wa dark stormy night wa alone wa sitting red chair three cat score
 What&#39;s the major difference between glove and word2vec?,"<p>What is the difference between word2vec and glove? 
 Are both the ways to train a word embedding? if yes then how can we use both?</p>
 ",Vectorization & Embeddings,major difference glove word vec difference word vec glove way train word embedding yes use
@@ -2243,6 +2270,49 @@ print(cosine_similarity(embs))
 </code></pre>
 <p>Am I doing something wrong?</p>
 ",Vectorization & Embeddings,bert embedding cosine similarity look random useless thought use bert embeddings determine semantic similarity wa trying group word category using result bad e g small example animal fruit notice highest similarity cat banana something wrong
+Text summarizations of comments and replace the duplicates with the first occurrence if the meaning is comment is same,"<p>Context - Doing an NLP project to analyze comments column in a data frame. I want to replace the duplicates with the first occurrence if the meaning of the comments are same.</p>
+<p>I wants to compare all the sentences and consider the sentences which have similar meaning.</p>
+<p>I have tried transformer for summarization and cosine to find similarity between sentences. but it is not giving me the desired results.</p>
+<p>Any help will be deeply appreciated.</p>
+<p>code is here -</p>
+<pre><code>#functions to lemmatize and remove punctuation
+def remove_punctuation(text):
+    text = text.lower()
+    text=text.strip()
+    text = text.translate(str.maketrans('','',string.punctuation))
+    text = sent_tokenize(text)
+    text_list=[t.strip() for t in text]
+    return text_list
+
+
+def lemmatize_text(text):
+    lemmatizer = WordNetLemmatizer()
+    words = word_tokenize(text.lower())
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+    return &quot; &quot;.join(lemmatized_words)
+
+model=SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
+#this will have unique values of other comments column. values after summarizations will be replaced in other comments column to bring uniformity
+Other_comments_unique=df1[&quot;DUPLICATE - Other comments&quot;].apply(lambda x:x.strip().lower().translate(str.maketrans('','',string.punctuation))).unique()
+df1['DUPLICATE - Other comments']=df1['DUPLICATE - Other comments'].apply(remove_punctuation)
+df1['DUPLICATE - Other comments'].head()
+
+#summarization - meaning extracting the core message of the sentence. done in this cell
+changed_values={}
+for i in range(0,len(df1)):
+    items = [n for n in df1['test'][i]]
+    for u in Other_comments_unique:
+        if u!=&quot;nothing more&quot;:
+            for a in items:
+                embeddings1=model.encode(u)
+                embeddings2=model.encode(a)
+                cosine_sim = util.cos_sim(embeddings1,embeddings2)
+                if cosine_sim.item()&gt;0.5 and cosine_sim.item()&lt;.99:
+                changed_values.update({u:a})
+        items=[]
+</code></pre>
+",Vectorization & Embeddings,text summarization comment replace duplicate first occurrence meaning comment context nlp project analyze comment column data frame want replace duplicate first occurrence meaning comment want compare sentence consider sentence similar meaning tried transformer summarization cosine find similarity sentence giving desired result help deeply appreciated code
 BartForConditionalGeneration: Adding additional layers of embedding,"<p>In this file:</p>
 <pre><code>https://github.com/huggingface/transformers/blob/main/src/transformers/models/bart/modeling_bart.py
 </code></pre>
@@ -4167,6 +4237,30 @@ Actual Answer : USA is the capital of Washington D.C.</p>
 <p>The answers are lexically similar however they are semantically different due to the subject-object swap.</p>
 <p>I'm new to NLP and I read few articles on Doc2Vec, however the examples provided are not similar enough for my doubt. Please advice methods that I should be trying and any references.</p>
 ",Vectorization & Embeddings,detecting semantic dissimilarity sentence word e g question capital usa expected answer washington c capital usa actual answer usa capital washington c answer lexically similar however semantically different due subject object swap new nlp read article doc vec however example provided similar enough doubt please advice method trying reference
+load csv file from azure blob storage with langchain,"<p>I am trying to load a csv file from azure blob storage.</p>
+<p>However in terminal I can print the data, but it is not directly fed to my chatbot, but for a general data.
+the code works fine for CSVloader in a local file but not for azure blob storage. I am following the langchain documentation:</p>
+<p><a href=""https://python.langchain.com/docs/integrations/document_loaders/azure_blob_storage_file"" rel=""nofollow noreferrer"">https://python.langchain.com/docs/integrations/document_loaders/azure_blob_storage_file</a></p>
+<p>code:</p>
+<pre><code>`def __init__(self, conversation_state: ConversationState):
+        self.conversation_state = conversation_state
+        self.session_accessor = self.conversation_state.create_property(&quot;Session&quot;)
+        #loader = CSVLoader(file_path=&quot;data.csv&quot;, encoding=&quot;utf-8&quot;, csv_args={'delimiter': ','})
+        loader = AzureBlobStorageFileLoader(
+        conn_str=&quot;DefaultEndpointsProtocol=https;AccountName=##;AccountKey=+###==;EndpointSuffix=core.windows.net&quot;,
+        container=&quot;dataset&quot;,
+        blob_name=&quot;data.csv&quot;)
+        data = loader.load() 
+        print(type(data)) #&lt;class 'list'&gt;
+        print(type(data[0])) #langchain.schema.document.Document'&gt;
+        print(data) #I can see the data         `
+
+     
+                                 
+</code></pre>
+<p>Retrying langchain.embeddings.openai.embed_with_retry.._embed_with_retry in 4.0 seconds as it raised APIError: OpenAI API returned an empty embedding.</p>
+<p>when asking the bot, as mentioned it answer a general data not my custom data.</p>
+",Vectorization & Embeddings,load csv file azure blob storage langchain trying load csv file azure blob storage however terminal print data directly fed chatbot general data code work fine csvloader local file azure blob storage following langchain documentation code retrying langchain embeddings openai embed retry embed retry second raised apierror openai api returned empty embedding asking bot mentioned answer general data custom data
 How to get the sentence embeddings with DeBERTa.deberta.pooling?,"<p>How to get the sentence embeddings with DeBERTa.deberta.pooling?</p>
 <p>Hi everyone, I applied a DeBERTa model to analyze sentences, this is what my code looks like:</p>
 <pre><code>from transformers import DebertaTokenizer, DebertaModel
@@ -4194,6 +4288,31 @@ Computational Complexity of Self-Attention in the Transformer Model,"<p>I recent
 <p>Why have the authors ignored the cost of computing the Query, Key, and Value matrices while reporting total computational complexity?</p>
 <p>I understand that the proposed layer is fully parallelizable across the <code>n</code> positions, but I believe that Table 1 does not take this into account anyway.</p>
 ",Vectorization & Embeddings,computational complexity self attention transformer model recently went transformer paper google research describing self attention layer could completely replace traditional rnn based sequence encoding layer machine translation table paper author compare computational complexity different sequence encoding layer state later self attention layer faster rnn layer sequence length smaller dimension vector representation however self attention layer seems inferior complexity claimed understanding computation correct let input self attention layer shape since word vector corresponding row dimension computing output self attention requires following step consider single headed self attention simplicity linearly transforming row compute query key value matrix ha shape accomplished post multiplying learned matrix shape amounting computational complexity computing layer output specified equation paper softmax computed row computing ha complexity post multiplying resultant ha complexity well therefore total complexity layer worse traditional rnn layer obtained result multi headed attention considering appropriate intermediate representation dimension finally multiplying number head author ignored cost computing query key value matrix reporting total computational complexity understand proposed layer fully parallelizable across position believe table doe take account anyway
+"Filtering Documents Using Word Embeddings: Keep Job Postings, Exclude Resumes","<p>I have a DataFrame containing a column of various documents, and I'm trying to filter out documents that resemble resumes while keeping job postings. To achieve this, I've utilized a CSV file provided <a href=""https://www.kaggle.com/code/akashkotal/resume-screening-with-nlp/input"" rel=""nofollow noreferrer"">here</a> to find similarities between my document contents and resumes.</p>
+<p>However, my current approach seems to return both resumes and job postings. I'm interested in retaining the job postings but excluding the resumes from my DataFrame.</p>
+<pre><code>def calculate_word_embedding_similarity(dataframe, text_to_compare, column_name='processed_content', embedding_model=None):
+    text_tokens = text_to_compare.lower().split()
+    dataframe_tokens = dataframe[column_name].str.lower().str.split()
+
+    text_vector = sum(embedding_model[word] for word in text_tokens if word in embedding_model)
+    dataframe_vectors = [
+        sum(embedding_model[word] for word in tokens if word in embedding_model)
+        for tokens in dataframe_tokens
+    ]
+
+    cosine_similarities = [
+        cosine_similarity([text_vector], [dataframe_vector])[0][0]
+        for dataframe_vector in dataframe_vectors
+    ]
+
+    dataframe['similarity'] = cosine_similarities
+
+    dataframe = dataframe.sort_values(by='word_embedding_similarity', ascending=False)
+
+    return dataframe
+</code></pre>
+<p>Could anyone suggest a method or modification to my approach that would allow me to achieve this filtering task effectively? I want to ensure that only job postings are retained in my DataFrame while eliminating resumes.</p>
+",Vectorization & Embeddings,filtering document using word embeddings keep job posting exclude resume dataframe containing column various document trying filter document resemble resume keeping job posting achieve utilized csv file provided find similarity document content resume however current approach seems return resume job posting interested retaining job posting excluding resume dataframe could anyone suggest method modification approach would allow achieve filtering task effectively want ensure job posting retained dataframe eliminating resume
 Sentence Embeddings with Multiprocessing,"<p>I would like to compute sentence embeddings on a very large text dataset in the fastest way possible. For this purpose I have access to a multi-core CPU (x32).</p>
 <p>My current code is as follows:</p>
 <pre><code>import tensorflow as tf
@@ -4212,6 +4331,9 @@ How to fetch vectors for a word list with Word2Vec?,"<p>I want to create a text 
 
 <p>I'm new to word2vec and I don't know how to go about doing this. I've read from several of the main sites, and several of the questions on Stack, and haven't found a good tutorial yet.</p>
 ",Vectorization & Embeddings,fetch vector word list word vec want create text file essentially dictionary word paired vector representation word vec assuming process would first train word vec look word list find representation save new text file new word vec know go read several main site several question stack found good tutorial yet
+Get word frequencies from a pretrained word2vec model in gensim,"<p>I am trying to get the CBOW represention (word frequencies) out of a pretrained word2vec model in gensim. I know that the word2vec model I am using was originally trained using CBOW so the word2vec object must store word frequencies somewhere but I cannot find it. I did read the documentation but did not help at all, or maybe I am misunderstanding something.</p>
+<p>Edit: If there's no way to retrieve the word frequencies except by having the original dataset, please tell me straight away.</p>
+",Vectorization & Embeddings,get word frequency pretrained word vec model gensim trying get cbow represention word frequency pretrained word vec model gensim know word vec model using wa originally trained using cbow word vec object must store word frequency somewhere find read documentation help maybe misunderstanding something edit way retrieve word frequency except original dataset please tell straight away
 Is there a way to load Word2Vec embeddings to ChromaDB?,"<p>I want to query for similar words using ChromaDB. For example, 'great' should return all the words that are similar to 'great', in most cases, it would be synonyms. For this, I would like to upload Word2Vec or Glove embeddings to ChromaDB and query.</p>
 <p>Most of the examples demonstrate how one can build embeddings into ChromaDB while processing the documents. As I have very little document, I want to use embeddings provided by Word2Vec or GloVe.</p>
 <p>Is it possible to load the Word2Vec/Glove embeddings directly into ChromaDB?</p>
@@ -5174,6 +5296,107 @@ How embedding lookup works in Word2Vec,"<p>I am trying to understand Word2Vec. F
 NLP Classification on a dataset,"<p>I am trying to learned NLP. I understand the basic concepts from Text Preprocessing to td-idf, and Word Embedding. How do I apply this learning? I have a Data set with two columns: Answer and Gender. I want to use NLP to transform the Answer column to vectors and then use supervised machine learning to train a model that predict where a certain type of answer was given by male or a female.
 I dont know how to process after I Pre_processed the text.</p>
 ",Vectorization & Embeddings,nlp classification dataset trying learned nlp understand basic concept text preprocessing td idf word embedding apply learning data set two column answer gender want use nlp transform answer column vector use supervised machine learning train model predict certain type answer wa given male female dont know process pre processed text
+Reduce the computation and storage burden for row-wise comparison in Python,"<p>Consider we have the following data frame:</p>
+<pre><code>      message
+0       ABC
+1       abc
+2       cba
+3      abcd
+4      dcsa
+5      adcd
+6      abcd
+7       cba                   
+</code></pre>
+<p>I want to perform row-wise comparisons, then finally group the data using the similarity vector for some metric calculation.</p>
+<p>For now, I am doing the following:</p>
+<pre><code>     message      similarity
+0       ABC  [1, 0, 0, 0, 1, 0, 1, 0]
+1       abc  [1, 0, 1, 0, 1, 0, 1, 0]
+2       cba  [1, 0, 0, 0, 1, 0, 1, 0]
+3      abcd  [1, 0, 1, 0, 1, 0, 1, 0]
+4      dcsa  [1, 0, 0, 0, 1, 0, 1, 0]
+5      adcd  [1, 0, 0, 0, 1, 0, 1, 0]
+6      abcd  [1, 1, 0, 0, 1, 0, 1, 0]
+7       cba  [1, 1, 0, 0, 1, 0, 1, 0]
+</code></pre>
+<p>From the above, it is clear that I am doing a brute-force job. That being said, starting from row 1, I compare it with all the rows (including itself), and if they have sufficient similarity, then I store it as <code>1</code>, otherwise it is <code>0</code>, and thus, the vector size is the number of rows (<code>N</code>), and it is a <code>O(N^2)</code> problem. For a smaller dataset, this is acceptable, but it does not scale for bigger datasets. For example, let us imagine that there are <code>1M</code> rows, and for each row, there is a <code>1M</code>-sized similarity vector—this is really crazy.</p>
+<p>Therefore, I am here for input regarding two questions:</p>
+<ol>
+<li><p>Can we reduce the <code>O(N^2)</code> complexity? My current thought is we can order the <code>message</code> column and perform comparison on a reduced basis. e.g., for row1, comparing it with row2 till rowN, and for row2, comparing it with row3 till rowN, etc. But the similarity vector will vary on its length among all the rows.</p>
+</li>
+<li><p>Is there a better way to store the similarity vector? We need it for grouping purpose, and thus, such a vector is unavoidable. Can we use another method to handle it?</p>
+</li>
+</ol>
+<p>A minimal reproducible example is provided below to play with.</p>
+<pre><code>import pandas as pd
+from difflib import SequenceMatcher
+
+df = pd.DataFrame({'message': ['ABC', 'ABCD', 'DCBA', 'abcde', 'CBDA', 'abcde', 'edcba']})
+
+def similarity_score(s1, s2):
+    coef = SequenceMatcher(None, s1, s2).ratio()
+    if coef &gt;= 0.75:
+        return 1
+    else:
+        return 0
+
+def similarity(x, df):
+    sim_score = []
+    for i in df['message']:
+        sim_score.append(similarity_score(x, i))
+    return sim_score
+
+df['similarity'] = df['message'].apply(lambda x: similarity(x, df)).astype(str)
+</code></pre>
+<p>Below I'd like to illustrate my motivation for the questions above using a reproducible example. For each message, there is an count (<code>cnt</code>). After the similarity vector (<code>similarity</code>) is created, I used it as a grouping variable to categorize the message into different groups (<code>group</code>), and finally, sum up the count per group.</p>
+<pre><code>import pandas as pd
+from difflib import SequenceMatcher
+
+df = pd.DataFrame({'message': ['ABC','abc','cba','abcd','dcsa','adcd','abcd','cba'], 
+                  'cnt': [1, 2, 3, 4, 5, 6, 7, 8]})
+
+def similarity_score(s1, s2):
+    coef = SequenceMatcher(None, s1, s2).ratio()
+    if coef &gt;= 0.80:
+        return 1
+    else:
+        return 0
+
+def similarity(x,df):
+    sim_score = []
+    for i in df['message']:
+        sim_score.append(similarity_score(x, i))
+    return sim_score
+
+df['similarity'] = df['message'].apply(lambda x: similarity(x, df)).astype(str)
+df[&quot;group&quot;] = pd.factorize(df[&quot;similarity&quot;].astype(str))[0] + 1
+print(df)
+</code></pre>
+<p>The output is as follows:</p>
+<pre><code>   message  cnt         similarity          group
+0     ABC    1  [1, 0, 0, 0, 0, 0, 0, 0]      1
+1     abc    2  [0, 1, 0, 1, 0, 0, 1, 0]      2
+2     cba    3  [0, 0, 1, 0, 0, 0, 0, 1]      3
+3    abcd    4  [0, 1, 0, 1, 0, 0, 1, 0]      2
+4    dcsa    5  [0, 0, 0, 0, 1, 0, 0, 0]      4
+5    adcd    6  [0, 0, 0, 0, 0, 1, 0, 0]      5
+6    abcd    7  [0, 1, 0, 1, 0, 0, 1, 0]      2
+7     cba    8  [0, 0, 1, 0, 0, 0, 0, 1]      3
+</code></pre>
+<p>Finally, I sum up the count by <code>group</code> as following (that is why at the beginning of the question, I said &quot;group the data using the similarity vector for some metric calculation&quot;.</p>
+<pre><code>df_final = df.groupby(&quot;group&quot;).sum(&quot;cnt&quot;)
+print(df_final)
+</code></pre>
+<p>The output is as follows:</p>
+<pre><code>group   cnt    
+1        1
+2       13
+3       11
+4        5
+5        6
+</code></pre>
+<p>Hopefully the added example is clear enough. Thank you.</p>
+",Vectorization & Embeddings,reduce computation storage burden row wise comparison python consider following data frame want perform row wise comparison finally group data using similarity vector metric calculation following clear brute force job said starting row compare row including sufficient similarity store otherwise thus vector size number row problem smaller dataset acceptable doe scale bigger datasets example let u imagine row row sized similarity vector really crazy therefore input regarding two question reduce complexity current thought order column perform comparison reduced basis e g row comparing row till rown row comparing row till rown etc similarity vector vary length among row better way store similarity vector need grouping purpose thus vector unavoidable use another method handle minimal reproducible example provided play like illustrate motivation question using reproducible example message count similarity vector created used grouping variable categorize message different group finally sum count per group output follows finally sum count following beginning question said group data using similarity vector metric calculation output follows hopefully added example clear enough thank
 Handling large inputs in Programming Language Models,"<p>I am using CodeBERT and CodeT5 models to generate embeddings for my Python code dataset. Specifically, I am using the <code>codebert-base</code> and <code>codet5-small</code> models from HuggingFace. However, these models have a maximum input sequence length of 512 tokens. When tokenizing the Python codes, I find that their length is approximately 10 times larger than the maximum input sequence length. My intention is not to perform any downstream tasks; rather, I want to obtain the embeddings for the purpose of clustering. I am wondering how to handle these lengthy input codes aside from removing less important parts from the inputs.</p>
 ",Vectorization & Embeddings,handling large input programming language model using codebert codet model generate embeddings python code dataset specifically using model huggingface however model maximum input sequence length token tokenizing python code find length approximately time larger maximum input sequence length intention perform downstream task rather want obtain embeddings purpose clustering wondering handle lengthy input code aside removing le important part input
 Tf-Idf weights for an unseen word in query,"<p>Assume we have a Tf-Idf matrix and a new query came. If this query has words that haven't been seen before, how can we find its vector and use the cosine similarity?</p>
@@ -6215,6 +6438,37 @@ model_v = Doc2Vec(documents, vector_size=5, window=2, min_count=1, workers=4)
 <a href=""http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/"" rel=""nofollow noreferrer"">http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/</a></p>
 <p>Named: 'reviews_Electronics_5.json.gz'</p>
 ",Vectorization & Embeddings,build doc vec model find textually similar review using gensim dataset amazon review dataset gz file following code given understanding code creates product folder txt file named asin code txt store review reviewer id helpfulness score bit unsure doe taggedreviewdocument function seems create document dictionary key value first task create doc vec model code go second task find top helpful review product similarity score thinking similarity score based similarity review text rank helpfulness score however completely idea call similar argument gensim model using document idea extract text review document either know part document store text review help appreciated whatever tried output show nothing document output output dataset taken named review electronics json gz
+Didnt get the expected results when calculate Cosine similarity between strings,"<p>I want to calculate the pairwise cosine similarity between two strings  that are in the same row of a pandas data frame.</p>
+<p>I used the following lines of codes:</p>
+<pre><code>import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+pd.set_option('display.float_format', '{:.4f}'.format)
+
+
+df = pd.DataFrame({'text1': ['The quick brown fox jumps over the lazy dog', 'The red apple', 'The big blue sky'],
+                   'text2': ['The lazy cat jumps over the brown dog', 'The red apple', 'The big yellow sun']})
+
+
+vectorizer = CountVectorizer().fit_transform(df['text1'] + ' ' + df['text2'])
+
+
+cosine_similarities = cosine_similarity(vectorizer)[:, 0:1]
+
+
+df['cosine_similarity'] = cosine_similarities
+
+
+print(df)  
+</code></pre>
+<p>It gave me following output, which seems incorrect:</p>
+<p><a href=""https://i.sstatic.net/dVOTF.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/dVOTF.png"" alt=""enter image description here"" /></a></p>
+<p>Can anyone help me to figure out what I did incorrectly?</p>
+<p>Thank you.</p>
+",Vectorization & Embeddings,didnt get expected result calculate cosine similarity string want calculate pairwise cosine similarity two string row panda data frame used following line code gave following output seems incorrect anyone help figure incorrectly thank
 Compare each string with all other strings in a dataframe,"<p>I have this dataframe:</p>
 <pre><code>mylist = [
     &quot;₹67.00 to Rupam Sweets using Bank Account XXXXXXXX5343&lt;br&gt;11 Feb 2023, 20:42:25&quot;,
@@ -7395,6 +7649,44 @@ Why word embedding technique works,"<p>I have look into some word embedding tech
 </ol>
 <p>Any possible explanation?</p>
 ",Vectorization & Embeddings,word embedding technique work look word embedding technique cbow context single word weight matrix produced used embedding vector skip gram word context see acutally word word assingle prediction enough weight matrix produced used embedding introduction tool would always quote cosine similarity say word similar meanning would convert similar vector method based context account word around target word say syntagmatic rather paradigmatic close distance sentence indicate close meaning think many counter example frequently occurs good day good day different though close distance toilet washroom two word similar meaning sentence contains one would unlikely contain another possible explanation
+Merge CountVectorizer output from 4 text columns back into one dataset,"<p>I have a collection of ~100,000 documents in a dataset with a unique doc_id and four columns containing text (like below). </p>
+
+<p><a href=""https://i.sstatic.net/Q15w1.png"" rel=""nofollow"">original dataset</a></p>
+
+<p>I want to vectorize each of the four text columns individually and then combine all of those features back together to create one large dataset for the purpose of building a model for prediction. I approached the vectorization for each text feature using code like below:</p>
+
+<pre><code>stopwords = nltk.corpus.stopwords.words(""english"")
+
+subject_transformer = CountVectorizer(stop_words=stopwords)
+subject_vectorized = subject_transformer.fit_transform(full_docs['subject'])
+
+body_transformer = CountVectorizer(stop_words=stopwords)
+body_vectorized = body_transformer.fit_transform(full_docs['body'])
+
+excerpt_transformer = CountVectorizer(stop_words=stopwords)
+excerpt_vectorized = excerpt_transformer.fit_transform(full_docs['excerpt'])
+
+regex_transformer = CountVectorizer(stop_words=stopwords)
+regex_vectorized = regex_transformer.fit_transform(full_docs['regex'])
+</code></pre>
+
+<p>Each vectorization yields a sparse matrix like below where <strong>column one</strong> is the document number, <strong>column two</strong> is the column number (one for each word in the original text column), and the <strong>last column</strong> is the actual count. </p>
+
+<p><a href=""https://i.sstatic.net/CYZpm.png"" rel=""nofollow"">sparse matrix</a></p>
+
+<p>What I want to do is the following:</p>
+
+<ol>
+<li>Transpose each sparse matrix to a full dataframe of dimensions nxp where n=number of documents &amp; p=number of words in that corpus</li>
+<li>Merge each of these matrices/dataframes back together for the purpose of building a model for prediction</li>
+</ol>
+
+<p>I initially tried the following:</p>
+
+<p>regex_vectorized_df = pd.DataFrame(regex_vectorized.toarray())</p>
+
+<p>Then I could merge the four individual dataframes back together. This doesn't work because toarray() is too memory intensive. What is the best way to merge these four sparse matrices into one dataset with one unique line per document?</p>
+",Vectorization & Embeddings,merge countvectorizer output text column back one dataset collection document dataset unique doc id four column containing text like original dataset want vectorize four text column individually combine feature back together create one large dataset purpose building model prediction approached vectorization text feature using code like vectorization yield sparse matrix like column one document number column two column number one word original text column last column actual count sparse matrix want following transpose sparse matrix full dataframe dimension nxp n number document p number word corpus merge matrix dataframes back together purpose building model prediction initially tried following regex vectorized df pd dataframe regex vectorized toarray could merge four individual dataframes back together work toarray memory intensive best way merge four sparse matrix one dataset one unique line per document
 Generating embedding for long documents using pre-trained word vectors,"<p>I have a set of pre-trained word embeddings from the Wikipedia corpus. I also have 300 dimension embeddings of Wikipedia article pages. I am looking to build a similarity engine by running a simple cosine similarity algorithm for any new query (long documents) against these pre-trained embeddings. To do this, I want to represent any new input document as a 300d vector using the pre-trained word embeddings and then run cosine similarity against the corpus. How can this be achieved?</p>
 ",Vectorization & Embeddings,generating embedding long document using pre trained word vector set pre trained word embeddings wikipedia corpus also dimension embeddings wikipedia article page looking build similarity engine running simple cosine similarity algorithm new query long document pre trained embeddings want represent new input document vector using pre trained word embeddings run cosine similarity corpus achieved
 How to detect if two news articles have the same topic? (Python semantic similarity),"<p>I'm trying to scrape headlines and body text from articles on a few specific sites, similar to what Google does with Google News.</p>
@@ -8817,6 +9109,49 @@ print(accuracy_score(y_pred, y_test))
 How do pass a single datapt to predict function?</p>
 <p>Please let me know.</p>
 ",Vectorization & Embeddings,predict single datapoint logisticregression working nlp problem text classification first preprocessed text trained model data tfidf want try test model single datapoint ml inference pas single datapt predict function please let know
+how to de-duplicate the record in data frame without null value in rows in python using record linkage toolkit?,"<p>This is the data frame, here i need to deduplicate the records, for dedup the record there i need to exclude the not available value and compare with other each records.</p>
+<pre><code>df = pd.DataFrame({'fname':['richard','patricia','william','michael','richard','william'],
+'lname': ['dietzen','economides','macdonald','boothby','dietzen','macdonald'],
+'contact':['18708667706','not available','12404471426','18177395663','18708667706','12404471426'],
+'bus_contact':['not available','12406789540','15619984476','not available','not available','15619984476'],
+'email':['not available','patricia.economides@gmail.com','dpjpropertymanagement@gmail.com','mboothby@osmifw.com','not available','dpjpropertymanagement@gmail.com'],
+'bus_mail':['rdietzen@hotmail.com','wmacdonald@mcrtrust.com','not available','michael.boothby@yahoo.com','rdietzen@hotmail.com','abc.com']})
+</code></pre>
+<p>this is my code for record linkage</p>
+<pre><code> import recordlinkage
+ indexer = recordlinkage.Index()
+ indexer.block(&quot;LASTNAME&quot;)
+ candidate_links = indexer.index(master_data)
+
+ compare = recordlinkage.Compare()
+
+ compare.string(&quot;fname&quot;, &quot;fname&quot;, method=&quot;jarowinkler&quot;, threshold=0.85, missing_value = 'not available', label=&quot;fname&quot;)
+
+compare.string(&quot;lname&quot;, &quot;lname&quot;, method=&quot;jarowinkler&quot;, threshold=0.85, missing_value = 'not available', label=&quot;lname&quot;)
+compare.exact(&quot;contact&quot;, &quot;contact&quot;, missing_value = 'not available', label='contact')
+compare.exact(&quot;bus_contact&quot;, &quot;bus_contact&quot;, missing_value = 'not available', label=&quot;bus_contact&quot;)
+compare.string(&quot;email&quot;, &quot;email&quot;, method=&quot;jarowinkler&quot;, threshold=0.85,
+
+          missing_value='not available', label=&quot;email&quot;)
+compare.string(&quot;bus_mail&quot;, &quot;bus_mail&quot;, method=&quot;jarowinkler&quot;, threshold=0.85,
+           missing_value='not available', label=&quot;bus_mail&quot;)
+features = compare.compute(candidate_links, df)
+</code></pre>
+<p>actual output of record linkage score:</p>
+<pre><code>|      | fname| lname| contact| bus_contact| email | bus_mail|
+|      |-----------------------------------------------------|
+|(4, 0)|  1   |  1  |  1      |   1        |  1    |   1     |
+|(5, 2)|  1   |  1  |  1      |   1        |  1    |   0     |
+</code></pre>
+<p>expected output of record linkage score should be exclude the not available value when compute the scores. assume it as NaN value</p>
+<p>expected output of record linkage score:</p>
+<pre><code>|      | fname| lname| contact| bus_contact| email | bus_mail|
+|      |-----------------------------------------------------|
+|(4, 0)|  1   |  1  |  1      |   0        |  0    |   1     |
+|(5, 2)|  1   |  1  |  1      |   1        |  1    |   0     |
+</code></pre>
+<p>If the both records are not available it should be return as 0. please can anyone help me out.</p>
+",Vectorization & Embeddings,de duplicate record data frame without null value row python using record linkage toolkit data frame need record dedup record need exclude available value compare record code record linkage actual output record linkage score expected output record linkage score exclude available value compute score assume nan value expected output record linkage score record available return please anyone help
 Is there a list of all embedding techniques used in all applications of Machine learning?,"<p>I started to learn embedding techniques used in machine learning and allied fields. There are word embeddings, graph embeddings, and network embeddings. I was overwhelmed by the various embedding techniques as I googled. Is there a good repository or book or resource that starts with the need for embedding and slowly moves onto different advanced embedding techniques in NLP, Computer Vision, Knowledge Graphs etc.</p>
 <p>I need an organic development of the subject so that I can think in different directions and to b able to come up with my own techniques in the embedding space.</p>
 ",Vectorization & Embeddings,list embedding technique used application machine learning started learn embedding technique used machine learning allied field word embeddings graph embeddings network embeddings wa overwhelmed various embedding technique googled good repository book resource start need embedding slowly move onto different advanced embedding technique nlp computer vision knowledge graph etc need organic development subject think different direction b able come technique embedding space
@@ -9125,6 +9460,30 @@ doubts regarding word2vec Continuous bag-of-words (CBOW),"<p><a href=""https://i
 
 <p>Thanks</p>
 ",Vectorization & Embeddings,doubt regarding word vec continuous bag word cbow cbow model input word feed training model simultaneously one one thanks
+What is the ideal &quot;size&quot; of the vector for each word in Word2Vec?,"<p>I have a dataset of over 1 million rows. Each row has 40 token words. Based on these tokens, a classification is made with a neural network. The vocabulary is 20,000 unique words. It is a <strong>binary classification</strong> problem. I set the size (dimension) of the vectors in <code>gensim</code> <code>Word2Vec</code> as 150 and saved these vectors for each data point in a <code>json</code> file. The <code>json</code> file's size is really huge: 250 GB. I cannot load this file into memory in one scoop as my RAM is only 128 GB. I am trying to see if I can reduce the physical size of these vectors by reducing them to the right size. I went through some of the suggestions made in this website such as <a href=""https://stackoverflow.com/questions/46560861/relation-between-word2vec-vector-size-and-total-number-of-words-scanned"">Relation between Word2Vec vector size and total number of words scanned?</a>. But the vector size is mentioned to be 100-300 and also depends on the problem.</p>
+<p>Here is what I am doing:</p>
+<pre><code># for training the word2vec model
+w2vmodel = gensim.models.Word2Vec(one_mil_tokens,vector_size=150, window=2, min_count=1, sg=0, seed=1)
+w2vmodel.save(&quot;w2model.trained&quot;)
+</code></pre>
+<p>and</p>
+<pre><code>model = gensim.models.Word2Vec.load(&quot;w2model.trained&quot;)
+vec = []
+finalvecs = []
+
+#tokens is a list of over a 1 million rows
+for token in tokens:
+  for word in token:
+    vec.append(model.wv[eachtoken].tolist())
+  finalvecs.append(vec)
+</code></pre>
+<p>I am doing <code>json.dump()</code> for <code>finalvecs</code>.</p>
+<ol>
+<li>How can I determine the right size (dimension) of the vector for each token based on the given problem?</li>
+<li>I use skip-gram model to train Word2Vec. Should I use CBOW to optimize the size?</li>
+<li>Is <code>json</code> the fight format to store/retrieve these vectors or are there other efficient ways?</li>
+</ol>
+",Vectorization & Embeddings,ideal size vector word word vec dataset million row row ha token word based token classification made neural network vocabulary unique word binary classification problem set size dimension vector saved vector data point file file size really huge gb load file memory one scoop ram gb trying see reduce physical size vector reducing right size went suggestion made website href word vec vector size total number word scanned vector size mentioned also depends problem determine right size dimension vector token based given problem use skip gram model train word vec use cbow optimize size fight format store retrieve vector efficient way
 NLP - How to get the a list of frequently asked questions on a list of questions,"<p>Everything is in the title, so basically I have a list of several questions as strings and the idea is to get another list of frequently asked questions within that first list of questions.</p>
 <p>I don't know if it'll make sense but I'll try to explain the approach I tried.</p>
 <p>The approach consist of calculating the cosine similarity of each element of the list with the rest of the elements not including the element being processed to prevent performing calculations with the same element.</p>
@@ -9426,6 +9785,37 @@ Contextual word embeddings from pretrained word2vec vectors,"<p>I would like to 
 <p>And then it would undertake the task of text classification (I have a dataset with several categories like animals, cars, etc.), but the result would be new representations for the word jaguar, but in different contexts, so two different embeddings.</p>
 <p>Does anyone have any idea how I could create such a network? I don't hide that I'm a beginner and have no idea how to go about it.</p>
 ",Vectorization & Embeddings,contextual word embeddings pretrained word vec vector would like create word embeddings take context account vector word jaguar animal would different word jaguar car brand know word vec give one representation given word would like take already pretrained embeddings enrich context far tried simple way taking average vector word category word example like would like try create train neural network would take entire sentence e g jaguar f pace great suv sport car among cat tiger lion bigger jaguar would undertake task text classification dataset several category like animal car etc result would new representation word jaguar different context two different embeddings doe anyone idea could create network hide beginner idea go
+Output 2D array to a Matrix as a CSV - Python,"<p>I have a 2D array with vectorised rows with each row representing a document in the corpus:</p>
+<pre><code>array[[ 0.0 0.0 0.4583 0.6584 0.0]
+                              ...
+      [0.4390 0.0 0.0 0.5749 0.0]]
+</code></pre>
+<p>I have calculated cosine similarity for each row/vector in the 2D array with every other vector like so:</p>
+<pre><code>#calculate semantic similarity for all permutations all in one go
+for i in range(Vectors.shape[0]): #for each vector/row in 2D array
+    for j in range(i + 1, Vectors.shape[0]): #for each row + 1 in the 2D array
+        cosine_similarities = linear_kernel(Vectors[i], Vectors[j]).flatten()
+        #np.savetxt(&quot;foo.csv&quot;, cosine_similarities, delimiter=&quot;,&quot;)
+        pd.DataFrame(cosine_similarities).to_csv(&quot;test_matrix.csv&quot;, mode = 'a') #save into csv as a matirix
+</code></pre>
+<p>The output prior to saving into a csv looks like:</p>
+<pre><code>[0.5748389]
+[0.5847379]
+...
+[0.3257490]
+</code></pre>
+<p>How am I able to transform the output into a <strong>matrix</strong> and save that into a csv?</p>
+<p>The output I'm looking for is:</p>
+<pre><code>   0          1           ...  76
+0  0.5748389  0.5847379        0.3257490
+1  ...        ...         ...   ...
+...
+76
+</code></pre>
+<hr />
+<p><strong>UPDATE:</strong>
+I followed this and it worked out! Using cosine similarity function directly on a sparse matrix worked, and then converted it to a list and then dataframe. See: <a href=""https://stackoverflow.com/questions/17627219/whats-the-fastest-way-in-python-to-calculate-cosine-similarity-given-sparse-mat"">What&#39;s the fastest way in Python to calculate cosine similarity given sparse matrix data?</a> for more info!</p>
+",Vectorization & Embeddings,output array matrix csv python array vectorised row row representing document corpus calculated cosine similarity row vector array every vector like output prior saving csv look like able transform output matrix save csv output looking update followed worked using cosine similarity function directly sparse matrix worked converted list dataframe see href fastest way python calculate cosine similarity given sparse matrix data info
 "I created a TF-IDF code to analyze an annual report, I want to know the importance of specific keywords","<pre><code>import pandas as pd
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -10746,6 +11136,16 @@ model = Sequential([
 <p>I am a little bit confused on the dimensions of the embedding and global average pooling layers.</p>
 <p>For example, if I have a sample sentence vector <code>[‘I’, ‘like’, ‘Chinese’, ‘food’]</code>. The embedding layer will expand this vector from 4x1 dimensions to a matrix of 4x16 dimensions right? Then the global average pooling 1D will take an average of each <strong>feature</strong>, and return a vector of 16x1, where each value represents an average feature value of my sentence, am I correct?</p>
 ",Vectorization & Embeddings,nlp kera dimension embedding global average pooling layer trying trace calculation tensorflow nlp neural network pipeline little bit confused dimension embedding global average pooling layer example sample sentence vector embedding layer expand vector x dimension matrix x dimension right global average pooling take average feature return vector x value represents average feature value sentence correct
+What algorithm should I use for the following sequential dataset training?,"<p>I have a dataset that contains opcode sequences of malware files. I read a paper where the author tried to implement a RNN algorithm like LSTM, but he specified a preprocessing step where he creates a word-bag and uses Word2Vec to convert everything into vectorized format.
+I am stuck at this place. Any help would be appreciated.</p>
+<pre><code>model = gensim.models.Word2Vec()
+model.build_vocab(sequence_text, progress_per=1000)
+model.train(sequence_text, total_examples=model.corpus_count, epochs=model.epochs)
+</code></pre>
+<p>I will also put a screenshot of the CSV file.
+<a href=""https://i.sstatic.net/EKEnz.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/EKEnz.png"" alt=""Dataset"" /></a></p>
+<p>Ultimate Goal: I need to identify if a sequence belongs to malware class or not.</p>
+",Vectorization & Embeddings,algorithm use following sequential dataset training dataset contains opcode sequence malware file read paper author tried implement rnn algorithm like lstm specified preprocessing step creates word bag us word vec convert everything vectorized format stuck place help would appreciated also put screenshot csv file ultimate goal need identify sequence belongs malware class
 How to get Pre-trained XLNET Sentence embeddings?,"<p>I want to get XLNET Pre-trained Sentence Embeddings of any given sentence. Please provide a code snippet to get the embeddings</p>
 ",Vectorization & Embeddings,get pre trained xlnet sentence embeddings want get xlnet pre trained sentence embeddings given sentence please provide code snippet get embeddings
 Parallel Convolutions using Keras,"<p>What i am trying to do is create a text classification model which combines CNNS and word embeddings.The basic idea is that we have an Embedding layer at the start of the network and then 2 parallel convolutional networks for find 2,3 - grams.<br />
@@ -11631,6 +12031,9 @@ Convert sparse matrix (csc_matrix) to pandas dataframe,"<p>I want to convert thi
 
 <p>Getting a dataframe helps me to transform the text analysis problem into data analysis.</p>
 ",Vectorization & Embeddings,convert sparse matrix csc matrix panda dataframe want convert matrix panda dataframe csc matrix first number bracket index second number column number end data want feature selection text analysis first number represents document second feature word last number tfidf score getting dataframe help transform text analysis problem data analysis
+does gensim.corpora wikiCorpus work only with bz2 file?,"<p>I'm trying to load a wiki dump (.gz) and use it in gensim word2vec. I convert it into bz2 using bzip2 in terminal but Wikicorpus class seems to refuse the file. Can someone please explain me how to get the text from a wiki dump in a easy way?
+thanks</p>
+",Vectorization & Embeddings,doe gensim corpus wikicorpus work bz file trying load wiki dump gz use gensim word vec convert bz using bzip terminal wikicorpus class seems refuse file someone please explain get text wiki dump easy way thanks
 Python compute cosine similarity on two directories of files,"<p>I have two directories of files. One contains human-transcribed files and the other contains IBM Watson transcribed files. Both directories have the same number of files, and both were transcribed from the same telephony recordings.</p>
 <p>I'm computing cosine similarity using SpaCy's .similarity between the matching files and print or store the result along with the compared file names. I have attempted using a function to iterate through in addition to for loops but cannot find a way to iterate between both directories, compare the two files with a matching index, and print the result.</p>
 <p>Here's my current code:</p>
@@ -14118,6 +14521,33 @@ How to find gender bias in word embeddings?,"<p>I have <code>glove.twitter.27B.2
 <p><code>model.similarity(&quot;woman&quot;, &quot;kitchen&quot;) == 0.40180725</code></p>
 <p>I want to find a gender bias direction in this word embeddings, but not sure how.</p>
 ",Vectorization & Embeddings,find gender bias word embeddings word embeddings embeddings format transfered format using code gender bias word embeddings want find gender bias direction word embeddings sure
+How to write a method that returns cosine similarity between two documents,"<p>I am writing a method that returns cosine similarity between two documents. Using sklearn CountVectorizer()
+I have tried</p>
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+def doc_cos_similar(doc1:str, doc2:str) -&gt; float:
+  vectorizer= CountVectorizer()
+  doc1=&quot;Good morning&quot;
+  doc2=&quot;Good evening&quot;
+  documents = [doc1, doc2]
+  count_vectorizer = CountVectorizer()
+  sparse_matrix = count_vectorizer.fit_transform(documents)
+  doc_term_matrix = sparse_matrix.todense()
+  return doc_term_matrix
+</code></pre>
+<p>#input</p>
+<pre><code>doc1=&quot;Good morning&quot;
+doc2=&quot;Good afternoon&quot;
+</code></pre>
+<p>the
+output should be 0.60(something alike)</p>
+<p>But the output is a</p>
+<blockquote>
+<p>matrix([[0, 1, 1],
+[1, 1, 0]])</p>
+</blockquote>
+",Vectorization & Embeddings,write method return cosine similarity two document writing method return cosine similarity two document using sklearn countvectorizer tried input output something alike output matrix
 Distractor Generation for Multiple choice question,"<p>I'm currently working on generating distractor for multiple choice questions. Training set consists of question, answer and 3 distractor and I need to predict 3 distractor for test set. I have gone through many research papers regarding this but the problem in my case is unique. Here the problem is the questions and answers are for a comprehension(usually a big passage of text story) but the comprehension based on which is not given nor any supporting text is given for the question. Moreover, the answers and distractor are not a single word but sentences. The research paper I went mostly worked with some kind of support text. Even the SciQ dataset had some supporting text but the problem im working is different</p>
 <p><a href=""http://www.personal.psu.edu/cul226/files/naacl18_bea_distractor.pdf"" rel=""nofollow noreferrer"">This</a> research paper was the one which I thought closely went by what I wanted and I'm planning to implement this. Below is an excerpt from the paper which the authors say worked better than NN models.</p>
 <blockquote>
@@ -14401,6 +14831,38 @@ have the dimension that I wanted. It is  (None, 10) instead of (None,7).</p>
 But I don't think that the suggested answer there answer the original question (it seems to return the maximum of the entire matrix).</p>
 <p><a href=""https://i.sstatic.net/AIHUT.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/AIHUT.png"" alt=""enter image description here"" /></a></p>
 ",Vectorization & Embeddings,kera max pooling layer embedding layer word embedding dimension overall matrix row column applying embedding using embedding layer get output dimension none want vector th element maximum row range hence vector length dimension like none purpose first use reshape layer change dimension otherwise doe work tried use globalmaxpooling purpose also tried maxpooling output doe dimension wanted none instead none checked globalmaxpooling separate example work well must something additional dimension embedding layer push middle p similar question ha asked
+Text (cosine) similarity,"<p>I have followed the explanation of Fred Foo in this stack overflow question: <a href=""https://stackoverflow.com/questions/8897593/how-to-compute-the-similarity-between-two-text-documents"">How to compute the similarity between two text documents?</a></p>
+<p>I have run the following piece of code that he wrote:</p>
+<pre><code>from sklearn.feature_extraction.text import TfidfVectorizer
+
+corpus = [&quot;I'd like an apple&quot;,
+          &quot;An apple a day keeps the doctor away&quot;,
+          &quot;Never compare an apple to an orange&quot;,
+          &quot;I prefer scikit-learn to Orange&quot;,
+          &quot;The scikit-learn docs are Orange and Blue&quot;]
+vect = TfidfVectorizer(min_df=1, stop_words=&quot;english&quot;)
+tfidf = vect.fit_transform(corpus)
+pairwise_similarity = tfidf * tfidf.T
+print(pairwise_similarity.toarray())
+</code></pre>
+<p>And the result is:</p>
+<pre><code>[[1.         0.17668795 0.27056873 0.         0.        ]
+ [0.17668795 1.         0.15439436 0.         0.        ]
+ [0.27056873 0.15439436 1.         0.19635649 0.16815247]
+ [0.         0.         0.19635649 1.         0.54499756]
+ [0.         0.         0.16815247 0.54499756 1.        ]]
+</code></pre>
+<p>But what I noticed is that when I set corpus to be:</p>
+<pre><code>corpus = [&quot;I'd like an apple&quot;,
+          &quot;An apple a day keeps the doctor away&quot;]
+</code></pre>
+<p>and run the same code again, I get the matrix:</p>
+<pre><code>[[1.         0.19431434]
+ [0.19431434 1.        ]]
+</code></pre>
+<p>Thus their similarity changes (in the first matrix, their similarity is 0.17668795). Why is that the case? I am really confused.
+Thank you in advance!</p>
+",Vectorization & Embeddings,text cosine similarity followed explanation fred foo stack overflow question href compute similarity two text document run following piece code wrote result noticed set corpus run code get matrix thus similarity change first matrix similarity case really confused thank advance
 Gensim Compute centroid from list of words,"<p>How to compute the centroid of given 5 words from the word-embedding and then find the most similar words from that centroid. (In gensim)</p>
 ",Vectorization & Embeddings,gensim compute centroid list word compute centroid given word word embedding find similar word centroid gensim
 Word-embedding does not provide expected relations between words,"<p>I am trying to train a word embedding to a list of repeated sentences where only the subject changes. I expected that the generated vectors corresponding the subjects provide a strong correlation after training as it is expected from a word embedding. However, the angle between the vectors of subjects is not always larger than the angle between subjects and a random word.</p>
@@ -16096,6 +16558,130 @@ Understanding gensim word2vec&#39;s most_similar,"<p>I am unsure how I should us
 
 <p>Additionally, is there a method that allows us to map the relation between two points to another point and get the result (cf. the man-king woman-X example)?</p>
 ",Vectorization & Embeddings,understanding gensim word vec similar unsure use similar method gensim word vec let say want test tried true example man stand king woman stand x find x thought could method result getting think true documentation read find top n similar word positive word contribute positively towards similarity negative word negatively method computes cosine similarity simple mean projection weight vector given word vector word model method corresponds word analogy distance script original word vec implementation assume take positive example negative example try find point vector space close possible positive vector far away possible negative one correct additionally method allows u map relation two point another point get result cf man king woman x example
+How to get the wikipedia corpus text with punctuation by using gensim wikicorpus?,"<p>I'm trying to get the text with its punctuation as it is important to consider the latter in my doc2vec model.  However, the wikicorpus retrieve only the text. After searching the web I found these pages:</p>
+
+<ol>
+<li>Page from gensim github issues section. It was a question by someone where the answer was to subclass WikiCorpus (answered by Piskvorky). Luckily, in the same page, there was a code representing the suggested 'subclass' solution. The code was provided by Rhazegh. (<a href=""https://github.com/RaRe-Technologies/gensim/issues/552"" rel=""noreferrer"">link</a>)</li>
+<li>Page from stackoverflow with a title: ""Disabling Gensim's removal of punctuation etc. when parsing a wiki corpus"". However, no clear answer was provided and was treated in the context of spaCy. (<a href=""https://stackoverflow.com/questions/43500996/disabling-gensims-removal-of-punctuation-etc-when-parsing-a-wiki-corpus"">link</a>)</li>
+</ol>
+
+<p>I decided to use the code provided in page 1. My current code (mywikicorpus.py):</p>
+
+<pre><code>import sys
+import os
+sys.path.append('C:\\Users\\Ghaliamus\\Anaconda2\\envs\\wiki\\Lib\\site-packages\\gensim\\corpora\\')
+
+from wikicorpus import *
+
+def tokenize(content):
+    # override original method in wikicorpus.py
+    return [token.encode('utf8') for token in utils.tokenize(content, lower=True, errors='ignore')
+        if len(token) &lt;= 15 and not token.startswith('_')]
+
+def process_article(args):
+   # override original method in wikicorpus.py
+    text, lemmatize, title, pageid = args
+    text = filter_wiki(text)
+    if lemmatize:
+        result = utils.lemmatize(text)
+    else:
+        result = tokenize(text)
+    return result, title, pageid
+
+
+class MyWikiCorpus(WikiCorpus):
+def __init__(self, fname, processes=None, lemmatize=utils.has_pattern(), dictionary=None, filter_namespaces=('0',)):
+    WikiCorpus.__init__(self, fname, processes, lemmatize, dictionary, filter_namespaces)
+
+    def get_texts(self):
+        articles, articles_all = 0, 0
+        positions, positions_all = 0, 0
+        texts = ((text, self.lemmatize, title, pageid) for title, text, pageid in extract_pages(bz2.BZ2File(self.fname), self.filter_namespaces))
+        pool = multiprocessing.Pool(self.processes)
+        for group in utils.chunkize(texts, chunksize=10 * self.processes, maxsize=1):
+            for tokens, title, pageid in pool.imap(process_article, group):  # chunksize=10):
+                articles_all += 1
+                positions_all += len(tokens)
+            if len(tokens) &lt; ARTICLE_MIN_WORDS or any(title.startswith(ignore + ':') for ignore in IGNORED_NAMESPACES):
+                continue
+            articles += 1
+            positions += len(tokens)
+            if self.metadata:
+                yield (tokens, (pageid, title))
+            else:
+                yield tokens
+    pool.terminate()
+
+    logger.info(
+        ""finished iterating over Wikipedia corpus of %i documents with %i positions""
+        "" (total %i articles, %i positions before pruning articles shorter than %i words)"",
+        articles, positions, articles_all, positions_all, ARTICLE_MIN_WORDS)
+    self.length = articles  # cache corpus length
+</code></pre>
+
+<p>And then, I used another code by Pan Yang (<a href=""https://textminingonline.com/training-word2vec-model-on-english-wikipedia-by-gensim"" rel=""noreferrer"">link</a>). This code initiates WikiCorpus object and retrieve the text. The only change in my current code is initiating MyWikiCorpus instead of WikiCorpus. The code (process_wiki.py):</p>
+
+<pre><code>from __future__ import print_function
+import logging
+import os.path
+import six
+import sys
+import mywikicorpus as myModule
+
+
+
+if __name__ == '__main__':
+    program = os.path.basename(sys.argv[0])
+    logger = logging.getLogger(program)
+
+    logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s')
+    logging.root.setLevel(level=logging.INFO)
+    logger.info(""running %s"" % ' '.join(sys.argv))
+
+    # check and process input arguments
+    if len(sys.argv) != 3:
+        print(""Using: python process_wiki.py enwiki-20180601-pages-    articles.xml.bz2 wiki.en.text"")
+        sys.exit(1)
+    inp, outp = sys.argv[1:3]
+    space = "" ""
+    i = 0
+
+    output = open(outp, 'w')
+    wiki = myModule.MyWikiCorpus(inp, lemmatize=False, dictionary={})
+    for text in wiki.get_texts():
+        if six.PY3:
+            output.write(bytes(' '.join(text), 'utf-8').decode('utf-8') + '\n')
+        else:
+            output.write(space.join(text) + ""\n"")
+        i = i + 1
+        if (i % 10000 == 0):
+            logger.info(""Saved "" + str(i) + "" articles"")
+
+    output.close()
+    logger.info(""Finished Saved "" + str(i) + "" articles"")
+</code></pre>
+
+<p>Through command line I ran the process_wiki.py code. I got text of the corpus with the last line in the command prompt: </p>
+
+<p>(2018-06-05 09:18:16,480: INFO: Finished Saved 4526191 articles)</p>
+
+<p>When I read the file in python, I checked the first article and it was without punctuation. Example:</p>
+
+<p>(anarchism is a political philosophy that advocates self governed societies based on voluntary institutions these are often described as stateless societies although several authors have defined them more specifically as institutions based on non hierarchical or free associations anarchism holds the state to be undesirable unnecessary and harmful while opposition to the state is central anarchism specifically entails opposing authority or hierarchical)</p>
+
+<p>My two relevant questions, and I wish you can help me with them, please:</p>
+
+<ol>
+<li>is there any thing wrong in my reported pipeline above?</li>
+<li>regardless such pipeline, if I opened the gensim  wikicorpus python code (<a href=""https://github.com/RaRe-Technologies/gensim/blob/develop/gensim/corpora/wikicorpus.py"" rel=""noreferrer"">wikicorpus.py</a>) and wanted to edit it, what is the line that I should add it or remove it or update it (with what if possible) to get the same results but with punctuation?</li>
+</ol>
+
+<p>Many thanks for your time reading this long post. </p>
+
+<p>Best wishes,</p>
+
+<p>Ghaliamus </p>
+",Vectorization & Embeddings,get wikipedia corpus text punctuation using gensim wikicorpus trying get text punctuation important consider latter doc vec model however wikicorpus retrieve text searching web found page page gensim github issue section wa question someone answer wa subclass wikicorpus answered piskvorky luckily page wa code representing suggested subclass solution code wa provided rhazegh link page stackoverflow title disabling gensim removal punctuation etc parsing wiki corpus however clear answer wa provided wa treated context spacy link code initiate wikicorpus object retrieve text change current code initiating mywikicorpus instead wikicorpus code process wiki py command line ran process wiki py code got text corpus last line command prompt info finished saved article read file python checked first article wa without punctuation example anarchism political philosophy advocate self governed society based voluntary institution often described stateless society although several author defined specifically institution based non hierarchical free association anarchism hold state undesirable unnecessary harmful opposition state central anarchism specifically entail opposing authority hierarchical two relevant question wish help please thing wrong reported pipeline regardless pipeline opened gensim wikicorpus python code wikicorpus py wanted edit line add remove update possible get result punctuation many thanks time reading long post best wish ghaliamus
 How to normalize word embeddings (word2vec),"<p>I have a pre trained Word2Vec model with embeddings. I need to normalize some embeddings to do analyses with the words. Is there a simple line (or block) of code to do this? I've been searching online but can't find a simple answer.</p>
 ",Vectorization & Embeddings,normalize word embeddings word vec pre trained word vec model embeddings need normalize embeddings analysis word simple line block code searching online find simple answer
 faster sklearn tf-idf vectorizer,"<p>I was trying to use sklearn's TfidfVectorizer for a project, but Tfidf Vectorizer seems to take up a lot of time...</p>
@@ -16344,6 +16930,9 @@ vec2 = d2v_model.infer_vector(string2.split())
 
 <p>Can I compare the feature vectors value by value and if they are closer => the texts are more similar?</p>
 ",Vectorization & Embeddings,measure similarity two document using doc vec already trained gensim doc vec model finding similar document unknown one need find similarity value two unknown document training data referenced doc id code vec vec successfully initialized value size vector size looking gensim api example could find method work expecting taggeddocument compare feature vector value value closer text similar
+How can I Convert a dataset to glove or word2vec format?,"<p>I have my twitter archive downloaded and wanted to run word2vec to experiment most similar words, analogies etc on it.</p>
+<p>But I am stuck at first step - how to convert a given dataset / csv / document so that it can be input to word2vec? i.e. what is the process to convert data to glove/word2vec format?</p>
+",Vectorization & Embeddings,convert dataset glove word vec format twitter archive downloaded wanted run word vec experiment similar word analogy etc stuck first step convert given dataset csv document input word vec e process convert data glove word vec format
 Right way to calculate the cosine similarity of two word-frequency-dictionaries in python?,"<p>I'm trying to iterate through a file containing text and calculate the cosine similarity between the current line and a query the user raised. I have already tokenized the query and the line and saved the union of their words into a set.</p>
 
 <p>Example:</p>
@@ -18420,6 +19009,76 @@ print(w1.wup_similarity(w2))
 <p>I want preferably a library with pre-entrained model because I need a model that can work with any words in any domain</p>
 <p>What about word embedding ?</p>
 ",Vectorization & Embeddings,similarity two word pre trained nltk wordnet want compare two word similarity score used wordnet nltk corpus got similarity score work noun need compare noun adjective type word example bellow need compare word like expensive adjective price want preferably library pre entrained model need model work word domain word embedding
+Am i clustering users correctly by using sklearn&#39;s cosine similarity method and K-means algorithm?,"<p>I have a movie dataset with more than 200 movies and more than 100 users. The users rated the movies. A value of 1 for good, 0 for bad and blank if no choice.</p>
+<p>I want to cluster similar users based on their reviews with the idea that users who rated similar movies as good might also rate a movie as good which was not rated by any user in the same cluster. I used cosine similarity measure with k-means clustering. The csv file is shown below:</p>
+<pre><code>  UserID         M1     M2       M3  ...............  M200                          
+  user1          1      0                               0     
+  user2          0      1        1                                      
+  user3          0      1                               1                                                                         
+    .
+    .
+    .
+    .
+ user100         1      0        1                                       
+</code></pre>
+<p>According to the scheme, if an original review was 1 (good) then we put 1 in the cell and -1 in the cell if the review was 0 (bad). For no reviews, we put 0 in the cell. The csv file below explains the scheme. The rows are users and M in the column is movie and C is the choice.</p>
+<pre><code> UserID      M1C1   M2C1  M3C1 .  . ..............M200C1                            
+  user1       1     -1     0                        -1    
+  user2      -1      1     1                         0   
+  user3      -1      1     0                         1                                                                       
+    .
+    .
+    .
+ user100      1     -1     1                         0       
+</code></pre>
+<p>I measured cosine similarity and then clustered the users with sklearn's cosine_similarity and kmeans clustering algorithm. The code is:</p>
+<pre><code>import pandas as pd
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.cluster import KMeans
+
+df = pd.read_csv('input_file.csv', sep=',', encoding='latin-1',  
+                  index_col=False)
+
+df = df.set_index('UserID')
+
+
+pairwise = pd.DataFrame(
+         cosine_similarity(df.values),
+         columns = df.index.values,
+         index = df.index
+)
+
+print (pairwise.round(2))
+
+pairs = pairwise.unstack()
+
+pairs.index.rename(['User A', 'User B'], inplace=True)
+pairs = pairs.to_frame('cosine distance').reset_index()
+
+A = pairs[
+      (pairs['cosine distance'] &lt; 0.00) 
+      &amp; (pairs['User A'] != pairs['User B'])
+]
+
+print(A)
+
+kmeans = KMeans(n_clusters=2, init ='k-means++', max_iter=50, 
+                n_init=5,random_state=0 )
+y_kmeans = kmeans.fit_predict(pairwise)
+
+print(y_kmeans)
+
+frame = pd.DataFrame(pairwise)
+frame['cluster'] = y_kmeans
+
+print(frame['cluster'])
+print(frame['cluster'].value_counts())
+</code></pre>
+<p>With this code, i am getting the cosine similarity for all the pairs and i can filter the pairs based on the value of cosine similarity. I am also getting a list of clusters for the users. I want to know that am i doing it right ? Is it right to calculate the cosine similarity first and then pass the values to kmeans ? As by default, the sklearn's kmeans function uses euclidean distance.</p>
+<p>I will really appreciate some help.</p>
+<p>Thanks..</p>
+",Vectorization & Embeddings,clustering user correctly using sklearn cosine similarity method k mean algorithm movie dataset movie user user rated movie value good bad blank choice want cluster similar user based review idea user rated similar movie good might also rate movie good wa rated user cluster used cosine similarity measure k mean clustering csv file shown according scheme original review wa good put cell cell review wa bad review put cell csv file explains scheme row user column movie c choice measured cosine similarity clustered user sklearn cosine similarity kmeans clustering algorithm code code getting cosine similarity pair filter pair based value cosine similarity also getting list cluster user want know right right calculate cosine similarity first pas value kmeans default sklearn kmeans function us euclidean distance really appreciate help thanks
 "python code to compare the pairs of sentences, and see if they are in the same or different blocks in text file","<p>I've 2 text files. Writing a Python Program for the following
 1)I need to compare the pairs of sentences in the 1st file, and see if they are in the same or different blocks, and compare that to the 2nd text file.
 2)I need to calculate the percentage of correct classification.
@@ -18963,42 +19622,6 @@ What is negative sampling method use- sigmoid or softmax?,"<p>I am recently read
 <p>but i am confused because i have seen that formula in sigmoid function, not softmax function.</p>
 <p>How you derive that definition from softmax?</p>
 ",Vectorization & Embeddings,negative sampling method use sigmoid softmax recently reading paper word vec explained something understand page say p defined using softmax p w c theta frac e v c dotv w enter image description confused seen formula sigmoid function softmax function derive definition softmax
-How to improve word mover distance similarity in python and provide similarity score using weighted sentence,"<p>Word movers Distance can be used to identify similarity between text .
-This similarity can be used to compare multiple text for finding nearest similar text.
-However , I was unable to customise the algorithm to do the following 
-1)eliminate location (GPE) - identified by spacy , in the text  to have any weightage in comparing similarity .
-2)Give more weightage to features that are in first sentence of text rather than features in second sentence and second sentence over third and so on .</p>
-
-<pre><code>instance = WmdSimilarity(wmd_corpus, loaded_model, num_best=10)
-start = time()
-sent = 'Abc hotel serves best in class drunken prawn in north america . ABC Hotel has branches in London, New York, Chicago and San Francisco.'
-query = preprocess(sent)
-
-sims = instance[query]  # A query is simply a ""look-up"" in the similarity class.
-
-print('Cell took %.2f seconds to run.' % (time() - start))
-
-print('Query:')
-print(sent)
-for i in range(num_best):
-    print()
-    print('sim = %.4f' % sims[i][1])
-    print(documents[sims[i][0]])
-</code></pre>
-
-<p>In this particular example , where hotel description is passed for WMD similarity ,
-The results identify descriptions such as </p>
-
-<p>-DEF is a restaurant in Chicago serving vegan food since 1969 . 
--JKL now serving in London, New York, Chicago and San Francisco 
-- Bestsellers of the hotel include drunken prawn , lasagne etc . (MNO Hotel)</p>
-
-<p>Expected result 
-Only MNO hotel from the above result is relevant accoring to the food aspect . </p>
-
-<p>Query :
-How to eliminate the other hotel which are mapped due to location ?</p>
-",Vectorization & Embeddings,improve word mover distance similarity python provide similarity score using weighted sentence word mover distance used identify similarity text similarity used compare multiple text finding nearest similar text however wa unable customise algorithm following eliminate location gpe identified spacy text weightage comparing similarity give weightage feature first sentence text rather feature second sentence second sentence third particular example hotel description passed wmd similarity result identify description def restaurant chicago serving vegan food since jkl serving london new york chicago san francisco bestseller hotel include drunken prawn lasagne etc mno hotel expected result mno hotel result relevant accoring food aspect query eliminate hotel mapped due location
 Combine Word Embeddings with with topic-word distribution from LDA for text summarization,"<p>Im a newbie in NLP and i was wondering if it is a good idea to summarize a document that has already been classified into a certain topic through methods such as LDA by considering the Word Embedding retrieved from Word2Vec and the topic-word distribution that has already been generated, to come up with a sentence scoring algorithm. Does this sound like a good approach for creating a summary of a document?</p>
 ",Vectorization & Embeddings,combine word embeddings topic word distribution lda text summarization im newbie nlp wa wondering good idea summarize document ha already classified certain topic method lda considering word embedding retrieved word vec topic word distribution ha already generated come sentence scoring algorithm doe sound like good approach creating summary document
 Is there a faster way to lookup dictionary indices?,"<p>I am trying to look up dictionary indices for thousands of strings and this process is very, very slow. There are package alternatives, like <code>KeyedVectors</code> from <code>gensim.models</code>, which does what I want to do in about a minute, but I want to do what the package does more manually and to have more control over what I am doing.</p>
@@ -19280,6 +19903,10 @@ one_hot_vector = [0]*3</p>
 <p>text 3 vector representation: [1,0,0]</p>
 <p>this example has 3 clusters - the clusters I have would be 1000 dimensions in length.</p>
 ",Vectorization & Embeddings,implement brown cluster represenations text dicts feature text classifier elegantly trying implement version brown cluster series review text semeval using owoputi et al publicly available twitter cluster look like following bitstring indicates cluster cluster extracted dictionary relevant bitstring key list token value e g missing part one hot encode text mapping dictionary key index vector array word occurs text word occurs cluster value cluster changed e g one hot vector cluster vector index mine cluster vector index love like want need cluster vector index dog pet cat puppy text hate cat text vector representation text dog love text vector representation text dream sheep text vector representation example ha cluster cluster would dimension length
+OOV (Out Of Vocabulary) word embeddings for Fasttex in low RAM environments,"<p>Is there a way to obtain the vectors for OOV (Out Of Vocabulary) words using fasttext but without loading all the embeddings into memory?</p>
+
+<p>I normally work in low RAM environments (&lt;10GB of RAM) so loading a 7GB model into memory is just impossible. To use word embeddings without using that much RAM one can read a <code>.vec</code> (which is normally a plain-text) file line by line and store it into a database (which you later access to request a word vector). However to obtain OOV vectors with fasttext you need to use the <code>.bin</code> files and load then into memory. Is there a way you can avoid loading the whole <code>.bin</code> file?</p>
+",Vectorization & Embeddings,oov vocabulary word embeddings fasttex low ram environment way obtain vector oov vocabulary word using fasttext without loading embeddings memory normally work low ram environment gb ram loading gb model memory impossible use word embeddings without using much ram one read normally plain text file line line store database later access request word vector however obtain oov vector fasttext need use file load memory way avoid loading whole file
 CNN on tfidf as input,"<p>I am working on fake news detection using CNN, I am new to ccoding CNNs in keras and tensorflow. I need help regarding creating a CNN that takes input as statements in form of vectors each of length 100 and outputs 0 or 1 depending on its predicted value as false or true.</p>
 
 <pre><code>X_train.shape
@@ -20189,6 +20816,45 @@ Literary author classification from book content,"<p>I'm trying to build a model
 
 <p>Are there other strategies, maybe better suited to work with long texts? Should I consider trimming the dataset in a certain way?</p>
 ",Vectorization & Embeddings,literary author classification book content trying build model able classify author book fiction book moment looking text first worked author least book dataset wa book written author total went pretty great decided raise stake lowering threshold book database author book way classified book follows removed punctuation newlines extra space stopwords every text extracted feature sklearn countvectorizer tfidfvectorizer approach f score wa book db book db case used sgd model scikit learn training larger dataset wa much slower decided get random word book use decreased training time minute minute enabled try something different big difference various metric decided try remove tfidf feature using countvectorizer got f score sure happening expectation wa tfidf would make thing easier therefore better score theory tfidf help sparsity matrix clue removing improved score instead strategy maybe better suited work long text consider trimming dataset certain way
+How can I apply histwords to my own corpus of text?,"<p>I recently come across this paper ( <a href=""https://arxiv.org/pdf/1605.09096.pdf"" rel=""nofollow noreferrer"">https://arxiv.org/pdf/1605.09096.pdf</a> ) and I have been Reading through the GitHub ( <a href=""https://github.com/williamleif/histwords"" rel=""nofollow noreferrer"">https://github.com/williamleif/histwords</a> ) but it is still not so clear to me how I can apply it to my own data. My data comes in the format of the following:</p>
+
+<pre><code>#### 2008
+   text_2008 = pd.DataFrame({'dat1': [""I love machine learning in 2008. Its awesome."",
+            ""I love coding in Python in 2008"",
+            ""I love building chatbots in 2008"",
+            ""they chat amagingly well""]})
+    ID_2008 = pd.DataFrame({'dat2': [1,2,3,4]})
+
+    my_actual_data_format_2008 = text.join(ID)
+
+#### 2009
+   text_2009 = pd.DataFrame({'dat1': [""I love machine learning. Its awesome."",
+            ""I love coding in Python"",
+            ""I love building chatbots"",
+            ""they chat amagingly well""]})
+    ID_2009 = pd.DataFrame({'dat2': [1,2,3,4]})
+
+    my_actual_data_format_2009 = text.join(ID)
+
+
+#### 2010
+   text_2010 = pd.DataFrame({'dat1': [""I love machine learning more in 2010. Its awesome."",
+            ""I love coding in Python in 2010"",
+            ""I love building chatbots in 2010"",
+            ""they chat amagingly well""]})
+    ID_2010 = pd.DataFrame({'dat2': [1,2,3,4]})
+
+    my_actual_data_format_2010 = text.join(ID)
+</code></pre>
+
+<p>So I have multiple pandas data frames with each row containing an <code>ID</code> and <code>text</code> column.</p>
+
+<p>From my understanding, the sgns takes .txt files not pandas data frames. ( <a href=""https://github.com/williamleif/histwords/tree/master/sgns"" rel=""nofollow noreferrer"">https://github.com/williamleif/histwords/tree/master/sgns</a> ) </p>
+
+<p>From the homepage it states ""If you want to learn historical embeddings for new data, the code in the sgns directory is recommended""</p>
+
+<p>If somebody can give me a push in the right direction, that would be awesome! Should I save my pandas rows ""text"" as .txt files?</p>
+",Vectorization & Embeddings,apply histwords corpus text recently come across paper reading github still clear apply data data come format following multiple panda data frame row containing column understanding sgns take txt file panda data frame homepage state want learn historical embeddings new data code sgns directory recommended somebody give push right direction would awesome save panda row text txt file
 Is it possible to compare similarity scores across two word embeddings repository?,"<p>In my study, I am exploring if there is a statistically significant ideological bias in one set of media as compared to another. I was hoping to explore this using the word embeddings approach. </p>
 
 <p>Let us take US and UK news media for example. If I build a corpora of all US media articles for a given time period and a separate corpora of all UK media articles for the same period, train them each using the same word embeddings algorithm (<code>gensim/word2vec/fasttext</code>) with the same set of parameters (e.g., window and vector size), is it possible to test if cosine similarity obtained between a pair of words in the US corpora is statistically significantly larger than cosine similarity obtained between the same pair of words in the UK corpora?</p>
@@ -20457,6 +21123,8 @@ My source of doubt arises from this line in Gensim documentation (in Word2Vec De
 
 <p>Does this mean the model on gensim is not fully trained? Is it different from the official embeddings by Mikolov? </p>
 ",Vectorization & Embeddings,gensim word vec model standard model mikolov implementing paper compare performance paper uathor say dimensional pre trained word vec vector mikolov et al wondering whether pretrained word vec gensim model pretrained embeddings official google site googlenews vector negative bin gz file source doubt arises line gensim documentation word vec demo section fetch word vec model trained part google news dataset covering approximately million word phrase doe mean model gensim fully trained different official embeddings mikolov
+How to calculate semantic similarity of short text corpora?,"<p>What is the proper approach to unsupervised comparison of semantic similarity between two short text corpora? Comparing LDA topic distributions for the two doesn't seem to be a solution, as for short documents the generated topics do not really grasp the semantics very well. Chunking didn't help, because  following tweets don't have to be on the same topic. Is e.g. creating a matrix of cosine similarities between document TF-IDFs in these corpora a good way to go?</p>
+",Vectorization & Embeddings,calculate semantic similarity short text corpus proper approach unsupervised comparison semantic similarity two short text corpus comparing lda topic distribution two seem solution short document generated topic really grasp semantics well chunking help following tweet topic e g creating matrix cosine similarity document tf idf corpus good way go
 "InvalidArgumentError: Incompatible shapes: [10,2856,2856] vs. [10,2856]","<p>This is more of a conceptual misunderstanding, but when I go through the embedding layer, my 2-D x_train turns into a 3-D matrix. However, how can I then fit it to my model with y_train that is still 2-D? I tried flatten() to a 2-D matrix but it didn't work.</p>
 
 <p>Here is my code:</p>
@@ -20641,6 +21309,21 @@ doc2 = ""the quicker dogs pose a serious problem for lazy dogs the quicker dogs 
 ",Vectorization & Embeddings,doe euclidean distance change string double problem trying answer question consider two document b whose euclidean distance cosine similarity c using normalization raw term frequency create new document appending anotherdocument b appending b euclidean distance b using raw term frequency solution output tfs doc quicker brown dog easily jump lazy seems like work proceed calculate euclidean distance first doc doc doc doc shown give score try verify correct using sklearn like get output translates round manual result problem try answer initial question double string e g get output manual technique using sklearn method vectorizer using one method ed stay using double correct solution cause difference really stuck thanks advance
 Cosine similarity of a new text document with existing list of documents,"<p>I have a dataframe of 1000 text documents with corresponding keywords.I want to extract keywords of a new document by finding the keywords corresponding to the documents in the list which is most similar.</p>
 ",Vectorization & Embeddings,cosine similarity new text document existing list document dataframe text document corresponding keywords want extract keywords new document finding keywords corresponding document list similar
+Applying LSA on term document matrix when number of documents are very less,"<p>I have a term-document matrix (X) of shape <code>(6, 25931)</code>. The first 5 documents are my source documents and the last document is my target document. The column represents counts for different words in the vocabulary set. I want to get the cosine similarity of the last document with each of the other documents.  </p>
+
+<p>But since SVD produces an S of size <code>(min(6, 25931),)</code>, If I used the S to reduce my X, I get a 6 * 6 matrix. But In this case, I feel that I will be losing too much information since I am reducing a vector of size <code>(25931,)</code> to <code>(6,)</code>. </p>
+
+<p>And when you think about it, usually, the number of documents will always be less than number of vocabulary words. In this case, using SVD to reduce dimensionality will always produce vectors that are of size <code>(no documents,)</code>. </p>
+
+<p>According to everything that I have read, when SVD is used like this on a term-document matrix, it's called LSA. </p>
+
+<ol>
+<li>Am I implementing LSA correctly? </li>
+<li>If this is correct, then is there any other way to reduce the dimensionality and get denser vectors where the size of the compressed vector is greater than <code>(6,)</code>?</li>
+</ol>
+
+<p>P.S.: I also tried using <code>fit_transform</code> from <code>sklearn.decomposition.TruncatedSVD</code> which expects the vector to be of the form <code>(n_samples, n_components)</code> which is why the shape of my term-document matrix is <code>(6, 25931)</code> and not <code>(25931, 6)</code>. I kept getting a <code>(6, 6)</code> matrix which initially confused me. But now it makes sense after I remembered the math behind SVD. </p>
+",Vectorization & Embeddings,applying lsa term document matrix number document le term document matrix x shape first document source document last document target document column represents count different word vocabulary set want get cosine similarity last document document since svd produce size used reduce x get matrix case feel losing much information since reducing vector size think usually number document always le number vocabulary word case using svd reduce dimensionality always produce vector size according everything read svd used like term document matrix called lsa implementing lsa correctly correct way reduce dimensionality get denser vector size compressed vector greater p also tried using expects vector form shape term document matrix kept getting matrix initially confused make sense remembered math behind svd
 Which additional features to use apart from Doc2Vec embeddings for Document Similarity?,"<p>So I am doing a project on document similarity and right now my features are only the embeddings from Doc2Vec. Since that is not showing any good results, after hyperparameter optimization and word embedding before the doc embedding... What other features can I add, so as to get better results?
 My dataset is 150 documents, 500-700 words each, with 10 topics(labels), each document having one topic. Documents are labeled on a document level, and that labeling is currently used only for evaluation purposes.</p>
 
@@ -20863,6 +21546,20 @@ model.add(layers.Dense(3, activation='sigmoid'))
 
 <p>Lisa </p>
 ",Vectorization & Embeddings,vectorize list string word vec feed kera sequential layer trying built custom made word embedding model fasttext represents data list sentence vector feed kera cnn abusive language detection tokenised data stored list like currently applying fasttext model like perform obviously document matrix fit input kera model stuck running idea make output embedding fit input kera thank much advance guy best lisa
+Python dictionary creation?,"<p>Hey so currently I've been trying to convert the text containing column of a csv file into a dictionary. From here I would then like to create word embeddings (&amp; potentially embeddings for subparts of words. ie. dictionary => dict - tion - nary) What would be the best way to go about this, what frameworks would work best? I have attached my current code and an example of one row of the database.</p>
+
+<pre><code># First we must input the data, we can use pandas to do this.
+import pandas as pd
+# Our data does not have headers so we will fabricate ones ourself during the importing
+data = pd.read_csv('agr_en_train.csv', header=None, names =['Unique_ID', 'Text', 'Aggression-level'])
+# We can now check the data has loaded properly.
+data
+
+{0}{facebook_corpus_msr_1723796}    {Well said sonu..you have courage to stand agai...} {OAG}
+</code></pre>
+
+<p>Please let me know if you require any other info the answer this question more adeptly. Additionally are there any recommended pre-created dictionaries. How would I utilise them, an answer or direction to any sources that would be helpful are greatly appreciated!</p>
+",Vectorization & Embeddings,python dictionary creation hey currently trying convert text containing column csv file dictionary would like create word embeddings potentially embeddings subpart word ie dictionary dict tion nary would best way go framework would work best attached current code example one row database please let know require info answer question adeptly additionally recommended pre created dictionary would utilise answer direction source would helpful greatly appreciated
 How to increase the similarity between specific words in word2vec?,"<p>I'm new to use Word2Vec.</p>
 
 <p>I am very curious to know how to increase the similarity between the specific words in word2vec.</p>
@@ -21687,6 +22384,117 @@ nlp.vocab.vectors.data[6, :]   # gives me the 6th embedding
 
 <p>but I'm hoping there's a better approach.</p>
 ",Vectorization & Embeddings,spacy retrieve word key associated particular index given index corresponding row retrieve corresponding word key word key map th embedding could sort brute force search iterating like hoping better approach
+NLP clustering documents,"<p>I am using HDBSCAN algorithm to create clusters from the documents I have. But to create a vector matrix from the words, I am using tf-idf algorithm and want to use GloVe or Word2vec(because tf-idf based on BoW, so it can`t capture semantics). </p>
+
+<p>Which method can I use - GloV, Word2vec or any other methods that will be appropriated for text clusterization?
+And how I can implement it?</p>
+
+<p>Any help will be highly appreciated! </p>
+
+<pre><code>nltk.download('stopwords')
+
+title = []
+synopses = []
+filename = ""twitter-test-dataset.csv""
+num_clusters = 10
+pkl_file = ""doc_cluster.pkl""
+generate_pkl = False
+
+# pre-process data
+with open(filename, 'r') as csvfile:
+    # creating a csv reader object
+    csvreader = csv.reader(csvfile)
+
+    # extracting field names through first row
+    fields = csvreader.next()
+
+    # extracting each data row one by one
+    duplicates = 0
+    for row in csvreader:
+        # removes the characters specified
+        line = re.sub(r'[.,""!]+', '', row[2], flags=re.MULTILINE)
+        line = re.sub(r'^RT[\s]+', '', line, flags=re.MULTILINE)  # removes RT
+        line = re.sub(r'https?:\/\/.*[\r\n]*', '',
+                    line, flags=re.MULTILINE)  # remove link
+        line = re.sub(r'[:]+', '', line, flags=re.MULTILINE)
+        line = (re.sub(
+            ""(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"", "" "", line, flags=re.MULTILINE))
+        line = filter(lambda x: x in string.printable,
+                    line)  # filter non-ascii characers
+        if line not in synopses:
+            synopses.append(line)
+            title.append(row[2])
+        else:
+            duplicates += 1
+
+print(""Removed "" + str(duplicates) + "" rows"")
+
+
+stopwords = nltk.corpus.stopwords.words('english')
+stemmer = SnowballStemmer(""english"")
+
+
+def tokenize_and_stem(text):
+    # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
+    tokens = [word for sent in nltk.sent_tokenize(
+        text) for word in nltk.word_tokenize(sent)]
+    filtered_tokens = []
+    # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
+    for**strong text** token in tokens:
+        if re.search('[a-zA-Z]', token):
+            filtered_tokens.append(token)
+    stems = [stemmer.stem(t) for t in filtered_tokens]
+    return stems
+
+
+def tokenize_only(text):
+    # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
+    tokens = [word.lower() for sent in nltk.sent_tokenize(text)
+            for word in nltk.word_tokenize(sent)]
+    filtered_tokens = []
+    # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
+    for token in tokens:
+        if re.search('[a-zA-Z]', token):
+            filtered_tokens.append(token)
+    return filtered_tokens
+
+
+totalvocab_stemmed = []
+totalvocab_tokenized = []
+
+for i in synopses:
+    # for each item in 'synopses', tokenize/stem
+    allwords_stemmed = tokenize_and_stem(i)
+    # extend the 'totalvocab_stemmed' list
+    totalvocab_stemmed.extend(allwords_stemmed)
+
+    allwords_tokenized = tokenize_only(i)
+    totalvocab_tokenized.extend(allwords_tokenized)
+
+vocab_frame = pd.DataFrame(
+    {'words': totalvocab_tokenized}, index=totalvocab_stemmed)
+
+# print ""there are "" + str(vocab_frame.shape[0]) + "" items in vocab_frame""
+
+
+# define vectorizer parameters
+tfidf_vectorizer = TfidfVectorizer(max_df=0.8, max_features=200000,
+                                min_df=0.0, stop_words='english',
+                                use_idf=True, tokenizer=tokenize_and_stem, ngram_range=(1, 3))
+
+#CREATE TFIDF MATRIX
+tfidf_matrix = tfidf_vectorizer.fit_transform(synopses)
+terms = tfidf_vectorizer.get_feature_names()
+
+
+c = hdbscan.HDBSCAN(min_cluster_size=5)
+#PASS TFIDF_MATRIX TO HDBSCAN
+c.fit(tfidf_matrix)
+print(c.labels_)
+sys.exit()
+
+</code></pre>
+",Vectorization & Embeddings,nlp clustering document using hdbscan algorithm create cluster document create vector matrix word using tf idf algorithm want use glove word vec tf idf based bow capture semantics method use glov word vec method appropriated text clusterization implement help highly appreciated
 How to make part of the embedding matrix trainable and rest part as not trainable in pytorch?,"<p><strong>Codes are in Pytorch.</strong></p>
 
 <p>I want part of my embedding matrix to be trainable and I want rest part to freeze weights as they are pretrained vectors.</p>
@@ -23256,6 +24064,22 @@ My current method is:</p>
 
 <p>Is it possible to make the Universal Sentence Encoder retrain on my keywords and output different embeddings (for instance by setting <code>trainable = True</code>)?</p>
 ",Vectorization & Embeddings,possible retrain google universal sentence encoder take keywords account encoding sentence bit confused mean set loading universal sentence encoder small corpus different sentence given sentence want find similar sentence current method load module encode sentence find closest sentence using cosine similarity performs decent would want model finetuned dictionary becuase certain keywords important others thus classification problem looking existing example retrainin module classification possible make universal sentence encoder retrain keywords output different embeddings instance setting
+How to free the memory taken by a pyspark model (JavaModel)?,"<p>As described, I load a trained word2vec model through pyspark. </p>
+
+<pre><code>word2vec_model = Word2VecModel.load(""saving path"")
+</code></pre>
+
+<p>After using that, I want to delete it since it will take much memory space on single node (I used the findSynonyms function, and the doc says it should be local used only)
+I tried to use</p>
+
+<pre><code>del word2vec_model
+gc.collect()
+</code></pre>
+
+<p>but it seems that doesn't word. And it's not an rdd file, I can't use .unpersist(). I didn't find any like unload() fuction in the doc.</p>
+
+<p>Anyone could help me or give me some advice?</p>
+",Vectorization & Embeddings,free memory taken pyspark model javamodel described load trained word vec model pyspark using want delete since take much memory space single node used findsynonyms function doc say local used tried use seems word rdd file use unpersist find like unload fuction doc anyone could help give advice
 Requirement to compare the BDD Test cases to the crawled page objects and map the bdd steps to page objects and pages automatically,"<p>I am creating a Keras based nueral networking on top of Tensorflow. My requirement is to take 2 data sets as below and compare</p>
 
 <ol>
@@ -25014,6 +25838,12 @@ from sklearn.pipeline import Pipeline
 
 <p>How would this code work?</p>
 ",Vectorization & Embeddings,nlp use two vectorizers bag word tfidf sklearn pipeline trying solve text classification problem using also wanted check vectorizer would work best data bag word tf idf far using two vectorizers separately one comparing result thought maybe using would make code look organized noticed suggested code sklearn tutorial module official page includes two vectorizers bag word impression wa need choose one vectorizer feature mean data get vectorized twice simple term frequency next tf idf would code work
+Confusion matrix for LDA,"<p>I’m trying to check the performance of my LDA model using a confusion matrix but I have no clue what to do.  I’m hoping someone can maybe just point my in the right direction. </p>
+
+<p>So I ran an LDA model on a corpus filled with short documents. I then calculated the average vector of each document and then proceeded with calculating cosine similarities. </p>
+
+<p>How would I now get a confusion matrix?  Please note that I am very new to the world of NLP. If there is some other/better way of checking the performance of this model please let me know.</p>
+",Vectorization & Embeddings,confusion matrix lda trying check performance lda model using confusion matrix clue hoping someone maybe point right direction ran lda model corpus filled short document calculated average vector document proceeded calculating cosine similarity would get confusion matrix please note new world nlp better way checking performance model please let know
 Check if a substring of a string is in a list of strings in python,"<p>I have a dictionary of foods: </p>
 
 <pre><code>foods={
@@ -26028,6 +26858,23 @@ Caused by: java.lang.UnsupportedOperationException
     at org.deeplearning4j.models.sequencevectors.SequenceVectors$VectorCalculationsThread.run(SequenceVectors.java:1274)
 </code></pre>
 ",Vectorization & Embeddings,java lang runtimeexception java lang unsupportedoperationexceptionat error training glove dl j want work glove embedding english sentence training showing error java lang runtimeexception java lang unsupportedoperationexceptionat glove embedding unsupervised model encode english text vector dl j java library training glove model error showing
+How to calculate the similarity measure of text document?,"<p>I have CSV file that looks like:</p>
+
+<pre><code>idx         messages
+112  I have a car and it is blue
+114  I have a bike and it is red
+115  I don't have any car
+117  I don't have any bike
+</code></pre>
+
+<p>I would like to have the code that reads the file and performs the similarity difference.</p>
+
+<p>I have looked into many posts regarding this such as <a href=""https://stackoverflow.com/questions/8897593/how-to-compute-the-similarity-between-two-text-documents"">1</a> <a href=""https://stackoverflow.com/questions/52090786/how-to-measure-the-similarity-of-two-documents-given-the-similarity-of-each-pa"">2</a> <a href=""https://stackoverflow.com/questions/6069922/measuring-similarity-between-document-sets"">3</a> <a href=""https://stackoverflow.com/questions/9453731/how-to-calculate-distance-similarity-measure-of-given-2-strings"">4</a> but either it is hard for me to understand or not exactly what I want. </p>
+
+<p>based on some posts and webpages that saying ""a simple and effective one is Cosine similarity"" or ""Universal sentence encoder"" or ""Levenshtein distance"". </p>
+
+<p>It would be great if you can provide your help with code that I can run in my side as well. Thanks</p>
+",Vectorization & Embeddings,calculate similarity measure text document csv file look like would like code read file performs similarity difference looked many post regarding based post webpage saying simple effective one cosine similarity universal sentence encoder levenshtein distance would great provide help code run side well thanks
 Python3 - Doc2Vec: Get document by vector/ID,"<p>I've already built my Doc2Vec model, using around 20.000 files. I'm looking for a way to find the string representation of a given vector/ID, which might be similar to Word2Vec's index2entity. I'm able to get the vector itself, using model['n'], but now I'm wondering whether there's a way to get some sort of string representation of it as well.</p>
 ",Vectorization & Embeddings,python doc vec get document vector id already built doc vec model using around file looking way find string representation given vector id might similar word vec index entity able get vector using model n wondering whether way get sort string representation well
 Using cosine similarity for classifying documents,"<p>I have a set of files for five different categories and most of them are not labelled correctly.Objective is to predict the correct category of the file whenever the same is uploaded.I used cosine similarity along with tf -idf to predict the class of the document with which cosine similarity is the maximum as of now i am getting good results but really not sure how well this will work down the road. Also why isnt cosine similarity used in building document classifiers instead of machine learning models when the categories of files are labelled correctly?Would really appreciate your feedback on my approach as well as your answer to the question.</p>
@@ -26489,6 +27336,45 @@ is there a way to export the Word2Vec model's vectors to the format that Embeddi
 
 <p>Thanks!</p>
 ",Vectorization & Embeddings,visualize word vec model using embedding projector best way visualize word vec model using tensorflow embedding projector way export word vec model vector format embedding projector expects built function tensorflow thanks
+Do I need to adjust for length while comparing cosine similarity across different pairs of documents?,"<p>Assume that I have two documents, A and B, and each document has two versions, 1 and 2. I calculate the cosine similarities for (A1, A2) and (B1, B2). Let Sa = cosine(A1, A2), and Sb = cosine(B1, B2).</p>
+
+<p>If Sa &lt; Sb, can I say that there has been a greater change or update for Document A than Document B? </p>
+
+<p>A paper states that: ""The longer a pair of documents, the more probable a word is included in both documents, leading to a lower likelihood that the documents will differ (see appendix B for an analytical proof)."" The paper can be found <a href=""https://onlinelibrary.wiley.com/doi/full/10.1111/j.1475-679X.2010.00396.x"" rel=""nofollow noreferrer"">HERE</a>. </p>
+
+<p>Is this true? This statement is likely true for the Jaccard similarity since the size of the vocabulary is limited. However, the cosine similarity is an angle, and intuitively the length of the documents shouldn't matter. If this is true,  what is the best way to adjust the similarity scores for length so that I can make a comparison across different pairs of documents. Thank you!   </p>
+
+<p>I run some stats based on 22861 pairs. Indeed, the doc length and the similarity are highly positively correlated. 
+Averages: </p>
+
+<pre><code>WC2          4829.637374
+WCl          4389.449193
+WCA          4609.543283
+Cosine         0.750225
+CosineR        0.786806
+Jaccard        0.606962
+JaccardR       0.653031
+</code></pre>
+
+<p>Where:</p>
+
+<p>WC2 is the clean word count of version2, excluding stopwords, numbers, and punctuations. 
+WCA is the average(WC1, and WC2). 
+Cosine is the clean cosine similarity based on the clean words.<br>
+CosineR is the cosine similarity based on all tokens(including stopwords, numbers, and punctuations). </p>
+
+<p>Here is the Pearson correlation matrix: </p>
+
+<pre><code>                WC2       WCl       WCA    Cosine   CosineR   Jaccard  JaccardR
+WC2       1.000000  0.886743  0.972220  0.121300  0.122131  0.107936  0.123040
+WCl       0.886743  1.000000  0.970310  0.238503  0.257914  0.220078  0.254090
+WCA       0.972220  0.970310  1.000000  0.184233  0.194497  0.167911  0.193036
+Cosine    0.121300  0.238503  0.184233  1.000000  0.978050  0.982066  0.971082
+CosineR   0.122131  0.257914  0.194497  0.978050  1.000000  0.948325  0.981853
+Jaccard   0.107936  0.220078  0.167911  0.982066  0.948325  1.000000  0.975908
+JaccardR  0.123040  0.254090  0.193036  0.971082  0.981853  0.975908  1.000000
+</code></pre>
+",Vectorization & Embeddings,need adjust length comparing cosine similarity across different pair document assume two document b document ha two version calculate cosine similarity b b let sa cosine sb cosine b b sa sb say ha greater change update document document b paper state longer pair document probable word included document leading lower likelihood document differ see appendix b analytical proof paper found true statement likely true jaccard similarity since size vocabulary limited however cosine similarity angle intuitively length document matter true best way adjust similarity score length make comparison across different pair document thank run stats based pair indeed doc length similarity highly positively correlated average wc clean word count version excluding stopwords number punctuation wca average wc wc cosine clean cosine similarity based clean word cosiner cosine similarity based token including stopwords number punctuation pearson correlation matrix
 What is exactly novel object captioning? And why 8 classes in MS-COCO are excluded in this task?,"<p>I am working with image captioning but I am having a hard time to understand precisely the term <code>novel object captioning</code>. Is this something that we trained a model on sentence-description pairs, and then apply to a dataset with objects that have never appeared in training process? I read this from <a href=""https://arxiv.org/pdf/1803.09845.pdf"" rel=""nofollow noreferrer"">Neural Baby Talk</a>. <a href=""https://arxiv.org/pdf/1511.05284.pdf"" rel=""nofollow noreferrer"">DCC</a> also states that in Introduction:</p>
 
 <blockquote>
@@ -27240,12 +28126,6 @@ Character-Word Embeddings from lm_1b in Keras,"<p>I would like to use some pre-t
 
 <p>Is there a simple manner to use these word/char embeddings in keras and/or to construct the character/word embedding portion of the model in keras such that further layers may be added for other NLP tasks?</p>
 ",Vectorization & Embeddings,character word embeddings lm b kera would like use pre trained word embeddings kera nn model published google well known article provided code train new model well embeddings however clear documentation retrieve embedding vector given string character word simple python function call much documentation seems center dumping vector file entire sentence presumably sentimental analysis far seen feed pretrained embeddings following syntax however converting different file structure quite clear several softmax output uncertain one would belong furthermore align word input dictionary word simple manner use word char embeddings kera construct character word embedding portion model kera layer may added nlp task
-Concepts to measure text &quot;relevancy&quot; to a subject?,"<p>I do side work writing/improving a research project web application for some political scientists. This application collects articles pertaining to the U.S. Supreme Court and runs analysis on them, and after nearly a year and half, we have a database of around 10,000 articles (and growing) to work with.</p>
-
-<p>One of the primary challenges of the project is being able to determine the ""relevancy"" of an article - that is, the primary focus is the federal U.S. Supreme Court (and/or its justices), and not a local or foreign supreme court. Since its inception, the way we've addressed it is to primarily parse the title for various explicit references to the federal court, as well as to verify that ""supreme"" and ""court"" are keywords collected from the article text. Basic and sloppy, but it actually works fairly well. That being said, irrelevant articles can find their way into the database - usually ones with headlines that don't explicitly mention a state or foreign country (the Indian Supreme Court is the usual offender).</p>
-
-<p>I've reached a point in development where I can focus on this aspect of the project more, but I'm not quite sure where to start. All I know is that I'm looking for a method of analyzing article text to determine its relevance to the federal court, and nothing else. I imagine this will entail some machine learning, but I've basically got no experience in the field. I've done a little reading into things like tf-idf weighting, vector space modeling, and word2vec (+ CBOW and Skip-Gram models), but I'm not quite seeing a ""big picture"" yet that shows me how just how applicable these concepts can be to my problem. Can anyone point me in the right direction?</p>
-",Vectorization & Embeddings,concept measure text relevancy subject side work writing improving research project web application political scientist application collect article pertaining u supreme court run analysis nearly year half database around article growing work one primary challenge project able determine relevancy article primary focus u supreme court local foreign supreme court since inception way addressed primarily parse title various explicit reference court well verify supreme court keywords collected article text basic actually work fairly well said irrelevant article find way database usually one headline explicitly mention state foreign country indian supreme court usual offender reached point development focus aspect project quite sure start know looking method analyzing article text determine relevance court nothing else imagine entail machine learning basically got experience field done little reading thing like tf idf weighting vector space modeling word vec cbow skip gram model quite seeing big picture yet show applicable concept problem anyone point right direction
 How does Pyspark Calculate Doc2Vec from word2vec word embeddings?,"<p>I have a pyspark dataframe with a corpus of ~300k unique rows each with a ""doc"" that contains a few sentences of text in each.</p>
 
 <p>After processing, I have a 200 dimension vectorized representation of each row/doc. My NLP Process: </p>
@@ -27792,6 +28672,19 @@ Desired distribution of weights in word embedding vectors,"<p>I am training my o
 
 <p>What I imagine is a single ""good"" vector has various weights across the entire range of -1 to 1. For any single vector it may have significantly more dimensions near -1 or 1. However, the weight distribution of an entire corpus would balance out vectors that randomly have more values towards one end of the spectrum or another, so that the weight distribution of the entire corpus is approximately evenly distributed across the entire corpus. Is this intuition correct? </p>
 ",Vectorization & Embeddings,desired distribution weight word embedding vector training embedding vector focused academic dataset wos whether vector generated via word vec fasttext particularly matter say vector dimension wondering desired distribution weight within vector ought averaged across entire corpus vector experiment looking distribution sample vector came conclusion uncertain absolutely hold one train model epoch vector change significantly initiated value easy see start vector weight every category thus weight distribution centered around point typically trained corpus one train model document train vector show significant correlation typically visualize random set vector see stripe vector weight either positive negative imagine single good vector ha various weight across entire range single vector may significantly dimension near however weight distribution entire corpus would balance vector randomly value towards one end spectrum another weight distribution entire corpus approximately evenly distributed across entire corpus intuition correct
+Does the Google News Word2Vec model take up storage every time you run it?,"<p>This may seem like an odd question but I'm new to this so thought I'd ask anyway.</p>
+
+<p>I want to use this Google News model over various different files on my laptop. This means I will be running this line over and over again in different Jupyter notebooks: </p>
+
+<p>model=word2vec.KeyedVectors.load_word2vec_format(""GoogleNews-vectors-negative300.bin"",binary=True)</p>
+
+<p>Does this eat 1) Storage (I've noticed my storage filling up exponentially for no reason) 
+2) Less memory than it would otherwise if I close the previous notebook before running the next.</p>
+
+<p>My storage has gone down by 50GB in one day and the only thing I have done on this computer is run the Google News model (I didn't do most_similar()). Restarting and closing notebooks hasn't helped and there aren't any big files on the laptop. Any ideas?</p>
+
+<p>Thanks. </p>
+",Vectorization & Embeddings,doe google news word vec model take storage every time run may seem like odd question new thought ask anyway want use google news model various different file laptop mean running line different jupyter notebook model word vec keyedvectors load word vec format googlenews vector negative bin binary true doe eat storage noticed storage filling exponentially reason le memory would otherwise close previous notebook running next storage ha gone gb one day thing done computer run google news model similar restarting closing notebook helped big file laptop idea thanks
 Data augmentation for text classification,"<p>What is the current state of the art data augmentation technic about text classification?</p>
 
 <p>I made some research online about how can I extend my training set by doing some data transformation, the same we do on image classification.
@@ -28025,6 +28918,14 @@ cosine_similarity = np.dot(userAvec['president'], userBvec['president'])/(np.lin
 
 <p>Should it be done with <code>make_trans_primitive</code> or it would be better to prepare data some other way?</p>
 ",Vectorization & Embeddings,using featuretools text data word count tfidf featuretools best relational categorical numerical data regarding text seems count text length basic stats would best pipeline preparing textual data featuretools done would better prepare data way
+Predicting correct cluster for unseen data using a trained K-Means model,"<p>I know that K-Means is a lazy learner and will have to be retrained from scratch with new points, but still would like to know if there's any workaround to use a trained model to predict on a new unseen data.</p>
+
+<p>I'm using K-Means algorithm to cluster a medical corpus. I'm creating a term-document matrix to represent this corpus. Before feeding the data to kmeans algorithm, I perform truncated singular value decomposition on the data for dimensionality reduction. I've been thinking if there's a way to cluster a new unseen document without retraining the entire model. </p>
+
+<p>To get the vector representation of the new document and predict its cluster using the trained model, I need to ensure that it has the same vocabulary as that of the trained model and also maintains the same order in the term-document matrix. This can be done considering that these documents have a similar kind of vocabulary. But, how do I get SVD representation of this document? Now here's where my understanding gets a little shaky, so correct me if I'm wrong but to perform SVD on this vector representation, I'll need to append it to the original term-document matrix. Now, if I append this new document to original term-document matrix and perform SVD on it to get the vector representation with limited features (100 in this case), then I'm not sure how things will change? Will the new features selected by the SVD correspond semantically to that of the original ones? i.e. it won't make sense to measure the distance of new document from cluster centroids (with 100 features) if the corresponding features grasp different concepts.  </p>
+
+<p>Is there a way to use a trained kmeans model for new text data? Or any other better-suited clustering approach for this task?</p>
+",Vectorization & Embeddings,predicting correct cluster unseen data using trained k mean model know k mean lazy learner retrained scratch new point still would like know workaround use trained model predict new unseen data using k mean algorithm cluster medical corpus creating term document matrix represent corpus feeding data kmeans algorithm perform truncated singular value decomposition data dimensionality reduction thinking way cluster new unseen document without retraining entire model get vector representation new document predict cluster using trained model need ensure ha vocabulary trained model also maintains order term document matrix done considering document similar kind vocabulary get svd representation document understanding get little shaky correct wrong perform svd vector representation need append original term document matrix append new document original term document matrix perform svd get vector representation limited feature case sure thing change new feature selected svd correspond semantically original one e make sense measure distance new document cluster centroid feature corresponding feature grasp different concept way use trained kmeans model new text data better suited clustering approach task
 Find all potential similar documents out of a list of documents using clustering,"<p>I'm working with the quora question pairs csv file which I loaded into a pd dataframe and isolated the qid and question so my questions are in this form : </p>
 
 <pre><code>0        What is the step by step guide to invest in sh...
@@ -28973,6 +29874,58 @@ samsung                   sam sung
 <p>Please not, this is just a sample data, the strings are more complex than these. 
 How can I leverage packages such as Cosine Similarity and Sequence Matcher to make this happen?</p>
 ",Vectorization & Embeddings,find match similar element two column python data set like notice column contains almost similar word different term format space want technique cosine similarity sequence matcher match column result becomes like please sample data string complex leverage package cosine similarity sequence matcher make happen
+Finding cosine similarity of documents and their removal from R dataframe,"<p>I am working on the data frame which contains data per row doc number and text only. This data was exported from  xml file. The data is of form dataframe in variable <code>text_df</code> :</p>
+
+<p>line/ text<br>
+       </p>
+
+<pre><code> 1 when uploading objective file bugzilla se
+ 2 spelling mistake docs section searching fo…
+ 3 editparams cgi won save updates iis instal…
+ 4 editparams cgi won save updates            
+ 5 rfe unsubscribe from bug you reported      
+ 6 unsubscribe from bug you reported  
+</code></pre>
+
+<p>I am using the following code to identify and remove the duplicates. </p>
+
+<pre><code>doc_set_1 = text_df
+it1 = itoken(doc_set_1$text, progressbar = FALSE)
+
+# specially take different number of docs in second set
+doc_set_2 = text_df
+it2 = itoken(doc_set_2$text, progressbar = FALSE)
+it = itoken(text_df$text, progressbar = FALSE)
+ v = create_vocabulary(it) %&gt;% prune_vocabulary(doc_proportion_max = 
+ 0.1, term_count_min = 5)
+ vectorizer = vocab_vectorizer(v)
+ dtm1 = create_dtm(it1, vectorizer)
+ dtm2 = create_dtm(it2, vectorizer)
+ d1_d2_cos_sim = sim2(dtm1, dtm2, method = ""cosine"", norm = ""l2"")
+  mat&lt;-(d1_d2_cos_sim)
+  mat[lower.tri(mat,diag=TRUE)] &lt;- 0
+  ## for converting a sparse matrix into dataframe
+  mdf&lt;- as.data.frame(as.matrix(mat))
+  datalist = list()
+  for (i in 1:nrow(mat)) {
+   t&lt;-which(mat[i,]&gt;0.8)
+   if(length(t)&gt;1){
+   datalist[[i]] &lt;- t # add it to your list
+      }
+    }
+
+  #Number of Duplicates Found
+  length(unique(unlist(datalist)))
+
+   tmdf&lt;- subset(mdf,select=-c(unique(unlist(datalist))))
+
+  # Removing the similar documents
+  text_df&lt;-text_df[names(tmdf),]
+  nrow(text_df)
+</code></pre>
+
+<p>This code takes lot of time for solving, Any suggestions to make it better are welcome. </p>
+",Vectorization & Embeddings,finding cosine similarity document removal r dataframe working data frame contains data per row doc number text data wa exported xml file data form dataframe variable line text using following code identify remove duplicate code take lot time solving suggestion make better welcome
 Making Predictions on single review from input text using saved CNN model,"<p>I am making a classifier based on a CNN model in Keras.</p>
 
 <p>I will use it in an application, where the user can load the application and enter input text and the model will be loaded from the weights and make predictions.</p>
@@ -30202,6 +31155,10 @@ tfidf = TfidfVectorizer(
 <pre><code>['e', 's', '_', 'a', 't', 'o', 'c', 'r', 'i', 'n']
 </code></pre>
 ",Vectorization & Embeddings,problem tfidf vectorizing tokenized document vectorizing text blob token following style see token attached information extracting key word using tfidf follows problem procedure extracting keywords suspecting vectorizer object removing parenthesis textblob thus parameter tfidf vectorizer object use order preserve information parenthesis update also tried however return sequence character instead token already tokenize
+Delete first column and then take them as a index pandas,"<p>I have a <code>word2vec</code> dataframe like this which saved from save_word2vec_format using Gensim under txt file. After using pandas to read this file. (Picture below). How to delete first row and make them as a index?
+My txt file: <a href=""https://drive.google.com/file/d/1O206N93hPSmvMjwc0W5ATyqQMdMwhRlF/view?usp=sharing"" rel=""nofollow noreferrer"">https://drive.google.com/file/d/1O206N93hPSmvMjwc0W5ATyqQMdMwhRlF/view?usp=sharing</a>
+<a href=""https://i.sstatic.net/5qS8O.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/5qS8O.png"" alt=""enter image description here""></a></p>
+",Vectorization & Embeddings,delete first column take index panda dataframe like saved save word vec format using gensim txt file using panda read file picture delete first row make index txt file
 "What should be the word vectors of token &lt;pad&gt;, &lt;unknown&gt;, &lt;go&gt;, &lt;EOS&gt; before sent into RNN?","<p>In word embedding, what should be a good vector representation for the start_tokens _PAD, _UNKNOWN, _GO, _EOS? </p>
 ",Vectorization & Embeddings,word vector token pad unknown go eos sent rnn word embedding good vector representation start token pad unknown go eos
 Get word-embedding dictionary with glove-python model,"<p>I trained a Glove model in python using Maciejkula's implementation (<a href=""http://github.com/maciejkula/glove-python"" rel=""nofollow noreferrer"">github repo</a>).
@@ -30642,17 +31599,6 @@ loading of fasttext pre trained german word embedding&#39;s .vec file throwing o
 
 <p>Is there any way I can load it?</p>
 ",Vectorization & Embeddings,loading fasttext pre trained german word embedding vec file throwing memory error using gensim load fasttext pre trained word embedding give memory error way load
-Assign categories to words based on similarities,"<p>I have corpus of about 1 million documents of sentences. Let's say:-</p>
-
-<blockquote>
-  <p>sentence 1: ""Thrilling contest between manchester city and manchester united ends in draw""</p>
-</blockquote>
-
-<p>I want to assign sentences based on categories like above message belongs to category of ""sports"" and again assigned it to further categories like ""football"" categories in sports. 
-I want to categorize texts into four categories ""entertainment"",""sports"",""politics"",""technology"". 
-I have used an approach of Word2vec but it can only tells the relationship between two sentences. How exactly I can do this? I don't have any predefined labelled data just only million of records.
-what I really want to do something like <a href=""https://www.paralleldots.com/text-classification"" rel=""nofollow noreferrer"">this</a></p>
-",Vectorization & Embeddings,assign category word based similarity corpus million document sentence let say sentence thrilling contest manchester city manchester united end draw want assign sentence based category like message belongs category sport assigned category like football category sport want categorize text four category entertainment sport politics technology used approach word vec tell relationship two sentence exactly predefined labelled data million record really want something like
 word2Vec and abbreviations,"<p>I am working on text classification task where my dataset contains a lot of abbreviations and proper nouns. For instance: <strong>Milka choc. bar</strong>.<br>
 My idea is to use bidirectional LSTM model with word2vec embedding.<br>
 And here is my problem how to code words, that not appears in the dictionary? 
@@ -30764,6 +31710,34 @@ pretrain = vocab_processor.fit(vocab)
 <p>Vocab is a list of  415657 words. And I got a vocabulary of 412722. I know that <code>vocab_processor.fit</code> won't take upper and lower case as two words. This is really strange. How is this happening?<br>
 I checked the vector file again. There are no overlapping words at all.</p>
 ",Vectorization & Embeddings,got smaller vocabulary using tf contrib learn preprocessing vocabularyprocessor firstly trained word embedding code think anything wrong created list store word vector file vocab list word got vocabulary know take upper lower case two word really strange happening checked vector file overlapping word
+How to generate Word2vec Vectors in Python?,"<p>I am trying to generate Word2vec vectors.</p>
+
+<p>I have pandas data frame.</p>
+
+<p>I transformed it into tokens.</p>
+
+<p><code>df[""token""]</code></p>
+
+<p>Used Word2vec from gensim.models</p>
+
+<pre><code>model = w2v.Word2Vec(
+sentences=df[""token""],
+seed=seed,
+workers=num_workers,
+size=num_features,
+min_count=min_word_count,
+window=context_size,
+sample=downsampling
+)
+</code></pre>
+
+<p>How do I transform my dataframe df now?</p>
+
+<p>That is what is the equivalent of doing </p>
+
+<pre><code>model.transform(df)
+</code></pre>
+",Vectorization & Embeddings,generate word vec vector python trying generate word vec vector panda data frame transformed token used word vec gensim model transform dataframe df equivalent
 How to make word2vec model&#39;s loading time and memory use more efficient?,"<p>I want to use Word2vec in a web server (production) in two different variants where I fetch two sentences from the web and compare it in real-time. For now, I am testing it on a local machine which has 16GB RAM. </p>
 
 <p>Scenario:
@@ -35159,6 +36133,46 @@ corpus_w2v_wmd_index = gensim.similarities.docsim.Similarity.load(utils.paths.PA
 scores_w2v = np.array(corpus_w2v_wmd_index[words])  
 </code></pre>
 ",Vectorization & Embeddings,gensim word vec wmd similarity dictionary using word vec million abstract dataset billion word find similar document use class trying retrieve best match using calculation spends time building dictionary piece log doe part dependent query way calculation edit training scoring phase code training saving disk loading scoring
+Why do we calculate cosine similarities using tf-idf weightings?,"<p>Suppose we are trying to measure similarity between two very similar documents.</p>
+
+<pre><code>Document A: ""a b c d""
+Document B: ""a b c e""
+</code></pre>
+
+<p>This corresponds to a term-frequency matrix </p>
+
+<pre><code>  a b c d e
+A 1 1 1 1 0
+B 1 1 1 0 1
+</code></pre>
+
+<p>where the cosine similarity on the raw vectors is the dot product of the two vectors A and B, divided by the product of their magnitudes:</p>
+
+<blockquote>
+  <p>3/4 = (1*1 + 1*1 + 1*1 + 1*0 + 1*0) / (sqrt(4) * sqrt(4)).</p>
+</blockquote>
+
+<p>But when we apply an <a href=""https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System"" rel=""nofollow noreferrer"">inverse document frequency</a> transformation by multiplying each term in the matrix by (log(N / df_i), where N is the number of documents in the matrix, 2, and df_i is the number of documents in which a term is present, we get a tf-idf matrix of</p>
+
+<pre><code>   a b c d    e
+A: 0 0 0 log2 0
+B: 0 0 0 0    1og2
+</code></pre>
+
+<p>Since ""a"" appears in both documents, it has an inverse-document-frequency value of 0. This is the same for ""b"" and ""c"". Meanwhile, ""d"" is in document A, but not in document B, so it is multiplied by log(2/1). ""e"" is in document B, but not in document A, so it is also multiplied by log(2/1).</p>
+
+<p>The cosine similarity between these two vectors is 0, suggesting the two are totally different documents. Obviously, this is incorrect. For these two documents to be considered similar to each other using tf-idf weightings, we would need a third document C in the matrix which is vastly different from documents A and B. </p>
+
+<p>Thus, I am wondering whether and/or why we would use tf-idf weightings in combination with a cosine similarity metric to compare highly similar documents. None of the tutorials or StackOverflow questions I've read have been able to answer this question.</p>
+
+<p><a href=""http://www.p-value.info/2013/02/when-tfidf-and-cosine-similarity-fail.html"" rel=""nofollow noreferrer"">This post</a> discusses similar failings with tf-idf weights using cosine similarities, but offers no guidance on what to do about them.</p>
+
+<p>EDIT: as it turns out, the guidance I was looking for was in the comments of that blog post. It recommends using the formula</p>
+
+<p>1 + log ( N / ni + 1)</p>
+
+<p>as the inverse document frequency transformation instead. This would keep the weights of terms which are in every document close to their original weights, while inflating the weights of terms which are not present in a lot of documents by a greater degree. Interesting that this formula is not more prominently found in posts about tf-idf.</p>
+",Vectorization & Embeddings,calculate cosine similarity using tf idf weighting suppose trying measure similarity two similar document corresponds term frequency matrix cosine similarity raw vector dot product two vector b divided product magnitude sqrt sqrt apply inverse document frequency transformation multiplying term matrix log n df n number document matrix df number document term present get tf idf matrix since appears document ha inverse document frequency value b c meanwhile document document b multiplied log e document b document also multiplied log cosine similarity two vector suggesting two totally different document obviously incorrect two document considered similar using tf idf weighting would need third document c matrix different document b thus wondering whether would use tf idf weighting combination cosine similarity metric compare highly similar document none tutorial stackoverflow question read able answer question post discus similar failing tf idf weight using cosine similarity offer guidance edit turn guidance wa looking wa comment blog post recommends using formula log n ni inverse document frequency transformation instead would keep weight term every document close original weight inflating weight term present lot document greater degree interesting formula prominently found post tf idf
 Can we use tf-idf and cosine similarity for document recommendation system?,"<p>The document dataset is having 9000 documents and its growing day by day, most of the documents having average 1-3 paragraphs. </p>
 
 <p>The idea is to make a recommendation with the help of user's past usage of documents. </p>
@@ -35361,6 +36375,26 @@ Training a network to find similar bodies of text,"<p>I have multiple text files
 
 <p>I was wondering how do the methods outlined above generally compare to each other in terms of results they produce and is doc2vec robust and accurate enough to consider it a viable option? Also I may be overlooking a good method for this.</p>
 ",Vectorization & Embeddings,training network find similar body text multiple text file trying find way identify similar body text file consist average sized paragraph top also data could used lables data go root neural network saimese network wa one option another possibility wa wondering wa using something doc vec order process paragraph removal stopwords attempting find similar file text based upon cosine doc vec wa wondering method outlined generally compare term result produce doc vec robust accurate enough consider viable option also may overlooking good method
+Cosine similarity vs Cosine distance,"<p>I have a set of documents as given in the example below.</p>
+
+<pre><code>doc1 = {'Science': 0, 'History': 0, 'Politics': 0.15,... 'Sports': 0}
+doc2 = {'Science': 0.3, 'History': 0.5, 'Politics': 0.1,... 'Sports': 0}
+</code></pre>
+
+<p>I clustered these documents using DBSCAN by using the aforementioned vectors (my vectors are mostly sparse vectors). I get to know that 'cosine similarity' is extremely efficient to compute for sparse vectors. However, according to the sklearn.DBSCAN fit documentation you should use a distance matrix as input to DBSCAN. Hence, I want to know if it is wrong if I used 'cosine similarity' instead of 'cosine distance'.</p>
+
+<p>Please let me know what is the most suitable approach for my problem. Is it DBSCAN using cosine distance <strong>or</strong> DBSCAN using cosine similarity?</p>
+
+<pre><code># Fit DBSCAN using cosine distance
+db = DBSCAN(min_samples=1, metric='precomputed').fit(pairwise_distances(feature_matrix, metric='cosine'))
+</code></pre>
+
+<p><strong>OR</strong></p>
+
+<pre><code># Fit DBSCAN using cosine similarity
+    db = DBSCAN(min_samples=1, metric='precomputed').fit(1-pairwise_distances(feature_matrix, metric='cosine'))
+</code></pre>
+",Vectorization & Embeddings,cosine similarity v cosine distance set document given example clustered document using dbscan using aforementioned vector vector mostly sparse vector get know cosine similarity extremely efficient compute sparse vector however according sklearn dbscan fit documentation use distance matrix input dbscan hence want know wrong used cosine similarity instead cosine distance please let know suitable approach problem dbscan using cosine distance dbscan using cosine similarity
 Tfidf Vectorizer not working,"<p>I have a corpus(<strong>Hotel Reviews</strong>) and I want to do some NLP process including Tfidf. My problem is when I Applied Tfidf and print 100 features it doesn't appear as a single word but the entire sentence.
 Here is my code:</p>
 
@@ -35533,6 +36567,8 @@ While tf-idf focuses on the importance of a word in a document and similarity of
 ",Vectorization & Embeddings,method use convert word feature machine learning application planning building gender classifier know two popular model tf idf word vec tf idf focus importance word document similarity document word vec focus relationship word similarity however none theme seem perfect building vector feature used gender classification alternative vectorization model might suit task
 &quot;attention heads&quot; in seq2seq.embedding_attention_seq2seq of tensorflow,"<p>I'm new to the tensorflow and trying to implement the ""seq2seq"" model according to the tutorial. I'm not sure about one argument ""num_heads"" (default=1) of the func ""embedding_attention_seq2seq"". What does it represent? I didn't find it in the related papers.</p>
 ",Vectorization & Embeddings,attention head seq seq embedding attention seq seq tensorflow new tensorflow trying implement seq seq model according tutorial sure one argument num head default func embedding attention seq seq doe represent find related paper
+How to make Doc2Vec document vectors all positive?,"<p>I'm trying to use nonnegative matrix factorization on the output of Doc2Vec. However there is a constraint that there can be no negative input. How do I make it positive without doing something like absolute value that will construe the results? If it helps, I'm loading in a new paragraph and computing similarity but I thought that using Doc2Vec would capture more meaning.</p>
+",Vectorization & Embeddings,make doc vec document vector positive trying use nonnegative matrix factorization output doc vec however constraint negative input make positive without something like absolute value construe result help loading new paragraph computing similarity thought using doc vec would capture meaning
 Combing the NLTK text features with sklearn Vectorized features,"<p>I am trying to combine the dict type features used in NLTK along with the SKLEARN tfidf feature for each instance. </p>
 
 <p>Sample Input:
@@ -35903,6 +36939,53 @@ for key in db2.keys():
 <p>But this gives me cosine similarity scores against all keys in db1 for  each key in db2. Example: If there are 5 keys in db1 and 5 keys in db2, I get 25 rows as result with this code. <br>
 What I want is to get the cosine similarity scores for just corresponding key from db1 for the key in db2. Which means if there are 5 keys each in db1 and db2, I should have only 5 rows as a result - the cosine similarity score for each pair of duplicates only.<br><br>How should I tweak my code to get that?</p>
 ",Vectorization & Embeddings,cosine similarity already known pair duplicate list duplicate document pair saved csv file id column duplicate corresponding id column file go something like document id associated text saved somewhere else pulled text saved column id associated text two lsm database ha id key corresponding text value respective key therefore like dictionary similarly id say get text associated id want get cosine similarity score pair determine duplicate ness ran tfidf model created tfidf matrix document db corpus measured cosine similarity tfidf vector db tfidf matrix security reason provide complete code code go like give cosine similarity score key db key db example key db key db get row result code want get cosine similarity score corresponding key db key db mean key db db row result cosine similarity score pair duplicate tweak code get
+how to access and open files in folder automatically and check similarity with input file in python,"<p>i am making a desktop tool for plagiarism checking between documents. I use stopwords, vectorizer tf-idf etc and use cosine similarity to check similarity between two documents </p>
+
+<pre><code>{import nltk, string
+from sklearn.feature_extraction.text import TfidfVectorizer
+from  nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize 
+import nltk
+
+userinput1  = input (""Enter file name:"")
+myfile1 = open(userinput1).read()
+stop_words = set(stopwords.words(""english""))
+word1 = nltk.word_tokenize(myfile1)
+filtration_sentence = []
+for w in word1:
+    word = word_tokenize(myfile1)
+    filtered_sentence = [w for w in word if not w in stop_words]
+    print(filtered_sentence)
+
+userinput2  = input (""Enter file name:"")
+myfile2 = open(userinput2).read()
+stop_words = set(stopwords.words(""english""))
+word2 = nltk.word_tokenize(myfile2)
+filtration_sentence = []
+for w in word2:
+    word = word_tokenize(myfile2)
+    filtered_sentence = [w for w in word if not w in stop_words]
+    print(filtered_sentence)
+
+stemmer = nltk.stem.porter.PorterStemmer()
+remove_punctuation_map = dict((ord(char), None) for char in string.punctuation)
+
+def stem_tokens(tokens):
+    return [stemmer.stem(item) for item in tokens]
+
+'''remove punctuation, lowercase, stem'''
+def normalize(text):
+    return stem_tokens(nltk.word_tokenize(text.lower().translate(remove_punctuation_map)))
+vectorizer = TfidfVectorizer(tokenizer=normalize, stop_words='english')
+
+def cosine_sim(myfile1, myfile2):
+    tfidf = vectorizer.fit_transform([myfile1, myfile2])
+    return ((tfidf * tfidf.T).A)[0,1]
+print(cosine_sim(myfile1,myfile2))}
+</code></pre>
+
+<p>but the problem is ""i have to check similarity of input file from user with the number of files in folder. i tried my best to access folder ,open files automatically but not succeed. ""anyone here who can tell me how to access folder containing files and open files one by one and compare with input file.i am using python 3.4.4 and window 7</p>
+",Vectorization & Embeddings,access open file folder automatically check similarity input file python making desktop tool plagiarism checking document use stopwords vectorizer tf idf etc use cosine similarity check similarity two document problem check similarity input file user number file folder tried best access folder open file automatically succeed anyone tell access folder containing file open file one one compare input file using python window
 Average of word embeddings with TF-IDF score,"<p>I have been developing a python script to classify if an article is related to a body text or not. For that I have been using ML (SVM classifier) with some features, including average of word embeddings. </p>
 
 <p>The code for calculating the average of word embeddings between the list of articles and bodies is the following:</p>
@@ -36057,6 +37140,14 @@ What is relation between tsne and word2vec?,"<p>As I know of, <code>tsne</code> 
 ",Vectorization & Embeddings,relation tsne word vec know reducing dimension word vector generate word embedding model huge amount data relation two doe use inside use
 can anyone tell me about the model (skipgram/ CBOW ) used by Gensim?,"<p>word2vec uses either of the model for distributed representation of words. I was checking out the codes of gensim but it is not defined about the model used by gensim .</p>
 ",Vectorization & Embeddings,anyone tell model skipgram cbow used gensim word vec us either model distributed representation word wa checking code gensim defined model used gensim
+How word2vec retrieves result from binary files?,"<pre><code>from gensim.models.keyedvectors import KeyedVectors
+model = KeyedVectors.load_word2vec_format('google_news.bin', binary=True)
+print(model['the']) # this prints the 300D vector for the word 'the'
+</code></pre>
+
+<p>the code loads the google_news binary file to model. 
+my question is, how the line 3 computes the output from a binary file ( Since Binary files contains 0's and 1's).</p>
+",Vectorization & Embeddings,word vec retrieves result binary file code load google news binary file model question line computes output binary file since binary file contains
 LSTM labeling all samples as the same class,"<p>I'm trying to design an LSTM network using Keras to combine word embeddings and other features in a binary classification setting. My test set contains 250 samples per class. </p>
 
 <p>When I run my model using only the word embedding layers (the ""model"" layer in the code), I get an average F1 of around 0.67. When I create a new branch with the other features of fixed size that I compute separately (""branch2"") and merge these with the word embeddings using ""concat"", the predictions all revert to a single class (giving perfect recall for that class), and average F1 drops to 0.33.</p>
@@ -36276,6 +37367,265 @@ Gensim: What is difference between word2vec and doc2vec?,"<p>I'm kinda newbie an
 
 <p>Thanks.</p>
 ",Vectorization & Embeddings,gensim difference word vec doc vec kinda newbie native english trouble understanding think give word similar query word request training tell case use someone could explain difference short word please thanks
+Deep learning word2vec for small text,"<p>I am using word2vec from R [here][1]</p>
+
+<p>My data come from a csv file. Following are the data I have:</p>
+
+<pre><code>net
+abap
+access
+account management
+accounting
+active directory
+agile methodologies
+agile project management
+ajax
+algorithms
+analysis
+android
+android development
+angularjs
+ant
+apache
+asp
+asp net
+banking
+bb
+bpmn
+budgets
+business analysis
+business development
+business intelligence
+business planning
+business process
+business process design
+business strategy
+c
+change management
+channel partners
+cisco technologies
+cloud computing
+cms
+competitive analysis
+computer hardware
+computer science
+consulting
+contract negotiation
+corporate communications
+crm
+css
+customer service
+cvs
+data analysis
+data center
+data migration
+data warehousing
+database design
+databases
+db
+design patterns
+direct sales
+drupal
+eclipse
+ecommerce
+economics
+editing
+ejb
+english
+enterprise architecture
+enterprise software
+erp
+european union
+event management
+finance
+financial analysis
+firewalls
+forecasting
+french
+git
+hardware
+help desk support
+hibernate
+html
+human resources
+iis
+incident management
+integration
+it management
+it service management
+it strategy
+itil
+java
+java enterprise edition
+javascript
+jboss application server
+jdbc
+jee
+jira
+jms
+joomla
+jpa
+jquery
+jsf
+json
+jsp
+junit
+key account management
+leadership
+linux
+management
+management consulting
+market research
+marketing
+marketing communications
+marketing strategy
+matlab
+maven
+microsoft excel
+microsoft exchange
+microsoft office
+microsoft sql server
+microsoft word
+mobile applications
+mobile devices
+ms project
+mysql
+negotiation
+netbeans
+network administration
+network security
+networking
+new business development
+object oriented design
+oop
+operating systems
+oracle
+oracle applications
+oracle sql
+outsourcing
+photoshop
+php
+plsql
+pmo
+pmp
+postgresql
+powerpoint
+presales
+problem solving
+product development
+product management
+product marketing
+program management
+programming
+project management
+project planning
+project portfolio
+public relations
+public speaking
+python
+quality assurance
+requirements analysis
+requirements gathering
+research
+rest
+retail
+risk management
+rup
+saas
+sales
+sales management
+sales operations
+sap
+sap erp
+sap r
+scrum
+security
+selenium
+seo
+servers
+servlets
+sharepoint
+shell scripting
+soa
+soap
+social media
+social media marketing
+social networking
+software design
+software development
+software documentation
+software engineering
+software installation
+software project
+software quality
+solution architecture
+solution selling
+spring
+spring framework
+spss
+sql
+sql server
+startups
+strategic planning
+strategy
+struts
+subversion
+system administration
+systems analysis
+tcpip
+teaching
+team building
+team leadership
+team management
+teamwork
+technical support
+telecommunications
+testing
+tomcat
+training
+troubleshooting
+tsql
+uml
+unix
+unix shell scripting
+user acceptance testing
+vb net
+virtualization
+visio
+visual basic
+visual studio
+vmware
+voip
+vpn
+web applications
+web design
+web development
+web services
+weblogic
+windows
+windows server
+wordpress
+xml
+xslt
+</code></pre>
+
+<p>I would like to extract cluster of text so I could categorize the words. I use the following code from word2vec.</p>
+
+<pre><code>library(wordVectors)
+model = train_word2vec(""C:/Users/Desktop/input.csv"",output=""C:/Users/Desktop/output.vectors"",threads = 3,vectors = 100,window=12)
+nearest_to(model,model[[""bussiness""]])
+</code></pre>
+
+<p>I would expect to see nearest words based on bussiness because from observation of input file I can see that there are exist but I only take NA from output of nearest_to</p>
+
+<pre><code>&gt; nearest_to(model,model[[""bussiness""]])
+&lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; 
+  NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 
+</code></pre>
+
+<p>What can I do to fix the problem in code?
+      [1]: <a href=""https://github.com/bmschmidt/wordVectors"" rel=""nofollow"">https://github.com/bmschmidt/wordVectors</a></p>
+",Vectorization & Embeddings,deep learning word vec small text using word vec r data come csv file following data would like extract cluster text could categorize word use following code word vec would expect see nearest word based bussiness observation input file see exist take na output nearest fix problem code
 Tensorflow examples for RNN,"<p>I am trying to implement basic NLP tasks in Tensorflow without using the build in modules as much as possible (just for learning sake)</p>
 
 <p>I have been trying to implement a Part of Speech tagger using data from <a href=""http://www.cnts.ua.ac.be/conll2000/chunking/"" rel=""nofollow noreferrer"">http://www.cnts.ua.ac.be/conll2000/chunking/</a></p>
@@ -37012,14 +38362,6 @@ False
 ",Vectorization & Embeddings,elasticsearch possible cluster document share similar text without giving initial query compare elasticsearch possible group document share similar text without giving initial query compare know possible query get like document possible cluster document within index according field value instance document quick brown fox jump lazy dog document barcelona great city document fast orange fox jump lazy dog document madrid great city document like eat fish perform kind aggregation without giving search query group group document document group document document group document really appreciate clue
 Is there a Doc2vec model in tensorflow?,"<p>I know I am not suppose to ask for a tool, resource, etc on stackoverflow: But I think this is an important question and people will benefit from it. Here comes the question: I have found word2vec but failed to find doc2vec implementation in the tensorflow package, and will be surprised if it is not supported in tensorflow.</p>
 ",Vectorization & Embeddings,doc vec model tensorflow know suppose ask tool resource etc stackoverflow think important question people benefit come question found word vec failed find doc vec implementation tensorflow package surprised supported tensorflow
-Datasets in Biodomain like Word similarity datasets used in word2vec and Glove,"<p>I am training word2vec on biomedical texts. In order to perform word similarity and word analogy tests I want to have pairs of biomedical terms having same relationships(could be any), just like we have a comprehensive list of City-State data in word2vec. I tried searching the web but since I am new to the domain I am finding it confusing.  </p>
-
-<p>So, where can I find the list relevant to Drug-gene or Protein-action, etc? Or how can I mine this data. Please suggest publicly available such datasets. Also, please suggest any additional interesting relationships which I can also query. </p>
-
-<p>Another way would be to use available ontologies as they include relations between concepts such as has-part, is-a-way-of-doing, is-a-cause-of, is-a-symptom-of etc. Can I use ontologies to extract such pairs? If yes, then what ontologies and how? </p>
-
-<p>Are there any gold standard datasets already available that can serve my purpose? </p>
-",Vectorization & Embeddings,datasets biodomain like word similarity datasets used word vec glove training word vec biomedical text order perform word similarity word analogy test want pair biomedical term relationship could like comprehensive list city state data word vec tried searching web since new domain finding confusing find list relevant drug gene protein action etc mine data please suggest publicly available datasets also please suggest additional interesting relationship also query another way would use available ontology include relation concept ha part way cause symptom etc use ontology extract pair yes ontology gold standard datasets already available serve purpose
 Cosine similarity of representation of sentences formed with word vectors now measure word order?,"<p>I know, the original cosine similarity, when applied to representation of two documents by frequency of specific words, do not measure word order. I now see a whole bunch of papers applying cosine similarity to representation of pairs of sentences formed by words vectors. I assume they flatten the token# x embedding length matrix of each sentence to a long vector whose length is token# x embedding length of the original sentence. So ""I love you"" and ""you love me(normalized to ""I"") would not yield 1 in this new way of applying cosine similarity whereas the old way would yield 1. Am I correct? Thanks for any enlightening answer.</p>
 ",Vectorization & Embeddings,cosine similarity representation sentence formed word vector measure word order know original cosine similarity applied representation two document frequency specific word measure word order see whole bunch paper applying cosine similarity representation pair sentence formed word vector assume flatten token x embedding length matrix sentence long vector whose length token x embedding length original sentence love love normalized would yield new way applying cosine similarity whereas old way would yield correct thanks enlightening answer
 How to create document features from word-vectors?,"<p>I have around 100000 documents of varying word length. I also have trained a word2vec model on the entire corpus. Now how do I go from having this word-vectors to create features of same dimension for each individual documents?      </p>
@@ -37662,6 +39004,19 @@ end
 
 <p>And this line is the culprit. I'm not sure why it breaks my code. Maybe parts of this are deprecated? Can anyone offer some ideas about why this doesn't work, and perhaps alternate ways to achieve the effect I'm going for?</p>
 ",Vectorization & Embeddings,ruby meaningful word remove stopwords array speech file need compare array stopwords remove stopwords leave remaining meaningful word far something like embedding result function html like break page cause html disappear entirely narrowed problem line function line culprit sure break code maybe part deprecated anyone offer idea work perhaps alternate way achieve effect going
+use scikit learn tfidf vectorizer starting from counts data frame,"<p>I have a pandas data frame with counts of words for a series of documents. Can I apply <code>sklearn.feature_extraction.text.TfidfVectorizer</code> to it to return a term-document matrix? </p>
+
+<pre><code>import pandas as pd
+
+a = [1,2,3,4]
+b = [1,3,4,6]
+c = [3,4,6,1]
+
+df = pd.DataFrame([a,b,c])
+</code></pre>
+
+<p>How can I get tfidf version of counts in df?</p>
+",Vectorization & Embeddings,use scikit learn tfidf vectorizer starting count data frame panda data frame count word series document apply return term document matrix get tfidf version count df
 Anyone knows about text-based emotion detection systems that offer a demo?,"<p>I recently finished work on my text-based emotion detection engine and I am looking for other existing working systems to compare with mine in order to know what should be improved and also report comparisons in an upcoming paper. </p>
 
 <p>I have come across many companies claiming to do emotion detection from text but only this one offers a demo that I can use to compare with my system: <a href=""http://www.o2mc.io/portfolio-posts/text-analysis-restful-api-language-polarity-and-emotion/"" rel=""nofollow"">http://www.o2mc.io/portfolio-posts/text-analysis-restful-api-language-polarity-and-emotion/</a> (scroll all the way down to see the ""try it yourself"" section). </p>
@@ -37747,6 +39102,40 @@ University of Michigan</p>
 
 <p>breathing, in the inspiration-expiration ratio, and in the pulse rate and size. The arm volume shows a tendency to rise with respiratory waves. Agreeableness shows</p>
 ",Vectorization & Embeddings,compare many text file contain duplicate stub previous next file remove duplicate text automatically large number text file containing article academic journal unfortunately article file also contains stub end previous article beginning beginning next article end need remove stub preparation running frequency analysis article stub constitute duplicate data simple field mark beginning end article case however duplicate text doe seem formatted line case script compared file next file removed copy duplicate text would perfect seems like would pretty common issue programming surprised able find anything doe file name sort order script compare file next sequentially work e g bul txt bul txt two article one starting page page article included bellow two volume test data located note academic content analysis old journal article project history psychology programmer year experience linux usually figure thing go thanks help filename bul txt syn sthesia isi majority portugese word signifying black object idea relating black association admittedly true synsesthesia author belief matter degree logical spontaneous association genuine case colored audition reference downey june e case colored gustation amer j psycho medeiros e albuquerque sur un phenomene de synopsie presente par de million de sujets de psychol norm et path myers c case synassthesia brit j psychol affective experimental professor john f shepard university michigan three article appeared leipzig laboratory year drozynski object use gustatory olfactory stimulus study organic reaction feeling disturbance breathing may involved us rhythmical auditory stimulus find given different rate various grouping accompanied characteristic feeling subject record chest breathing curve sphygmograph water plethysmograph experiment began normal record stimulus wa given wa followed contrast stimulus lastly another normal wa taken length depth breathing measured time line wa recorded relation length inspiration length expiration wa determined length height pulsebeats also measured tabular summary given number time author find quantity increased decreased reaction period type feeling feeling state given rhythm always complex result referred dimension seemed dominant disconnected extract normal reaction period reproduced record author state excitement give increase rate depth breathing inspiration expiration ratio rate size pulse undulation arm volume far effect quieting cause decrease rate depth john f shepard breathing inspiration expiration ratio pulse rate size arm volume show tendency rise respiratory wave agreeableness show
+Problems fitting vocabulary in scikit-learn?,"<p>I have a directory full of <code>.txt</code> files (documents). First I <code>load</code> the documents and strip some parenthesis and remove some quotes, so the documents looks as follows, for example:</p>
+
+<pre><code>document1:
+is a scientific discipline that explores the construction and study of algorithms that can learn from data Such algorithms operate by building a model
+
+document2:
+Machine learning can be considered a subfield of computer science and statistics It has strong ties to artificial intelligence and optimization which deliver methods
+</code></pre>
+
+<p>So I'm loading the files from the directory like this:</p>
+
+<pre><code>preprocessDocuments =[[' '.join(x) for x in sample[:-1]] for sample in load(directory)]
+
+
+documents = ''.join( i for i in ''.join(str(v) for v
+                                              in preprocessDocuments) if i not in ""',()"")
+</code></pre>
+
+<p>Then I'm triying to vectorize <code>document1</code> and <code>document2</code> in order to create a training matrix as follows:</p>
+
+<pre><code>from sklearn.feature_extraction.text import HashingVectorizer
+vectorizer = HashingVectorizer(analyzer='word')
+X = HashingVectorizer.fit_transform(documents)
+X.toarray()
+</code></pre>
+
+<p>Then this is the output:</p>
+
+<pre><code>    raise ValueError(""empty vocabulary; perhaps the documents only""
+ValueError: empty vocabulary; perhaps the documents only contain stop words
+</code></pre>
+
+<p>How can I create a vector representation given this?. I thought that i was carrying the loaded files in <code>documents</code> but it seems that the documents can not be fitted.</p>
+",Vectorization & Embeddings,problem fitting vocabulary scikit learn directory full file document first document strip parenthesis remove quote document look follows example loading file directory like triying vectorize order create training matrix follows output create vector representation given thought wa carrying loaded file seems document fitted
 Text clustering within a log file,"<p>I am working on a problem of finding similar content in a log file. Let's say I have a log file which looks like this:</p>
 
 <pre><code> show version
@@ -38225,16 +39614,6 @@ Do tf-idf weights affect the cosine similarity?,"<p>I'm clustering text document
 
 <p>This triggers the question, where do the tf/idf weights play a role in the similarity calculations? Because what I understood so far is that the similarity here only cares about the presence and absence of the terms.</p>
 ",Vectorization & Embeddings,tf idf weight affect cosine similarity clustering text document using tf idf cosine similarity however something really understand even tho using measure tf idf weight affect similarity calculation two document suppose two document high tree high tree high tree high tree high tree similarity two document although tf idf vector two document different second normally higher weight term compared first document suppose weight two vector suppose v v calculating cosine similarity give sketch two random vector share term different weight obvious angel vector weight play role trigger question tf idf weight play role similarity calculation understood far similarity care presence absence term
-Methods for extracting locations from text?,"<p>What are the recommended methods for extracting locations from free text? </p>
-
-<p>What I can think of is to use regex rules like ""words ... in location"". But are there better approaches than this?</p>
-
-<p>Also I can think of having a lookup hash table table with names for countries and cities and then compare every extracted token from the text to that of the hash table.</p>
-
-<p>Does anybody know of better approaches?</p>
-
-<p>Edit: I'm trying to extract locations from tweets text. So the issue of high number of tweets might also affect my choice for a method.</p>
-",Vectorization & Embeddings,method extracting location text recommended method extracting location free text think use regex rule like word location better approach also think lookup hash table table name country city compare every extracted token text hash table doe anybody know better approach edit trying extract location tweet text issue high number tweet might also affect choice method
 Calculating Cosine Similarity of two Vectors of Different Size,"<p>I have 2 questions,</p>
 
 <ol>
@@ -38242,6 +39621,10 @@ Calculating Cosine Similarity of two Vectors of Different Size,"<p>I have 2 ques
 <li><p>Using the above method I've created vectors of 16 documents, which are of different sizes. Now i want to apply cosine similarity to find out how similar each document is. The problem I'm having is getting the dot product of two vectors because they are of different sizes. How would i do this?</p></li>
 </ol>
 ",Vectorization & Embeddings,calculating cosine similarity two vector different size question made vector document finding many time word appeared document right way making vector something else also using method created vector document different size want apply cosine similarity find similar document problem getting dot product two vector different size would
+Document Query similarity for very short documents,"<p>I am working on a project which incorporates a basic implementation of the vector space model. A collection of documents d1...dn form the columns of the term document matrix, the rows represent the words in the collection. I use standard tf-idf scoring with cosine similarity to calculate the distance between a query and a document.</p>
+
+<p>My question is, which distance metric can ""tackle"" similarity between short documents. Example: A document containing a single word, which is part of the query, will score very high using cosine similarity, since the norm of such a document is very small. How can I ""punish"" such documents which are obviously irrelevant?</p>
+",Vectorization & Embeddings,document query similarity short document working project incorporates basic implementation vector space model collection document dn form column term document matrix row represent word collection use standard tf idf scoring cosine similarity calculate distance query document question distance metric tackle similarity short document example document containing single word part query score high using cosine similarity since norm document small punish document obviously irrelevant
 Java Google Engine Library,"<p>i want a java library, to search a text on Google and returns some pages based on text and semantic similarity. is there any API doing this job?
 i wrote a crawler myself and search to specific depth from a root page, but i dont know how to input a text as a search query for Google.  </p>
 ",Vectorization & Embeddings,java google engine library want java library search text google return page based text semantic similarity api job wrote crawler search specific depth root page dont know input text search query google
@@ -38287,16 +39670,6 @@ Classification/Prediction in R,"<p>I have a corpus of <strong>N</strong> documen
 ",Vectorization & Embeddings,classification prediction r corpus n document classified spam spam following standard procedure pre process data r code pre processing end using weight tfidf want classify new document model calculate corresponding using tf document idf corpus single new document would like avoid recalculating whole corpus
 lexical-level similarity word clustering tool,"<p>Is there any open software toolkit that compares the lexcial-level similarities among words and group similar words together? For example, Blue jean, Blue jeans, and blue jea (miss-spelled) should be grouped together? I don't need to look for semantic similarity here. </p>
 ",Vectorization & Embeddings,lexical level similarity word clustering tool open software toolkit compare lexcial level similarity among word group similar word together example blue jean blue jean blue jea miss spelled grouped together need look semantic similarity
-Efficiently Compare Successive Characters in String,"<p>I'm doing some text analysis, and need to record the frequencies of character transitions in a <code>String</code>. I have <em>n</em> categories of characters: for the sake of example, <code>isUpperCase()</code>, <code>isNumber()</code>, and <code>isSpace()</code>.</p>
-
-<p>Given that there are <em>n</em> categories, there will be <em>n^2</em> categories of transitions, e.g. ""<code>isUpperCase()</code> --> <code>isUpperCase()</code>"", ""<code>isUpperCase</code> --> <code>isLetter()</code>"", ""<code>isLetter()</code> --> <code>isUpperCase()</code>"", etc.</p>
-
-<p>Given a block of text, I would like to record the number of transitions that took place. I would imagine constructing a <code>Map</code> with the transition types as the <code>Keys</code>, and an <code>Integer</code> as each <code>Value</code>. </p>
-
-<p>For the block of text ""<code>TO</code>"", the <code>Map</code> would look like <code>[isUpper -&gt; isUpper : 1, isUpper -&gt; isSpace : 1]</code></p>
-
-<p>The part I cannot figure out, though, is how to construct a <code>Map</code> where, from what I can see, the <code>Key</code> would consist of 2 <code>boolean</code> methods.</p>
-",Vectorization & Embeddings,efficiently compare successive character string text analysis need record frequency character transition n category character sake example given n category n category transition e g etc given block text would like record number transition took place would imagine constructing transition type block text would look like part figure though construct see would consist method
 Comparing context vectors,"<p>I'm using vectors to represent context around words and I need to compare contexts with each other. The following is a simplified version of my problem:</p>
 
 <p>Let's say I have a vector <code>a=[1,1,15,2,0]</code>. Then I have a vector <code>b=[0,0,15,0,0]</code> and <code>c=[1,1,11,0,1]</code>. When comparing the two vectors by cosine similarity <code>b</code> is closest to <code>a</code>. However, since the vectors are representing context <code>c</code> makes more sense in my case since <code>b</code> is just a context which happens to have one word common with the original and has the same score. </p>

@@ -554,6 +554,11 @@ def to_nltk_tree(node):
 John  a      flashy  the
 </code></pre>
 ",Parsing & POS Tagging,dependency parsing tree spacy sentence john saw flashy hat store represent dependency tree shown got script href pre getting following looking tree nltk format
+Given a word can we get all possible lemmas for it using Spacy?,"<p>The input word is standalone and not part of a sentence but I would like to get all of its possible lemmas as if the input word were in different sentences with all possible POS tags. I would also like to get the lookup version of the word's lemma.</p>
+<p>Why am I doing this?</p>
+<p>I have extracted lemmas from all the documents and I have also calculated the number of dependency links between lemmas. Both of which I have done using <code>en_core_web_sm</code>. Now, given an input word, I would like to return the lemmas that are linked most frequently to all the possible lemmas of the input word.</p>
+<p>So in short, I would like to replicate the behaviour of <code>token._lemma</code> for the input word with all possible POS tags to maintain consistency with the lemma links I have counted.</p>
+",Parsing & POS Tagging,given word get possible lemma using spacy input word standalone part sentence would like get possible lemma input word different sentence possible po tag would also like get lookup version word lemma extracted lemma document also calculated number dependency link lemma done using given input word would like return lemma linked frequently possible lemma input word short would like replicate behaviour input word possible po tag maintain consistency lemma link counted
 Saving nltk drawn parse tree to image file,"<p><img src=""https://i.sstatic.net/0wi0Q.png"" alt=""enter image description here""></p>
 
 <p>Is there any way to save the draw image from tree.draw() to an image file programmatically? I tried looking through the documentation, but I couldn't find anything.</p>
@@ -587,36 +592,6 @@ for token in sent:
 
 <p>. . punct []</p>
 ",Parsing & POS Tagging,way get entire constituent using spacy guess trying navigate spacy parse tree blunt way provided instance sentence like wa genius dog wa green want able save object variable genius green token child provides immediate syntactic dependent first example child wa genius child genius helpful want entire constituent genius sure reconstruct token child better way figure match wa using token text part trying figure return whole constituent genius using info provided child output prp nsubj wa vbd root genius dt det genius nn attr punct
-How to count the number of nouns from Spacy from a dataframe column?,"<p>I have a dataframe like that (as an example).</p>
-<div class=""s-table-container"">
-<table class=""s-table"">
-<thead>
-<tr>
-<th>text</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>I left the country.</td>
-</tr>
-<tr>
-<td>Andrew is from America and he loves apples.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>I want to add a new column, number of nouns, where Spacy should count the NOUNS pos tags. How do I convert that in Python?</p>
-<pre><code>import pandas as pd
-import spacy
-
-# the dataframe
-
-# NLP Spacy with POS tags
-nlp = spacy.load(&quot;en_core_web_sm&quot;)
-</code></pre>
-<p>My question is, how to apply nlp on the &quot;text&quot; column, check if the pos is NOUN and count it and give it as a feature?</p>
-<p>Thanks!</p>
-",Parsing & POS Tagging,count number noun spacy dataframe column dataframe like example text left country andrew america love apple want add new column number noun spacy count noun po tag convert python question apply nlp text column check po noun count give feature thanks
 Extract Noun Phrases with Stanza and CoreNLPClient,"<p>I am trying to extract noun phrases from sentences using Stanza(with Stanford CoreNLP). This can only be done with the CoreNLPClient module in Stanza. </p>
 
 <pre><code># Import client module
@@ -667,20 +642,6 @@ def extract_phrase(tree_str, label):
 
 <p>Is there a way I can make this more code efficient with less number of lines (especially, <code>stanza_phrases</code> and <code>extract_phrase</code> methods)</p>
 ",Parsing & POS Tagging,extract noun phrase stanza corenlpclient trying extract noun phrase sentence using stanza stanford corenlp done corenlpclient module stanza example sentence using function client get noun phrase function return python thus needed process output passing function nltk correctly extract noun phrase string hence came method ha loop output correctly format nltk generates tree used nltk output way make code efficient le number line especially method
-"Generate modifiers for a keyword using dependency parsing, NLP","<p>I have a dataframe containing reviews of a particular product with the columns month and review. I want perform a type of text analysis on the review column, whereby you can query the for a particular keyword and it will return a list of modifiers for that keyword.</p>
-<pre><code>df = pd.DataFrame({'month': ['Jan', 'Feb', 'Mar', 'Apr', 'Apr'],
-                   'review': ['there should be 'share' button on each item. right now when my wife wants me to buy her something, she has to dictate the item id which is horrendous.', 'always nice but high prices', 'this app currently needs more than 3 gigs of space on my phone. that is ridiculous. guess it has to go. /edit cool, trying again, thanks for the answer.', 'impossible to login in the app, is there any way to get the barcode of the card? if i click the link in the email for the card print thingy it just shows a broken image.', 'i cannot change my location and language preference'],
-                   'sentiment': [&quot;positive&quot;, &quot;negative&quot;, &quot;positive&quot;, &quot;negative&quot;, &quot;neutral&quot;]})
-</code></pre>
-<p>For example, say the reviews dataset is from the hospitality industry, and performed sentiment analysis. Upon checking the most frequent words in the positive and negative reviews, you got this.</p>
-<p><strong>Positive</strong>: hotel, location, staff, view, room, breakfast</p>
-<p><strong>Negative</strong>: hotel, staff, room, breakfast, window, bed, Wi-Fi</p>
-<p>You wanted to go deeper into the analysis and uncover exactly what it was about these objects that were – or were not – working as expected by customers. For example, why were windows such a prominent aspect of negative reviews?</p>
-<p>So, you  set out to create a syntactic dependency tree, which connects all terms in the input text according to their syntactic relation. Then, you queried this tree to pinpoint precisely what it was about a given keyword (for example, &quot;room&quot; or &quot;location&quot;) that customers did or did not especially like (<strong>this is where I need help, I don't know how to implement this in code</strong>)</p>
-<p>I want a resulting list of modifiers so I can create word clouds to visualize the frequency of each modifier for the given keyword, such as the word cloud below, for the keyword &quot;room&quot;:</p>
-<p><a href=""https://i.sstatic.net/izB1F.jpg"" rel=""nofollow noreferrer"">enter image description here</a></p>
-<p>Honestly I don't even know where to start, I'm currently working with spaCy's dependency parsing to see how it works and what it returns. So while I do that, I also seek help from here.</p>
-",Parsing & POS Tagging,generate modifier keyword using dependency parsing nlp dataframe containing review particular product column month review want perform type text analysis review column whereby query particular keyword return list modifier keyword example say review dataset hospitality industry performed sentiment analysis upon checking frequent word positive negative review got positive hotel location staff view room breakfast negative hotel staff room breakfast window bed wi fi wanted go deeper analysis uncover exactly wa object working expected customer example window prominent aspect negative review set create syntactic dependency tree connects term input text according syntactic relation queried tree pinpoint precisely wa given keyword example room location customer especially like need help know implement code want resulting list modifier create word cloud visualize frequency modifier given keyword word cloud keyword room enter image description honestly even know start currently working spacy dependency parsing see work return also seek help
 How to extract noun-based compound words from a sentence using Python?,"<p>I'm using <code>nltk</code> via the following code to extract nouns from a sentence:</p>
 <pre class=""lang-py prettyprint-override""><code>words = nltk.word_tokenize(sentence)
 tags = nltk.pos_tag(words)
@@ -712,6 +673,21 @@ print(new_list)
 <p>Not sure how to remove that specific string after it was used to replace and not sure how to iterate over both strings. <code>replace</code> is a lot longer than <code>a_list</code>. I have been working on this for a couple of hours now I'm sure there is something that can do this - just need help, it seems so close! There are many similar questions but I have tried and they have not worked for me</p>
 <p>Thank you!</p>
 ",Parsing & POS Tagging,python loop replace element string second element element second string trying replace element one string second element also string type element second string short version list working want replace element first list first element list second list second element po tag list second list match check rest list example part list working working function want list list replace replace replace string tuples harder work sure remove specific string wa used replace sure iterate string lot longer working couple hour sure something need help seems close many similar question tried worked thank
+Retain original document element index of argument passed through sklearn&#39;s CountVectorizer() in order to access corresponding part of speech tag,"<p>I have a data frame with sentences and the respective part of speech tag for each word (Below is an extract of the data I'm working with (data taken from <a href=""https://nlp.stanford.edu/projects/snli/"" rel=""nofollow noreferrer"">SNLI</a> corpus). For each sentence in my collection I would like to extract unigrams and the corresponding pos-tag of that word.</p>
+<p>For instance if I've the following:</p>
+<pre><code>vectorizer_unigram = CountVectorizer(analyzer='word', ngram_range=(1, 1), stop_words = 'english')
+
+doc = {'sent' : ['Two women are embracing while holding to go packages .'], 'tags' : ['NUM NOUN AUX VERB SCONJ VERB PART VERB NOUN PUNCT']}
+
+sentence = vectorizer_unigram.fit(doc['sent'])
+sentence_unigrams = sentence.get_feature_names_out()
+
+</code></pre>
+<p>Then I would get the following unigrams output:</p>
+<pre><code>array(['embracing', 'holding', 'packages', 'women'], dtype=object)
+</code></pre>
+<p>But I don't know how to retain the part of speech tag after this. I tried to do a lookup version with the unigrams, but as they may differ from the words in the sentence (if you for instance do <code>sentence.split(' ')</code>) you don't necessarily get the same tokens. Any suggestions of how I can extract unigrams and retain the corresponding part-of-speech tag?</p>
+",Parsing & POS Tagging,retain original document element index argument passed sklearn countvectorizer order access corresponding part speech tag data frame sentence respective part speech tag word extract data working data taken snli corpus sentence collection would like extract unigrams corresponding po tag word instance following would get following unigrams output know retain part speech tag tried lookup version unigrams may differ word sentence instance necessarily get token suggestion extract unigrams retain corresponding part speech tag
 Extracting noun+noun or (adj|noun)+noun from Text,"<p>Is it possible to extract <code>noun+noun</code> or <code>(adj|noun)+noun</code> using the R package <code>openNLP</code>? That is, I would like to use linguistic filtering to extract candidate noun phrases. Could you direct me how to do?
 Many thanks.</p>
 <hr />
@@ -766,6 +742,12 @@ index
 <p>I cannot understand its meaning well. Could you do me a favor and explain it? Or show how to code the filtering rule in the R language?
 Many thanks.</p>
 ",Parsing & POS Tagging,extracting noun noun adj noun noun text possible extract using r package would like use linguistic filtering extract candidate noun phrase could direct many thanks thanks response code reader refer index acqtagsplit extraction code optimal work idea please let know additional problem justeson katz proposed another linguistic filtering extract candidate noun phrase understand meaning well could favor explain show code filtering rule r language many thanks
+How to extract phrases from text using specific noun-verb-noun NLTK PoS tag patterns?,"<p>I have a data frame that has a column containing some text.</p>
+<p>I want to extract phrases from the text with the format <code>NN + VB + NN</code> or <code>NN + NN + VB + NN</code> or <code>NN + ... + NN + VB + NN</code> et cetera. Basically, I want to get the simple phrases with 1 to n <code>nouns</code> before the first encountered <code>verb</code>, followed by a <code>noun</code>.</p>
+<p>I'm using <code>nltk.pos_tag</code> after tokenizing the texts to get the tag of each word, however I cannot find a way to get what I want.</p>
+<p>I also thought about <code>bigrams</code>, <code>trigrams</code>, <code>ngrams</code> etc. but couldn't find a way to apply it.</p>
+<p>Any help, please?</p>
+",Parsing & POS Tagging,extract phrase text using specific noun verb noun nltk po tag pattern data frame ha column containing text want extract phrase text format et cetera basically want get simple phrase n first encountered followed using tokenizing text get tag word however find way get want also thought etc find way apply help please
 "Extracting &quot;((Adj|Noun)+|((Adj|Noun)(Noun-Prep)?)(Adj|Noun))Noun&quot; from Text (Justeson &amp; Katz, 1995)","<p>Is it possible to extract <code>((Adj|Noun)+|((Adj|Noun)(Noun-Prep)?)(Adj|Noun))Noun</code> proposed by Justeson and Katz (1995) using the R package <code>openNLP</code>?</p>
 <p>That is, I would like to use this linguistic filtering to extract candidate noun phrases.</p>
 <p>I cannot understand its meaning well.</p>
@@ -1585,6 +1567,51 @@ Convert String Token into Tree in Python (Stanford NLP),"<p>I am working on <a h
 </code></pre>
 <p>I want to know how to parse the result to get it into an easy and accessible format. Or Can I convert it into tree form? Or Is there any other library available that gives me lemma, pos tag and dependencies like this?</p>
 ",Parsing & POS Tagging,convert string token tree python stanford nlp working stanford nlp one project want fetch output produced api string format like want know parse result get easy accessible format convert tree form library available give lemma po tag dependency like
+Using GPU for NLP data preprocessing,"<p>I am trying to preprocess my dataset and I am facing problem like it takes ages to Tokenize and Parts of Speech tagging. I am wondering that can I use GPU for faster processing or I have some issues in my code.
+Code I am using for word tokenization is:</p>
+<pre class=""lang-py prettyprint-override""><code>def word_tokenizer(text):
+    out_result = &quot; &quot;
+    for words in text:
+        final_result = nltk.tokenize.TreebankWordTokenizer().tokenize(words)
+    return final_result
+    
+    train_df['review'] = train_df['review'].apply(lambda z: word_tokenizer(z))
+</code></pre>
+<p>and my code for parts of speech tagging is:</p>
+<pre class=""lang-py prettyprint-override""><code>def pos_tagging(text):
+    #data = nltk.pos_tag()
+    out_result = &quot; &quot;
+    for words in text:
+        out_result = nltk.pos_tag_sents(words)
+    return out_result
+    train_df['review'] = train_df['review'].apply(lambda z: pos_tagging(z))
+</code></pre>
+<p>Note: Initially I was using <code>nltk.pos_tag</code> but I it was also very slow. I read somewhere that instead of using that use <code>nltk.pos_tag_sents</code> but still it is too slow as my dataset is pretty much large.</p>
+<p>A help would be greatly appreciated.</p>
+",Parsing & POS Tagging,using gpu nlp data preprocessing trying preprocess dataset facing problem like take age tokenize part speech tagging wondering use gpu faster processing issue code code using word tokenization code part speech tagging note initially wa using wa also slow read somewhere instead using use still slow dataset pretty much large help would greatly appreciated
+how to assign labels to each token in my datafrmae?,"<p>I want to change the structure of my data frame, I want to convert a data frame,</p>
+<p><a href=""https://i.sstatic.net/obWky.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/obWky.png"" alt=""enter image description here"" /></a></p>
+<p>e.g first row is so</p>
+<pre><code>[Yes, it's annoying and cumbersome to separate your rubbish properly all the time., Three different bin bags stink away in the kitchen and have to be sorted into different wheelie bins., But still Germany produces way too much rubbish, and too many resources are lost when what actually should be separated and recycled is burnt., We Berliners should take the chance and become pioneers in waste separation!]
+</code></pre>
+<p>as you see in each row, column paragraph, I have a couple of sentences and in the column Label, I have corrpsp[edn label, I want to break assign to each token of sentences each  it is a label and it is Pos tags like this</p>
+<pre><code>[(Yes, UH, 0), (,, ,, 0), (it, PRP, 0), ('s, VBZ, 0), (annoying, JJ, 0), (and, CC, 0), (cumbersome, JJ, 0), (to, TO, 0), (separate, VB, 0), (your, PRP$, 0), (rubbish, NN, 0), (properly, RB, 0), (all, PDT, I0), (the, DT, 0), (time, NN, 0), (., ., 0),...]
+
+</code></pre>
+<p>i have kind  of done  to tokenized and assign pos tag using spacy</p>
+<pre><code>import spacy
+nlp = spacy.load(&quot;en_core_web_sm&quot;)
+def mapTokenPos(l):
+    tokenlist=[]
+    for x in l:
+        doc=nlp(x)
+        a=[(token.text,token.tag_) for token in doc]
+        tokenlist.append(a)
+    return tokenlist
+df[&quot;IOB&quot;]=df[&quot;Paragraph&quot;].apply(mapTokenPos)
+</code></pre>
+<p>but I do not know how to assign the labels to</p>
+",Parsing & POS Tagging,assign label token datafrmae want change structure data frame want convert data frame e g first row see row column paragraph couple sentence column label corrpsp edn label want break assign token sentence label po tag like kind done tokenized assign po tag using spacy know assign label
 How to create parse tree for generalized way to split unique sentences by subordinate or independent clauses?,"<p>I have been looking for a way to take a sentence and split it into clauses. So far I have found this example online: <a href=""https://stackoverflow.com/questions/39320015/how-to-split-an-nlp-parse-tree-to-clauses-independent-and-subordinate"">How to split an NLP parse tree to clauses (independent and subordinate)?</a></p>
 <p>However, the parse tree is given in this example. How can I create one for any sentence? I would like to find out how to create the parse tree that is used for the solution's input in Python.</p>
 ",Parsing & POS Tagging,create parse tree generalized way split unique sentence subordinate independent clause looking way take sentence split clause far found example online href split nlp parse tree clause independent subordinate however parse tree given example create one sentence would like find create parse tree used solution input python
@@ -2324,6 +2351,29 @@ There can be 'n' no. of patterns that we might want to extract. For example, her
 <p>I referred this link for Chunking :
 <a href=""https://www.codespeedy.com/chunking-rules-in-nlp/"" rel=""nofollow noreferrer"">https://www.codespeedy.com/chunking-rules-in-nlp/</a></p>
 ",Parsing & POS Tagging,extract chunk multiple pattern po tagged sentence given input sentence po tagged using po tag function nltk veer nnp singh nnp rathore nnp auctioned vbd prp gigantic jj house nn new nnp york nnp need extract phrase follow certain pattern example nnp nnp jj nn n pattern might want extract example need pattern namely nnp nnp jj nn output want inputted sentence list phrase like output veer singh rathore gigantic house new york tried something like output getting form tree output chunk veer nnp singh nnp rathore nnp auctioned vbd prp chunk gigantic jj house nn chunk new nnp york nnp chunk veer nnp singh nnp rathore nnp chunk gigantic jj house nn chunk new nnp york nnp resolved referred link chunking
+Is there any way to give an input file to Stanza (stanford corenlp client) rather then one piece of text while calling server?,"<p>I have a .csv file consists of Imdb sentiment analysis data-set. Each instance is a paragraph. I am using Stanza <a href=""https://stanfordnlp.github.io/stanza/client_usage.html"" rel=""nofollow noreferrer"">https://stanfordnlp.github.io/stanza/client_usage.html</a> for getting parse tree for each instance.</p>
+<pre><code>text = &quot;Chris Manning is a nice person. Chris wrote a simple sentence. He also gives oranges to people.&quot;
+
+with CoreNLPClient(
+    annotators=['tokenize','ssplit','pos','lemma','ner', 'parse', 'depparse','coref'],
+    timeout=30000,
+    memory='16G') as client:
+ann = client.annotate(text)
+</code></pre>
+<p>Right now, I have to re-run server for every instance and it is taking a lot of time since I have 50k instances.</p>
+<pre><code>1
+Starting server with command: java -Xmx16G -cp /home/wahab/treeattention/stanford-corenlp- 
+4.0.0/* edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 1200000 -threads 
+5 -maxCharLength 100000 -quiet True -serverProperties corenlp_server-a74576b3341f4cac.props 
+-preload parse
+2
+Starting server with command: java -Xmx16G -cp /home/wahab/treeattention/stanford-corenlp- 
+4.0.0/* edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 1200000 -threads 
+5 -maxCharLength 100000 -quiet True -serverProperties corenlp_server-d09e0e04e2534ae6.props 
+-preload parse
+</code></pre>
+<p>Is there any way to pass a file or do batching?</p>
+",Parsing & POS Tagging,way give input file stanza stanford corenlp client rather one piece text calling server csv file consists imdb sentiment analysis data set instance paragraph using stanza getting parse tree instance right run server every instance taking lot time since k instance way pas file batching
 How to determine plurality of a word in Python without using Inflect or NLTK?,"<p>I am writing a program using Python which reads a list of words and needs to determine the plurality of each one. I tried using Inflect but, as far as I can tell, it does not provide any great methods for determining the plurality of a generic word. I used the singular_noun and plural_noun methods but they both require that the word to be inflected be both a noun and plural/singular, respectively. According to documentation:</p>
 <blockquote>
 <p>&quot;All of the plural... plural inflection methods take the word to be inflected as their first argument and return the corresponding inflection. <strong>Note that all such methods expect the singular form of the word. The results of passing a plural form are undefined (and unlikely to be correct).</strong> Similarly, the si... singular inflection method expects the plural form of the word.&quot;</p>
@@ -2801,6 +2851,36 @@ How to go from type theory to first-order logic lambda-expressions,"<p>As can be
 I doubt there is a Spacy function for this but that would be the easiest way I guess (SpacySpaCy import is already implemented in my project).
 Nevertheless, I'm open for any possibility of phrase recognition/ chunking. </p>
 ",Parsing & POS Tagging,python chunking others noun phrase e g prepositional using spacy etc since wa told spacy wa powerful python module natural speech processing desperately looking way group word together noun phrase importantly prepositional phrase doubt spacy function would easiest way guess spacyspacy import already implemented project nevertheless open possibility phrase recognition chunking
+Chunking for non-noun phrases in SpaCy,"<p>Sorry if this seems like a silly question, but I am still new to Python and SpaCy.</p>
+
+<p>I have a data frame that contains customer complaints. It looks a bit like this:</p>
+
+<pre><code>df = pd.DataFrame( [[1, 'I was waiting at the bus stop and then suddenly the car mounted the pavement'],
+                    [2, 'When we got on the bus, we went upstairs but the bus braked hard and I fell'], 
+                    [3, 'The bus was clearly in the wrong lane when it crashed into my car']], 
+                    columns = ['ID', 'Text']) 
+</code></pre>
+
+<p>If I want to obtain the noun phrases, then I can do this:</p>
+
+<pre><code>def extract_noun_phrases(text):
+    return [(chunk.text, chunk.label_) for chunk in nlp(text).noun_chunks]
+
+def add_noun_phrases(df):
+    df['noun_phrases'] = df['Text'].apply(extract_noun_phrases)
+
+add_noun_phrases(df)
+</code></pre>
+
+<p>What about if I want to extract prepositional phrases from the <code>df</code>? So, specifically trying to extract lines like:</p>
+
+<ul>
+<li><code>at the bus stop</code></li>
+<li><code>in the wrong lane</code></li>
+</ul>
+
+<p>I know I am meant to be using <code>subtree</code> for this, but I don't understand how to apply it to my dataset.</p>
+",Parsing & POS Tagging,chunking non noun phrase spacy sorry seems like silly question still new python spacy data frame contains customer complaint look bit like want obtain noun phrase want extract prepositional phrase specifically trying extract line like know meant using understand apply dataset
 How to iterate through the synset list generated from wordnet using python 3.4.2,"<p>I am using wordnet to find the synonyms for a particular word as shown below</p>
 
 <pre><code>synonyms = wn.synsets('good','a')
@@ -2955,6 +3035,32 @@ Is there a way to correctly tag (PoS Tagging) the words which are forming a phra
 
 <p>Thanks in advance.</p>
 ",Parsing & POS Tagging,way correctly tag po tagging word forming phrase together tried various mean correctly tag bunch word form phrase especially noun phrase could succeed example first early morning sunbeam early morning wrongly tagged noun expected outcome first adverb early adverb morning adjective sunbeam noun could please suggest procedure tag word correctly thanks advance
+Finding total count for word form when many possible POS tags,"<p>I feel like I have a dumb question, but here goes anyway.. 
+I'm trying to go from data that looks something like this:</p>
+
+<pre><code>a word form     lemma    POS                count of occurrance
+same word form  lemma    Not the same POS   another count
+same word form  lemma    Yet another POS    another count
+</code></pre>
+
+<p>to a result that looks like this:</p>
+
+<pre><code>the word form    total count    all possible POS and their individual counts 
+</code></pre>
+
+<p>So for example I could have:</p>
+
+<pre><code>ring     total count = 100        noun = 40, verb = 60
+</code></pre>
+
+<p>I have my data in a CSV file. I want to do something like this:</p>
+
+<pre><code>for row in all_rows:
+    if row[0] is the same as row[0] in the next row, add the values from row[3] together to get the total count
+</code></pre>
+
+<p>buuut I can't seem to figure out how to do that. Help? </p>
+",Parsing & POS Tagging,finding total count word form many possible po tag feel like dumb question go anyway trying go data look something like result look like example could data csv file want something like buuut seem figure help
 Keyword Text Recognition and Extraction,"<p>I'm trying to build an architecture that recognizes words that are related to a subject word from a paragraph of text. These ""related"" words can be words that describes the subject word or provides information about the subject word.</p>
 
 <p>Here's a basic example: </p>
@@ -3778,6 +3884,48 @@ def get_chunks(sentence):
 
 <p>Thanks and cheers!</p>
 ",Parsing & POS Tagging,chunking complex noun phrase list spacy generating augmented list trying convert abbreviated list noun phrase describing occupation complete list noun phrase look something like example input output general operation manager general manager operation manager bus truck mechanic diesel engine specialist bus mechanic truck mechanic diesel engine specialist claim adjuster appraiser examiner claim adjuster claim appraiser claim examiner heavy vehicle mobile equipment service technician mechanic heavy vehicle service technician heavy vehicle mechanic mobile equipment service technician mobile equipment mechanic tried heavy rule based approach liking also tried simple chunking spacy initial result also perfect spacy code look like exact input code return operation manager bus truck mechanic diesel engine specialist claim adjuster appraiser examiner investigator heavy vehicle mobile equipment service technician mechanic considering going rule based approach maybe someone ha better suggestion thanks cheer
+Is it possible to create a list consisting of a percentage of elements of another list?,"<p>I am trying to create a dependency parser from a corpus. The corpus is in conll format so I have a function that reads the files and return a list of lists, in which each list is a parsed sentence (the corpus I'm using is already parsed, my job is to find another alternative in this parse). My professor asked to randomly pick only the 5% of sentences in this corpus, as it is too large. </p>
+
+<p>I have tried creating an empty list and use the append function, but I don't know how can I specify by indexing that I want 5 out of each 100 sentences of the corpus</p>
+
+<p>The function I have made for converting the conll files is the following: </p>
+
+<pre><code>import os, nltk, glob
+def read_files(path):
+    """"""
+    Function to load Ancora Dependency corpora (GLICOM style)
+    path = full path to the files
+    returns de corpus in sentences
+        each sentence is a list of tuples
+            each tuple is a token with the follwoing info:
+                index of the token in the sentence
+                token
+                lemma
+                POS /es pot eliminar
+                POS
+                FEAT /es pot eliminar
+                head
+                DepRelation
+    """"""
+    corpus = []
+    for f in glob.glob(path):
+        sents1 = open(f).read()[185:-2].split('\n\n')
+        sents2 = []
+        for n in range(len(sents1)):
+            sents2.append(sents1[n].split('\n'))
+        sents3 = []
+        for s in sents2:
+            sent = []
+            for t in s:
+                sent.append(tuple(t.split('\t')))
+            sents3.append(sent)
+        corpus.extend(sents3)
+    return corpus
+</code></pre>
+
+<p>I want a way of selecting 5 sentences of every 100 in the corpus so I can have a list of lists containing only these.
+Thanks in advance!</p>
+",Parsing & POS Tagging,possible create list consisting percentage element another list trying create dependency parser corpus corpus conll format function read file return list list list parsed sentence corpus using already parsed job find another alternative parse professor asked randomly pick sentence corpus large tried creating empty list use append function know specify indexing want sentence corpus function made converting conll file following want way selecting sentence every corpus list list containing thanks advance
 Extracting definitions and the text corresponding to the definition,"<p>I am trying to extract definitions and the text that goes along with that definition.</p>
 
 <p>The definition extraction is relatively easy because they are typically in parentheses and in quotes, so I can run a Regular Expression to find them. </p>
@@ -5268,6 +5416,22 @@ How to get a parse NLP Tree object from bracketed parse string with nltk or spac
 
 <p>BTW, I am using python 3</p>
 ",Parsing & POS Tagging,get parse nlp tree object bracketed parse string nltk spacy sentence could say regularly catch shower add exhilaration joie de vivre achieve get nlp parse tree like following example want replicate solution question href string sentence instead nlp tree p btw using python
+Tagging a .txt file from Inaugural Address Corpus,"<p>I'm having a hard time trying to figure this out.  New to coding.  I'm trying to read a .txt file, tokenize it, pos tag the words in it.</p>
+
+<p>Here's what I've got so far:</p>
+
+<pre><code>import nltk
+from nltk import word_tokenize
+import re
+
+file = open('1865-Lincoln.txt', 'r').readlines()
+text = word_tokenize(file)
+string = str(text)
+nltk.pos_tag(string)
+</code></pre>
+
+<p>My problem is, it keeps giving me the <code>TypeError: expected string or bytes-like object</code> error.</p>
+",Parsing & POS Tagging,tagging txt file inaugural address corpus hard time trying figure new coding trying read txt file tokenize po tag word got far problem keep giving error
 Type Error: &#39;NoneType&#39; object is not scriptable,"<p>I am trying to Generate the possible <strong>permutations and combinations</strong> of sentences from the given raw input statement using Spacy.io. At first, I generated the <strong>Dependency Parse</strong> tree and started traversing the tree.</p>
 <p>Dependency Tree for the input statement: <a href=""https://demos.explosion.ai/displacy/?text=So%20I%20am%20not%20asking%20you%20to%20decide%20anything%20right%20now%20because%20I%20just%20called%20to%20give%20you%20some%20information%20so%20that%20anytime%20may%20be%20now%20or%20%20%20in%20the%20near%20future%20if%20you%20plan%20to%20expand%20your%20business%20or%20do%20some%20renovations%20or%20purchase%20any%20equipment%20or%20get%20another%20store%20or%20anything%20like%20that%20you%20can%20contact%20us%20at%20that%20time%20okay&amp;model=en_core_web_sm&amp;cpu=0&amp;cph=0"" rel=""nofollow noreferrer"">Click here to see the Dependency Tree</a></p>
 <p>The below is the sample code I used to traverse the tree.</p>
@@ -5466,6 +5630,75 @@ Creating combination of different elements in a list,"<p>I have a list of words:
 
 <p>Any help on how can I do so?</p>
 ",Parsing & POS Tagging,creating combination different element list list word different po tag word example need compute combination possible statement example help
+Generate three level dependency in case a verb is attached with non verb in dependency parsing,"<p>I am using dependency parsing for a use case in R with the corenlp package. However, I need to tweak the dataframe for a specific use case.</p>
+
+<p>I need a dataframe where I have three columns. I have used the below code to reach till the dependency tree.</p>
+
+<pre><code>devtools::install_github(""statsmaths/coreNLP"")
+coreNLP::downloadCoreNLP()
+initCoreNLP()
+inp_cl = ""generate odd numbers from column one and print.""
+output = annotateString(inp_cl)
+dc = getDependency(output)
+
+ sentence governor dependent      type governorIdx dependentIdx govIndex depIndex
+1        1     ROOT  generate      root           0            1       NA        1
+2        1  numbers       odd      amod           3            2        3        2
+3        1 generate   numbers      dobj           1            3        1        3
+4        1   column      from      case           5            4        5        4
+5        1 generate    column nmod:from           1            5        1        5
+6        1   column       one    nummod           5            6        5        6
+7        1   column       and        cc           5            7        5        7
+8        1 generate     print nmod:from           1            8        1        8
+9        1   column     print  conj:and           5            8        5        8
+10       1 generate         .     punct           1            7        1        10
+</code></pre>
+
+<p>Using POS tagging with the following code, I ended up with the following data frame.</p>
+
+<pre><code>ps = getToken(output)
+
+ps = ps[,c(1,2,7,3)]
+
+colnames(dc)[8] = ""id""
+
+dp = merge(dc, ps[,c(""sentence"",""id"",""POS"")], 
+     by.x=c(""sentence"",""governorIdx""),by.y = c(""sentence"",""id""),all.x = T)
+
+dp = merge(dp, ps[,c(""sentence"",""id"",""POS"")], 
+     by.x=c(""sentence"",""dependentIdx""),by.y = c(""sentence"",""id""),all.x = T)
+
+colnames(dp)[9:10] = c(""POS_gov"",""POS_dep"")
+
+
+  sentence dependentIdx governorIdx governor dependent      type govIndex id POS_gov POS_dep
+1         1            1           0     ROOT  generate      root       NA  1    &lt;NA&gt;      VB
+2         1            2           3  numbers       odd      amod        3  2     NNS      JJ
+3         1            3           1 generate   numbers      dobj        1  3      VB     NNS
+4         1            4           5   column      from      case        5  4      NN      IN
+5         1            5           1 generate    column nmod:from        1  5      VB      NN
+6         1            6           5   column       one    nummod        5  6      NN      CD
+7         1            7           5   column       and        cc        5  7      NN      CC
+8         1            8           1 generate     print nmod:from        1  8      VB      NN
+9         1            8           5   column     print  conj:and        5  8      NN      NN
+10        1            9           1 generate         .     punct        1  9      VB       .
+</code></pre>
+
+<p>In case a verb(action word) is attached to a non-verb(non action word), but the  non-verb(non-action word) is connected to other non-verb(non-action words) then one row should indicate the entire connection. Eg: generate is a verb connected to numbers and numbers is a non verb connected to odd.</p>
+
+<p>So the intended data frame needs to be</p>
+
+<pre><code>Topic1 Topic2 Action
+numbers odd    generate
+column  from   generate
+column  one    generate
+column  and    generate
+column  from   print
+column  one    print
+column  and    print
+         .     generate
+</code></pre>
+",Parsing & POS Tagging,generate three level dependency case verb attached non verb dependency parsing using dependency parsing use case r corenlp package however need tweak dataframe specific use case need dataframe three column used code reach till dependency tree using po tagging following code ended following data frame case verb action word attached non verb non action word non verb non action word connected non verb non action word one row indicate entire connection eg generate verb connected number number non verb connected odd intended data frame need
 NLP - Sentence does not follow any of the grammar rule in Syntactic parsing,"<p>I have grammar extracted from Treebank dataset from nltk library. Now the parser will use these rules to parse the sentence. So for example I have grammar like below:</p>
 
 <pre><code>A-&gt;B C
@@ -5647,6 +5880,29 @@ Stanford nlp: Parse Tree,"<p>I have this sentence: <code>My dog also likes eatin
   t.labels();
 </code></pre>
 ",Parsing & POS Tagging,stanford nlp parse tree sentence get following parse tree get grammatical category namely np advp vp etc tried code
+Not able to attach extracted POS taged Noun phrases to pandas data frame,"<p>I am trying to extract only noun and noun phrases  to address data (a column a inside csv file). </p>
+
+<p>I was able to  remove the stop words, punctuations and numbers from the data. Also  was able  POS tag the data, but not able Extract Noun Phrases and attach back to data frame. Let me know what went  wrong</p>
+
+<pre><code>    stopwords=nltk.corpus.stopwords.words('english')
+    user_defined_stop_words=['hong','kong','hk','kowloon','hongkong']                    
+    new_stop_words=stopwords+user_defined_stop_words
+
+    data['Clean_addr'] = data['Adj_Addr'].apply(lambda x: ' '.join([item.lower() for item in x.split()]))
+    data['Clean_addr']=data['Clean_addr'].apply(lambda x:"""".join([item.lower() for item in x if  not  item.isdigit()]))
+    data['Clean_addr']=data['Clean_addr'].apply(lambda x:"""".join([item.lower() for item in x if item not in string.punctuation]))
+    data['Clean_addr'] = data['Clean_addr'].apply(lambda x: ' '.join([item.lower() for item in x.split() if item not in (new_stop_words)]))
+
+texts = data['Clean_addr'].tolist()
+tagged_texts = pos_tag_sents(map(word_tokenize, texts))
+data['POS']=tagged_texts
+data['POS']=data['POS'].apply(lambda x:' '.join([item[0] for item in x if (item[0][1]=='NNP' or item[0][1]=='NNS')]))    
+</code></pre>
+
+<p>Sample Dump of the File I am using</p>
+
+<p><a href=""https://www.dropbox.com/s/allhfdxni0kfyn6/Test.csv?dl=0"" rel=""nofollow noreferrer"">https://www.dropbox.com/s/allhfdxni0kfyn6/Test.csv?dl=0</a></p>
+",Parsing & POS Tagging,able attach extracted po taged noun phrase panda data frame trying extract noun noun phrase address data column inside csv file wa able remove stop word punctuation number data also wa able po tag data able extract noun phrase attach back data frame let know went wrong sample dump file using
 How to do a BFS on a verb phrase and extract all the dependent(first level or immediate dependent) noun tags in Stanford CoreNLP,"<p><a href=""https://i.sstatic.net/sio6d.png"" rel=""nofollow noreferrer""><img src=""https://i.sstatic.net/sio6d.png"" alt=""enter image description here""></a></p>
 
 <p>In this dependency tree I want to do one level BFS and extract a structure where VP/VBZ is the root node and the dependent NP/ NNP are the child nodes.
@@ -7407,6 +7663,71 @@ How to filter specific POS tags from list of lists to separate lists?,"<p>I have
 
 <p>Also tried to use <code>[[] for i in range(len(data)]</code> to append to their respective lists, but couldn't do so. </p>
 ",Parsing & POS Tagging,filter specific po tag list list separate list huge data product description required separate product name intent description found separating nnp tag tagging text po tag somewhat helpful cleansing following similar data want filter nnp tag want filtered respective list unable wrote following code giving following output output would like get also tried use append respective list
+Count POS Tags by column,"<p>I am trying to count all Part-Of-Speech tags in a row and sum it up.</p>
+
+<p>By now I reached two outputs:</p>
+
+<p>1) The/DT question/NN was/VBD ,/, what/WP are/VBP you/PRP going/VBG to/TO cut/VB ?/.</p>
+
+<p>2) c(""DT"", ""NN"", ""VBD"", "","", ""WP"", ""VBP"", ""PRP"", ""VBG"", ""TO"", ""VB"", ""."")</p>
+
+<p>In this particular example desirable output is:</p>
+
+<pre><code>        DT  NN  VBD  WP  VBP  PRP   VBG   TO   VB
+1 doc   1   1    1   1    1    1     1     1    1
+</code></pre>
+
+<p>But since I want to create it for the whole column in dataframe I want to see there 0 values as well in a columns, which corresponds to a POS tag which was not used in this sentence.</p>
+
+<p>Example:</p>
+
+<pre><code>1 doc = ""The/DT question/NN was/VBD ,/, what/WP are/VBP you/PRP going/VBG to/TO cut/VB ?/"" 
+
+2 doc = ""Response/NN ?/.""
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>        DT  NN  VBD  WP  VBP  PRP   VBG   TO   VB
+1 doc   1   1    1   1    1    1     1     1    1
+2 doc   0   1    0   0    0    0     0     0    0
+</code></pre>
+
+<p>What I did by now:</p>
+
+<pre><code>library(stringr)
+#Spliting into sentence based on carriage return
+
+s &lt;- unlist(lapply(df$sentence, function(x) { str_split(x, ""\n"")     }))
+
+library(NLP)
+library(openNLP)
+
+tagPOS &lt;-  function(x, ...) {
+s &lt;- as.String(x)
+word_token_annotator &lt;- Maxent_Word_Token_Annotator()
+a2 &lt;- Annotation(1L, ""sentence"", 1L, nchar(s))
+a2 &lt;- annotate(s, word_token_annotator, a2)
+a3 &lt;- annotate(s, Maxent_POS_Tag_Annotator(), a2)
+a3w &lt;- a3[a3$type == ""word""]
+POStags &lt;- unlist(lapply(a3w$features, `[[`, ""POS""))
+POStagged &lt;- paste(sprintf(""%s/%s"", s[a3w], POStags), collapse = "" "")
+list(POStagged = POStagged, POStags = POStags)
+}
+
+result &lt;- lapply(s,tagPOS)
+result &lt;- as.data.frame(do.call(rbind,result))
+</code></pre>
+
+<p>That's how I reached the output which was described at the beginning</p>
+
+<p>I have tried to count occurrences like this:
+    occurrences&lt;-as.data.frame (table(unlist(result$POStags)))</p>
+
+<p>But it count occurrences through the whole dataframe. I need to create new column to existing dataframe and count occurrences in the first column.</p>
+
+<p>Can anyone help me please? :(</p>
+",Parsing & POS Tagging,count po tag column trying count part speech tag row sum reached two output dt question nn wa vbd wp vbp prp going vbg cut vb c dt nn vbd wp vbp prp vbg vb particular example desirable output since want create whole column dataframe want see value well column corresponds po tag wa used sentence example output reached output wa described beginning tried count occurrence like occurrence data frame table unlist result postags count occurrence whole dataframe need create new column existing dataframe count occurrence first column anyone help please
 Part of speech tagging with Viterbi algorithm,"<p>I am working on a project where I need to use the Viterbi algorithm to do part of speech tagging on a list of sentences. For my training data I have sentences that are already tagged by word that I assume I need to parse and store in some data structure. Then I have a test data which also contains sentences where each word is tagged. </p>
 
 <p>I'm a bit confused on how I would approach this problem. I guess part of the issue stems from the fact that I don't think I fully understand the point of the Viterbi algorithm. Am I supposed to use the Viterbi algorithm to tag my test data and compare the results to the actual data? What data structures are best to do this and represent a sentence?</p>
@@ -9950,6 +10271,43 @@ dobj(eating-5, sausage-6)</p>
 
 <p>Kindly share the JAVA code to produce this output.</p>
 ",Parsing & POS Tagging,generate universal dependency relation using stanford nlp tool using java created parse tree command line using command upto got correct output input file tree format want output like universal dependency nmod po dog nsubj like dog advmod like also root root like xcomp like eating dobj eating sausage universal dependency enhanced nmod po dog nsubj like dog advmod like also root root like xcomp like eating dobj eating sausage kindly share java code produce output
+Using a regular expression to find all noun phrases in a paragraph following the occurrence of a specific phrase,"<p>I have a data frame of paragraphs, which I have (*can) split into word tokens and sentence tokens and am looking to find all the noun phrases following any instance where the phrase: ""contribute to"" or ""donate to"" occurs.</p>
+
+<p>Or really some form of that, so: </p>
+
+<pre><code>""Contributions are welcome to be made to the charity of your choice."" 
+
+---&gt; would return: ""the charity of your choice""
+</code></pre>
+
+<p>and </p>
+
+<pre><code>""blah blah blah donations, in honor of Firstname Lastname, can be made to ABC Foundation""
+
+---&gt; would return: ""ABC Foundation""
+</code></pre>
+
+<p>I've created a regular expression work-around that captures the correct phrase about 90% of the time... see below: </p>
+
+<pre><code>text = nltk.Text(nltk.word_tokenize(x))
+donation = TokenSearcher(text).findall(r""&lt;\.&gt; &lt;.*&gt;{,15}? &lt;donat.*|contrib.*&gt; &lt;.*&gt;*? &lt;to&gt; (&lt;.*&gt;+?) &lt;\.|\,|\;&gt; "")
+donation = [' '.join(tokens) for tokens in donation]
+return donation
+</code></pre>
+
+<p>I'd like to clean up that regular expression to get rid of the ""{,15}"" requirements because it's missing some of the values that I need. However, I'm not too polished with the ""greedy"" expressions and can't get it to work correctly. </p>
+
+<p>so this phrase: </p>
+
+<pre><code>While she lived a full life , had many achievements and made many 
+**contributions** , FirstName is remembered by most for her cheerful smile ,
+colorful track suits , and beautiful necklaces hand made by daughter FirstName .
+FirstName always cherished her annual visit home for Thanksgiving to visit
+brother FirstName LastName
+</code></pre>
+
+<p>is returning: ""visit brother FirstName Lastname"" due to the previous mentioning of contributions even though the word ""to"" comes well after 15 words later.</p>
+",Parsing & POS Tagging,using regular expression find noun phrase paragraph following occurrence specific phrase data frame paragraph split word token sentence token looking find noun phrase following instance phrase contribute donate occurs really form created regular expression work around capture correct phrase time see like clean regular expression get rid requirement missing value need however polished greedy expression get work correctly phrase returning visit brother firstname lastname due previous mentioning contribution even though word come well word later
 Stanford Dependency Parser and NLTK - Setup,"<p>I am trying to get Stanford Dependency Parser setup. However I am getting an Import Error - <strong><em>'ImportError: cannot import name StanfordDependencyParser</em></strong>'. I tried following instructions from answers to previous posts such as -  <a href=""https://stackoverflow.com/questions/13883277/stanford-parser-and-nltk"">Stanford Parser and NLTK</a>  and <a href=""https://stackoverflow.com/questions/34053021/stanford-dependency-parser-setup-and-nltk"">Stanford Dependency Parser Setup and NLTK</a>. Nothing seems to be working.</p>
 
 <p>My code is as follows: </p>
@@ -12091,6 +12449,40 @@ if __name__ == '__main__':
     p.map(multy,listed)
 </code></pre>
 ",Parsing & POS Tagging,quick nltk parse syntax tree trying parse several hundred sentence syntax tree need fast problem use nltk need define grammar cant know know gon na english tried using statistical parser work great purpose however speed could lot better way use nltk parsing without grammar snippet using processing pool processing parallel speed leaf lot desired
+Creating Rules for Word Permutations Based on a word&#39;s POS Tag,"<p>I have another question and since this community has been so great helping me along I thought I would give it another shot.</p>
+
+<p>Right now I have Python 3 code that imports a CSV file where the first column is full of words in the following format:</p>
+
+<pre><code>The
+Words
+Look
+Like
+This
+In
+A
+Column
+</code></pre>
+
+<p>Once this CSV file is uploaded and read by Python, the words are tagged using an NLTK POS Tagger.  From there, permutations are made from all of the words and then the results are exported to a new CSV file.
+Right now, my full code goes like this</p>
+
+<pre><code>Import CSV
+with open(r'C:\Users\jkk\Desktop\python.csv', 'r') as f:
+    reader = csv.reader(f)
+    J = []
+    for row in reader:
+      J.extend(row)
+import nltk
+D = nltk.pos_tag(J)
+C = list(itertools.permutations(D, 3))
+with open('test.csv', 'w') as a_file:
+    for result in C:
+    result = ' '.join(result)
+    a_file.write(result + '\n')
+</code></pre>
+
+<p><strong>My question is, how does one make rules for the word permutations based on the word tag?</strong>  More specifically, the reason I am tagging words is because I don't want nonsense permutations (i.e. The This In / A This In / etc).  Once the words are tagged with their respective part of speech, how do I code rules based on their tag (for example): Never have two ""DT"" labeled words follow each other (i.e. ""The"" and ""A"").  Or always have a NN tagged word be followed by a VBG tagged word (i.e. ""Looks"" always comes after ""Words"")?  And then finally, once those rules are implemented, get rid of the tags so that just the original words remain? I realize this is a general question but any guidance would be very much appreciated on how to approach this question as I am still very new and learning every step of the way!  Any resources, code, or even advice would help!  Thank you again for taking the time to read this long post!</p>
+",Parsing & POS Tagging,creating rule word permutation based word po tag another question since community ha great helping along thought would give another shot right python code import csv file first column full word following format csv file uploaded read python word tagged using nltk po tagger permutation made word result exported new csv file right full code go like question doe one make rule word permutation based word tag specifically reason tagging word want nonsense permutation e etc word tagged respective part speech code rule based tag example never two dt labeled word follow e always nn tagged word followed vbg tagged word e look always come word finally rule implemented get rid tag original word remain realize general question guidance would much appreciated approach question still new learning every step way resource code even advice would help thank taking time read long post
 NLP creating a model out of POS tags,"<p>I am trying to create a knowledgebase based on text mining. I am using Genia Corpus to tag the words by their Parts of speech. Given two terms from the text, how do i create a model that finds out its relation?</p>
 
 <p>Eg Text:</p>
@@ -12178,6 +12570,12 @@ Finding adverbs and what they modify using Stanford Parser,"<p>I am working with
 
 <p>For example, for the sentence ""The book is not interesting"", I can find the vertex for ""not"" in the parse tree. I would then like to find that ""not"" is modifying ""interesting"". Can the parser (or other Stanford corenlp software) provide that information?</p>
 ",Parsing & POS Tagging,finding adverb modify using stanford parser working stanford parser nlp software first time project would like find adverb determine modify sentence example sentence book interesting find vertex parse tree would like find modifying interesting parser stanford corenlp software provide information
+Best way to output Stanford NLP results,"<p>Hi folks:  I'm using the Stanford CoreNLP software to process hundreds of letters by different people (each about 10KB).  After I get the output, I need to further process it and add information at the level of tokens, sentences, and letters.  I'm quite new to NLP and was wondering what the typical or best way would be to output the pipeline results from Stanford CoreNLP to permit further processing?</p>
+
+<p>I'm guessing the typical approach would be to output to XML.  If I do, I estimate that will take about a GB of disk space, and I wonder, then, how quick and easy it would be to load that much XML back into Java for further processing and adding of information?</p>
+
+<p>An alternative might be to have CoreNLP serialize the annotation objects it produces and load those back for processing.  An advantage:  not having to figure out how to convert a sentence parse string back into a tree for further processing.  A disadvantage:  annotation objects contain a lot of different types of objects I'm still quite rough on manipulating and the documentation on these in Stanford CoreNLP seems slim to me.</p>
+",Parsing & POS Tagging,best way output stanford nlp result hi folk using stanford corenlp software process hundred letter different people kb get output need process add information level token sentence letter quite new nlp wa wondering typical best way would output pipeline result stanford corenlp permit processing guessing typical approach would output xml estimate take gb disk space wonder quick easy would load much xml back java processing adding information alternative might corenlp serialize annotation object produce load back processing advantage figure convert sentence parse string back tree processing disadvantage annotation object contain lot different type object still quite rough manipulating documentation stanford corenlp seems slim
 Uses/Applications of Part-of-speech-tagging (POS Tagging),"<p>I understand the implicit value of part-of-speech tagging and have seen mentions about its use in parsing, text-to-speech conversion, etc.</p>
 
 <p>Could you tell me how is the output of a PoS tagger formated ?
